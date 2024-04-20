@@ -20,7 +20,7 @@ public enum AID : uint
     CreepingMiasmaRest = 22438, // BozjanPhantom->self, 1.0s cast, range 50 width 12 rect
     MaledictionOfAgony = 22447, // Boss->self, 4.0s cast, range 70 circle
     Summon = 22443, // Boss->self, 3.0s cast, single-target, visual (go untargetable and spawn adds)
-    UndyingHatred = 22444, // StuffyWraith->self, 6.0s cast, range 60 width 48 rect
+    UndyingHatred = 22444, // StuffyWraith->self, 6.0s cast, range 60 width 48 rect knockback
     Transference = 22445, // Boss->location, no cast, single-target, teleport
     VileWave = 22449, // Boss->self, 6.0s cast, range 45 120-degree cone
 }

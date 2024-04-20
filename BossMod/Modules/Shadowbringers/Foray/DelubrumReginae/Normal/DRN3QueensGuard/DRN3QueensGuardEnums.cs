@@ -45,7 +45,7 @@ public enum AID : uint
     ShieldOmen = 22513, // Knight->self, 3.0s cast, single-target
     SwordOmen = 22512, // Knight->self, 3.0s cast, single-target
 
-    OptimalPlayCone = 22516, // Helper->self, 5.0s cast, single-target
+    OptimalPlay = 22516, // Helper->self, 5.0s cast, single-target
     OptimalPlayShield = 22515, // Knight->self, 6.0s cast, range ?-60 donut
     OptimalPlaySword = 22514, // Knight->self, 6.0s cast, range 10 circle
 
@@ -86,9 +86,9 @@ public enum SID : uint
     TheHeatOfBattle = 365, // none->player, extra=0xA
     Transcendent = 418, // none->player, extra=0x0
     TwiceComeRuin = 2485, // Knight/AetherialBolt/Helper->player, extra=0x1
-    Unknown1 = 2056, // none->GunTurret, extra=0xE1
-    Unknown2 = 2195, // AetherialWard->AetherialWard, extra=0x101/0x100
-    Unknown3 = 2160, // none->30B7, extra=0x2129
+    GunTurrentStatus = 2056, // none->GunTurret, extra=0xE1
+    WardStatus = 2195, // AetherialWard->AetherialWard, extra=0x101/0x100
+    AllyStatus = 2160, // none->30B7, extra=0x2129
     Weakness = 43, // none->player, extra=0x0
 }
 

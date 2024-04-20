@@ -6,7 +6,7 @@ class DRN3QueensGuardStates : StateMachineBuilder
         TrivialPhase()
             .ActivateOnEnter<OptimalPlaySword>()
             .ActivateOnEnter<OptimalPlayShield>()
-            .ActivateOnEnter<OptimalPlayCone>()
+            //.ActivateOnEnter<OptimalPlayCone>()
             .ActivateOnEnter<CoatOfArms>()
             .ActivateOnEnter<AboveBoard>()
             .ActivateOnEnter<PawnOff>();

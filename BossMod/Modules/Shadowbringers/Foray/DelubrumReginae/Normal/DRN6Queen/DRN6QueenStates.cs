@@ -12,8 +12,9 @@ class DRN6QueenStates : StateMachineBuilder
             .ActivateOnEnter<JudgmentBlade>()
             .ActivateOnEnter<HeavensWrathAOE>()
             .ActivateOnEnter<HeavensWrathKnockback>()
-            .ActivateOnEnter<QueensWill>()
-            .ActivateOnEnter<QueensEdict>()
+            //.ActivateOnEnter<Chess>()
+            //.ActivateOnEnter<QueensWill>()
+            //.ActivateOnEnter<QueensEdict>()
             .ActivateOnEnter<TurretsTour>()
             .ActivateOnEnter<AboveBoard>()
             .ActivateOnEnter<PawnOff>();

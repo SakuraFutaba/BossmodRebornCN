@@ -10,6 +10,7 @@ class DRN2DahuStates : StateMachineBuilder
             .ActivateOnEnter<HeadDown>()
             .ActivateOnEnter<FirebreatheRotating>()
             .ActivateOnEnter<Shockwave>()
+            .ActivateOnEnter<FeralHowl>()
             .ActivateOnEnter<HuntersClaw>();
     }
 }
