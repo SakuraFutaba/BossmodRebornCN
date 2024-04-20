@@ -6,7 +6,7 @@ class Firebreathe(BossModule module) : Components.SelfTargetedAOEs(module, Actio
 class HeadDown(BossModule module) : Components.ChargeAOEs(module, ActionID.MakeSpell(AID.HeadDown), 2);
 class HuntersClaw(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.HuntersClaw), new AOEShapeCircle(8));
 
-[ModuleInfo(BossModuleInfo.Maturity.Contributed, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 760, NameID = 9751)]
+[ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 760, NameID = 9751)]
 public class DRN2Dahu(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(82, 138), 30))
 {
     protected override void DrawEnemies(int pcSlot, Actor pc)
