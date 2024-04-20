@@ -1,6 +1,6 @@
 ﻿namespace BossMod.Shadowbringers.Foray.DelubrumReginae.Normal.DRN6Queen;
 
-abstract class Chess(BossModule module) : Components.GenericAOEs(module)
+public abstract class Chess : Components.GenericAOEs
 {
     public struct GuardState
     {
@@ -11,6 +11,8 @@ abstract class Chess(BossModule module) : Components.GenericAOEs(module)
     protected GuardState[] GuardStates = new GuardState[4];
     protected static readonly AOEShapeCross Shape = new(60, 5);
 
+    public Chess(BossModule module) : base(module) { }
+
     public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor)
     {
         if (NumCasts >= 4)
@@ -19,7 +21,7 @@ abstract class Chess(BossModule module) : Components.GenericAOEs(module)
         IEnumerable<GuardState> imminent = NumCasts < 2 ? GuardStates.Take(2) : GuardStates.Skip(2);
         foreach (var g in imminent)
             if (g.Actor != null)
-                yield return new(Shape, g.FinalPosition, g.Actor.Rotation);
+                yield return new AOEInstance(Shape, g.FinalPosition, g.Actor.Rotation);
     }
 
     public override void OnStatusGain(Actor actor, ActorStatus status)
@@ -36,7 +38,7 @@ abstract class Chess(BossModule module) : Components.GenericAOEs(module)
             var index = GuardIndex(actor);
             if (distance != 0 && index >= 0 && GuardStates[index].Actor == null)
             {
-                GuardStates[index] = new() { Actor = actor, FinalPosition = actor.Position + distance * 10 * actor.Rotation.ToDirection() };
+                GuardStates[index] = new GuardState { Actor = actor, FinalPosition = actor.Position + distance * 10 * actor.Rotation.ToDirection() };
             }
         }
     }
@@ -57,7 +59,11 @@ abstract class Chess(BossModule module) : Components.GenericAOEs(module)
     };
 }
 
-class QueensWill(BossModule module) : Chess(module) { }
+// QueensWill now inherits from Chess
+public class QueensWill : Chess
+{
+    public QueensWill(BossModule module) : base(module) { }
+}
 
 // TODO: enumerate all possible safespots instead? after first pair of casts, select still suitable second safespots
 class QueensEdict(BossModule module) : Chess(module)

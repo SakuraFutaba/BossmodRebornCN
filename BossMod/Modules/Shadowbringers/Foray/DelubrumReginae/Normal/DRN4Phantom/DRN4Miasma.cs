@@ -17,6 +17,7 @@ class Miasma(BossModule module) : Components.GenericAOEs(module)
     private Order _order;
 
     private static readonly AOEShapeRect _shapeRect = new(50, 6);
+    private static readonly AOEShapeCircle _shapeCircle = new(8);
     private static readonly AOEShapeDonut _shapeDonut = new(5, 19);
 
     public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor)
@@ -102,6 +103,23 @@ class Miasma(BossModule module) : Components.GenericAOEs(module)
                 AdvanceLane(ref l);
             }
         }
+    }
+
+    public override void OnActorEAnim(Actor actor, uint state)
+    {
+        if (state != 0x00010002)
+            return; // other states: 00080010 - start glowing, 00040020 - disappear
+        AOEShape? shape = (OID)actor.OID switch
+        {
+            OID.MiasmaLowRect => _shapeRect,
+            OID.MiasmaLowDonut => _shapeDonut,
+            _ => null
+        };
+        if (shape == null)
+            return;
+        int heightIndex = (OID)actor.OID is OID.MiasmaLowRect or OID.MiasmaLowDonut ? 0 : 1;
+        int laneIndex = LaneIndex(actor.Position);
+        _laneStates[laneIndex, heightIndex] = new() { Shape = shape, Activation = WorldState.FutureTime(16.1f), NextOrigin = new(actor.Position.X, Module.Bounds.Center.Z - Module.Bounds.HalfSize + (shape == _shapeRect ? 0 : 5)) };
     }
 
     private int LaneIndex(WPos pos) => (pos.X - Module.Bounds.Center.X) switch

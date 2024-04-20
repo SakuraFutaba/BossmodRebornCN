@@ -5,6 +5,8 @@ public enum OID : uint
     Boss = 0x30AC, // R2.400, x?
     BozjanPhantom = 0x233C, // R0.500, x?, 523 type
     StuffyWraith = 0x30AD, // R2.200, x?
+    MiasmaLowDonut = 0x1EB0DF, // R0.500, x0 (spawn during fight), EventObj type
+    MiasmaLowRect = 0x1EB0DD, // R0.500, x0 (spawn during fight), EventObj type
 }
 
 public enum AID : uint

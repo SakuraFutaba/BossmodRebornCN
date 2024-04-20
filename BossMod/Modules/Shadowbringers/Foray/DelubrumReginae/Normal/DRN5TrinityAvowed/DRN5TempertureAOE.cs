@@ -5,8 +5,9 @@ abstract class TemperatureAOE(BossModule module) : Components.GenericAOEs(module
     private class PlayerState
     {
         public int BaseTemperature;
+        public int Brand;
 
-        public int Temperature => BaseTemperature;
+        public int Temperature => BaseTemperature + Brand;
     }
 
     private Dictionary<ulong, PlayerState> _playerState = new();
@@ -29,6 +30,18 @@ abstract class TemperatureAOE(BossModule module) : Components.GenericAOEs(module
             case SID.RunningCold2:
                 _playerState.GetOrAdd(actor.InstanceID).BaseTemperature = -2;
                 break;
+            case SID.HotBrand1:
+                _playerState.GetOrAdd(actor.InstanceID).Brand = +1;
+                break;
+            case SID.HotBrand2:
+                _playerState.GetOrAdd(actor.InstanceID).Brand = +2;
+                break;
+            case SID.ColdBrand1:
+                _playerState.GetOrAdd(actor.InstanceID).Brand = -1;
+                break;
+            case SID.ColdBrand2:
+                _playerState.GetOrAdd(actor.InstanceID).Brand = -2;
+                break;
         }
     }
 
@@ -41,6 +54,12 @@ abstract class TemperatureAOE(BossModule module) : Components.GenericAOEs(module
             case SID.RunningCold1:
             case SID.RunningCold2:
                 _playerState.GetOrAdd(actor.InstanceID).BaseTemperature = 0;
+                break;
+            case SID.HotBrand1:
+            case SID.HotBrand2:
+            case SID.ColdBrand1:
+            case SID.ColdBrand2:
+                _playerState.GetOrAdd(actor.InstanceID).Brand = 0;
                 break;
         }
     }

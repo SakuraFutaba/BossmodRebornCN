@@ -102,6 +102,11 @@ public enum SID : uint
     Transcendent = 418, // none->player, extra=0x0
     TwiceComeRuin = 2485, // Boss/AvowedAvatar->player, extra=0x1
     Weakness = 43, // none->player, extra=0x0
+
+    HotBrand1 = 2277, // none->player, extra=0x0
+    HotBrand2 = 2291, // none->player, extra=0x0
+    ColdBrand1 = 2292, // none->player, extra=0x0
+    ColdBrand2 = 2296, // none->player, extra=0x0
 }
 
 public enum IconID : uint

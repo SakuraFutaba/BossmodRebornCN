@@ -15,7 +15,6 @@ public enum AID : uint
     Teleport = 23194, // Boss/SeekerAvatar->location, no cast, single-target, teleport
 
     VerdantTempest = 23222, // Boss->self, 5.0s cast, range 50 circle
-    //VerdantTempestAOE = 23347, // Helper->self, no cast, ???, raidwide (2 instances hitting half of raid each)
 
     VerdantPathKatana = 23191, // Boss->self, 3.0s cast, single-target, visual (switch to katana, cross aoe)
     ActOfMercy = 23218, // Boss->self, 3.0s cast, range 50 width 8 cross
@@ -38,17 +37,12 @@ public enum AID : uint
     VerdantPathSword = 23192, // Boss->self, 3.0s cast, single-target, visual (switch to sword, side aoes)
     BalefulSwathe = 23219, // Boss->self, no cast, single-target, visual (side aoes)
     BalefulSwatheAOE = 23220, // Helper->self, no cast, range 50 ?-degree cone (doesn't really look like cone...)
-    //BalefulOnslaught = 23690, // Boss->self, 4.0s cast, single-target, visual (tankbuster, shareable or skipping closest target)
-    //BalefulOnslaughtAOE1 = 23253, // Boss->self, no cast, range 10 ?-degree cone tankbuster (shareable/invulnable)
-    //BalefulOnslaughtAOE2 = 23254, // Boss->self, no cast, range 10 ?-degree cone tankbuster (solo, skipping closest target)
     PhantomEdge = 23200, // Boss->self, 4.0s cast, single-target, visual (applies status changing some effects)
     ScorchingShackle = 23214, // Helper->self, no cast, ??? (happens if chains aren't broken in time)
     BalefulBlade1 = 23336, // Boss->self, 8.0s cast, range 30 circle, visual (knockback, 'blockable' variant)
     BalefulBlade2 = 23337, // Boss->self, 8.0s cast, range 30 circle, visual (knockback, 'unblockable' variant)
     BalefulBladeAOE1 = 23201, // Helper->self, no cast, ???, LOSable knockback 30
     BalefulBladeAOE2 = 23202, // Helper->self, no cast, ???, knockback 30
-    //BalefulComet = 23255, // SeekerAvatar->self, no cast, range 12 circle aoe (clone jumps before firestorm)
-    //BalefulFirestorm = 23256, // SeekerAvatar->self, 1.0s cast, range 50 width 20 rect aoe
 
     VerdantPathFist = 23193, // Boss->self, 3.0s cast, single-target, visual (switch to fists, line stack)
     IronImpact = 23259, // Boss->self, no cast, range 50 width 8 rect line stack
