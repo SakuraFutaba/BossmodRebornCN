@@ -9,4 +9,4 @@ class OptimalPlayCone(BossModule module) : Components.SelfTargetedAOEs(module, A
 class PawnOff(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.PawnOffReal), new AOEShapeCircle(20));
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 760, NameID = 9863)]
-public class DRN6Queen(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsSquare(new(-272, -415), 25)); // note: arena swaps between circle and square
+public class DRN6Queen(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsSquare(new(-272, -415), 25)); // note: arena swaps between circle and square ArenaBoundsCircle(new(-272, -415), 25));

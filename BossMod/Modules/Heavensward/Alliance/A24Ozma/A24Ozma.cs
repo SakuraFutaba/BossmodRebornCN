@@ -1,8 +1,12 @@
 ﻿namespace BossMod.Heavensward.Alliance.A24Ozma;
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 168, NameID = 4896)]
-public class A24Ozma(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsUnion([new ArenaBoundsDonut(new(280, -410), 20, 30),
-new ArenaBoundsRect(new(260, -420), 5, 15, 240.Degrees()), new ArenaBoundsRect(new(280, -385), 5, 15, 180.Degrees()), new ArenaBoundsRect(new(300, -420), 5, 15, 110.Degrees())]))
+
+public class A24Ozma(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsUnion([new ArenaBoundsDonut(new(280, -410), 18, 25),
+        new ArenaBoundsRect(new(280, -386), 5, 12), //center
+        new ArenaBoundsRect(new(260, -422), 5, 12, -120.Degrees()),
+        new ArenaBoundsRect(new(300, -422), 5, 12, 120.Degrees())]))
+
 {
     protected override void DrawEnemies(int pcSlot, Actor pc)
     {
