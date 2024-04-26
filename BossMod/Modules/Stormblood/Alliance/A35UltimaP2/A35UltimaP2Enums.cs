@@ -30,6 +30,8 @@ public enum AID : uint
     Embrace3 = 14522, // Helper->self, no cast, range 7 circle
 
     FlareIV = 14493, // Helper->players, 5.5s cast, range 80 circle
+    UltimateFlare = 14525, // Dominion2->location, no cast, range 80 circle
+
 
     GrandCross1 = 14510, // 2639->self, 4.0s cast, range 60 width 15 cross
     GrandCross2 = 14536, // Boss->self, 3.0s cast, single-target

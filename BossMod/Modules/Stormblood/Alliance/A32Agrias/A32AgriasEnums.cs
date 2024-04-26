@@ -60,6 +60,7 @@ public enum SID : uint
     VulnerabilityDown = 350, // none->EmblazonedShield/SwordKnight, extra=0x0
     VulnerabilityUp = 202, // Boss/SwordKnight->player, extra=0x1/0x6/0x5/0x2/0x3/0x7
     Weakness = 43, // none->player, extra=0x0
+    FleetFooted = 2932, // none->player, extra=0x32
 }
 
 public enum IconID : uint
