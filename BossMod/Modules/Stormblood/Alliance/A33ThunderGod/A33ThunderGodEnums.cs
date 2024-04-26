@@ -61,9 +61,11 @@ public enum AID : uint
 
     TGHolySword1 = 14153, // Boss->self, 6.0s cast, single-target
     TGHolySword2 = 14154, // Boss->self, 6.0s cast, single-target
-    TGHolySword3 = 14157, // Boss->self, 8.0s cast, single-target
-    TGHolySword4 = 14159, // Boss->self, 6.0s cast, single-target
-    TGHolySword5 = 14160, // Boss->self, 6.0s cast, single-target
+    TGHolySword3 = 14156, // Boss->self, 8.0s cast, single-target
+    TGHolySword4 = 14157, // Boss->self, 8.0s cast, single-target
+    TGHolySword5 = 14159, // Boss->self, 6.0s cast, single-target
+    TGHolySword6 = 14160, // Boss->self, 6.0s cast, single-target
+
 
     Unknown1 = 14059, // Helper->self, no cast, single-target
     Unknown2 = 14372, // Helper->self, no cast, single-target
