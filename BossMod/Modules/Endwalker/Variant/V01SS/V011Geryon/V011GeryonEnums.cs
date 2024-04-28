@@ -28,10 +28,17 @@ public enum AID : uint
     Unknown1 = 29894, // Boss->location, no cast, single-target
     Unknown2 = 31260, // PowderKegRed->self, no cast, single-target
     Unknown3 = 29907, // PowderKegBlue->self, no cast, single-target
+
+    Intake = 29913, // Helper->self, no cast, range 40 width 10 rect
+
+    RunawayRunoff = 29911, // Helper->self, 9.0s cast, range 60 circle
+    Gigantomill = 29898, // Boss->self, 8.0s cast, range 72 width 10 cross
+
 }
 
 public enum IconID : uint
 {
     Icon_218 = 218, // player
+    Icon_156 = 156, // Boss
     Icon_157 = 157, // Boss
 }

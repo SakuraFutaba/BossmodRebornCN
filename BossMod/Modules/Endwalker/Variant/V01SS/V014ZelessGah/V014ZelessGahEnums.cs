@@ -37,6 +37,14 @@ public enum AID : uint
     Unknown1 = 29845, // Helper->InfernBrand1/InfernBrand2, no cast, single-target
     Unknown2 = 29847, // Helper->self, no cast, single-target
     Unknown3 = 29886, // Boss->location, no cast, single-target
+
+    //route 7
+    InfernWell1 = 29863, // Boss->self, 4.0s cast, single-target
+    UnknownAbility1 = 29864, // Helper->player, no cast, single-target
+    InfernWell2 = 29866, // Helper->self, 1.5s cast, range 8 circle
+    UnknownAbility2 = 29890, // Helper->self, no cast, range 60 width 100 rect
+    TrespassersPyre = 29848, // Helper->player, 1.0s cast, single-target
+
 }
 
 public enum SID : uint
@@ -44,7 +52,7 @@ public enum SID : uint
     UnknownStatus = 2397, // none->InfernBrand1/InfernBrand2, extra=0x1CA/0x1C1/0x1F3
     ForbiddenPassage = 3278, // none->player, extra=0x0
     VulnerabilityUp = 1789, // BallOfFire->player, extra=0x1
-
+    Stun = 2656, // none->player, extra=0x0
 }
 
 public enum IconID : uint
