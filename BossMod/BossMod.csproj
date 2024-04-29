@@ -20,6 +20,15 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Modules\Endwalker\Dungeon\D09Alzadaal\D091Ambujam.cs" />
+    <Compile Remove="Modules\Endwalker\Dungeon\D09Alzadaal\D092ArmoredChariot.cs" />
+    <Compile Remove="Modules\Endwalker\Dungeon\D09Alzadaal\D093Kapikulu.cs" />
+    <Compile Remove="Modules\Endwalker\Dungeon\D10FellCourt\D101EvilDreamers.cs" />
+    <Compile Remove="Modules\Endwalker\Dungeon\D10FellCourt\D102Beatrice.cs" />
+    <Compile Remove="Modules\Endwalker\Dungeon\D10FellCourt\D103Scarmiglione.cs" />
+  </ItemGroup>
+
 <!--  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>$(AppData)\XIVLauncher\devPlugins\BossMod\</OutputPath>
   </PropertyGroup>-->
@@ -28,6 +37,15 @@
     <Content Include="BossMod.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Modules\Endwalker\Dungeon\D09Alzadaal\D091Ambujam.cs" />
+    <None Include="Modules\Endwalker\Dungeon\D09Alzadaal\D092ArmoredChariot.cs" />
+    <None Include="Modules\Endwalker\Dungeon\D09Alzadaal\D093Kapikulu.cs" />
+    <None Include="Modules\Endwalker\Dungeon\D10FellCourt\D101EvilDreamers.cs" />
+    <None Include="Modules\Endwalker\Dungeon\D10FellCourt\D102Beatrice.cs" />
+    <None Include="Modules\Endwalker\Dungeon\D10FellCourt\D103Scarmiglione.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -57,6 +57,14 @@ public enum SID : uint
     Electrocution = 2086, // Minduruva->player, extra=0x0
 }
 
+public enum IconID : uint
+{
+    Icon_198 = 198, // player
+    Icon_139 = 139, // player
+    Icon_62 = 62, // player
+}
+
+
 class Dhrupad(BossModule module) : BossComponent(module)
 {
     private int NumCasts;

@@ -20,7 +20,7 @@ public enum AID : uint
     ManusyaBioIII1 = 25236, // Boss->self, 4,0s cast, single-target
     ManusyaBioIII2 = 25240, // Helper->self, 4,0s cast, range 40+R 180-degree cone
     TransmuteFireIII = 25242, // Boss->self, 2,7s cast, single-target
-    Unknown = 25243, // Helper->Boss, 3,6s cast, single-target
+    Unknown = 25243, // Helper->Boss, 3,6s cast, single-target// Indicator, splatoon uses this for some reason to show aoes way sooner
     ManusyaFire2 = 25699, // Boss->player, 2,0s cast, single-target
     Dhrupad = 25244, // Boss->self, 4,0s cast, single-target, after this each of the non-tank players get hit once by a single-target spell (ManusyaBlizzard, ManusyaFire1, ManusyaThunder)
     ManusyaFire1 = 25245, // Boss->player, no cast, single-target
@@ -28,6 +28,7 @@ public enum AID : uint
     ManusyaThunder = 25247, // Boss->player, no cast, single-target
     TransmuteBlizzardIII = 25371, // Boss->self, 2,7s cast, single-target
     TransmuteThunderIII = 25372, // Boss->self, 2,7s cast, single-target
+    TransmuteBioIII = 25373, // Boss->self, 2.7s cast, single-target
 }
 
 public enum SID : uint
@@ -41,6 +42,12 @@ public enum SID : uint
     ToxicAlchemy = 2754, // Boss->Boss, extra=0x0
     FireAlchemy = 2751, // Boss->Boss, extra=0x0
 }
+
+public enum IconID : uint
+{
+    Icon_198 = 198, // player
+}
+
 
 class ManusyaBio(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.ManusyaBio), "Tankbuster + cleansable poison");
 

@@ -30,6 +30,12 @@ public enum SID : uint
     WhoIsShe2 = 2654, // none->BerserkerSphere, extra=0x1A8
 }
 
+public enum IconID : uint
+{
+    Icon_198 = 198, // player
+}
+
+
 class IsitvaSiddhi(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.IsitvaSiddhi));
 
 class SphereShatter(BossModule module) : Components.GenericAOEs(module)
