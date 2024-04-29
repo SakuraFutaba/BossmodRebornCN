@@ -17,23 +17,33 @@ public enum AID : uint
     BlightedBladework1 = 30259, // Boss->location, 10.0s cast, single-target
     BlightedBladework2 = 30260, // Helper->self, 11.0s cast, range 25 circle
     BlightedSweep = 30261, // Boss->self, 7.0s cast, range 40 180-degree cone
+
     CorruptorsPitch1 = 30245, // Boss->self, no cast, single-target
     CorruptorsPitch2 = 30247, // Helper->self, no cast, range 60 circle
     CorruptorsPitch3 = 30248, // Helper->self, no cast, range 60 circle
     CorruptorsPitch4 = 30249, // Helper->self, no cast, range 60 circle
+
     CreepingDecay = 30240, // Boss->self, 4.0s cast, single-target
-    CursedEcho = 30257, // Boss->self, 4.0s cast, range 40 circle
+    CursedEcho = 30257, // Boss->self, 4.0s cast, range 40 circle //raidwide
+
     Nox = 30241, // Helper->self, 5.0s cast, range 10 circle
+
     RottenRampage1 = 30231, // Boss->self, 8.0s cast, single-target
     RottenRampage2 = 30232, // Helper->location, 10.0s cast, range 6 circle
     RottenRampage3 = 30233, // Helper->players, 10.0s cast, range 6 circle
+
     UnknownAbility1 = 30237, // Boss->location, no cast, single-target
     UnknownAbility2 = 30244, // Boss->self, no cast, single-target
+
     UnknownWeaponskill = 30234, // Boss->self, no cast, single-target
-    VacuumWave = 30236, // Helper->self, 5.4s cast, range 40 circle
-    VoidVortex1 = 30243, // Helper->players, 5.0s cast, range 6 circle
+
+    VacuumWave = 30236, // Helper->self, 5.4s cast, range 40 circle //knockback
+
+    VoidVortex1 = 30243, // Helper->players, 5.0s cast, range 6 circle //spread
     VoidVortex2 = 30253, // Boss->self, no cast, single-target
-    VoidVortex3 = 30254, // Helper->players, 5.0s cast, range 6 circle
+    VoidVortex3 = 30254, // Helper->players, 5.0s cast, range 6 circle //stack
+
+    // missing firedamp, tankbuster
 }
 
 public enum SID : uint
@@ -55,12 +65,35 @@ public enum TetherID : uint
 {
     Tether_206 = 206, // Boss->3AE4
 }
+class VoidVortex1(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.VoidVortex1), 6);
+class VoidVortex3(BossModule module) : Components.StackWithCastTargets(module, ActionID.MakeSpell(AID.VoidVortex3), 6, 8);
+
+class VacuumWave(BossModule module) : Components.KnockbackFromCastTarget(module, ActionID.MakeSpell(AID.VacuumWave), 30, stopAtWall: true);
+
+class BlightedBedevilment(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.BlightedBedevilment), new AOEShapeCircle(9));
+class BlightedBladework2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.BlightedBladework2), new AOEShapeCircle(9));
+class Nox(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Nox), new AOEShapeCircle(10));
+
+class RottenRampage2(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.RottenRampage2), 6);
+
+class BlightedSweep(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.BlightedSweep), new AOEShapeCone(40, 90.Degrees()));
+
+class CursedEcho(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.CursedEcho));
 
 class D103ScarmiglioneStates : StateMachineBuilder
 {
     public D103ScarmiglioneStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<VoidVortex1>()
+            .ActivateOnEnter<VoidVortex3>()
+            .ActivateOnEnter<VacuumWave>()
+            .ActivateOnEnter<BlightedBedevilment>()
+            .ActivateOnEnter<BlightedBladework2>()
+            .ActivateOnEnter<Nox>()
+            .ActivateOnEnter<RottenRampage2>()
+            .ActivateOnEnter<BlightedSweep>()
+            .ActivateOnEnter<CursedEcho>();
     }
 }
 

@@ -17,7 +17,7 @@ public enum AID : uint
     UniteMare3 = 29628, // EvilDreamer1->self, 10.0s cast, range 12 circle
     DarkVision = 29627, // EvilDreamer4->self, 15.0s cast, range 41 width 5 rect
     UnknownAbility2 = 29629, // EvilDreamer4->location, no cast, single-target
-
+    // Void Gravity missing, stack marker mechanic
 }
 
 public enum SID : uint
@@ -31,12 +31,20 @@ public enum TetherID : uint
     Tether_14 = 14, // SmallerBoss->SmallerBoss
 }
 
+class UniteMare1(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.UniteMare1), new AOEShapeCircle(6));
+class UniteMare2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.UniteMare2), new AOEShapeCircle(6));
+class UniteMare3(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.UniteMare3), new AOEShapeCircle(12));
+class DarkVision(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.DarkVision), new AOEShapeRect(41, 2.5f));
 
 class D101EvilDreamersStates : StateMachineBuilder
 {
     public D101EvilDreamersStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<UniteMare1>()
+            .ActivateOnEnter<UniteMare2>()
+            .ActivateOnEnter<UniteMare3>()
+            .ActivateOnEnter<DarkVision>();
     }
 }
 
