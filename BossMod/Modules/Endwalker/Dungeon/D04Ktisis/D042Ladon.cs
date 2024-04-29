@@ -1,4 +1,6 @@
-﻿namespace BossMod.Endwalker.Dungeon.D04Ktisis.D042Ladon;
+﻿using BossMod.Endwalker.Dungeon.D04Ktisis.D041Lyssa;
+
+namespace BossMod.Endwalker.Dungeon.D04Ktisis.D042Ladon;
 
 public enum OID : uint
 {
@@ -10,18 +12,18 @@ public enum OID : uint
 public enum AID : uint
 {
     AutoAttack = 872, // Boss->player, no cast, single-target
-    Inhale1 = 25732, // Boss->self, 4.0s cast, single-target
-    Inhale2 = 25915, // Boss->self, no cast, single-target
-    Intimidation = 25741, // Boss->self, 6.0s cast, range 40 circle
-    PyricBlast = 25742, // Boss->players, 4.0s cast, range 6 circle
-    PyricBreath1 = 25734, // Boss->self, 7.0s cast, range 40 ?-degree cone
-    PyricBreath2 = 25735, // Boss->self, 7.0s cast, range 40 ?-degree cone
-    PyricBreath3 = 25736, // Boss->self, 7.0s cast, range 40 ?-degree cone
+    Inhale1 = 25732, // Boss->self, 4.0s cast, single-target //Indicator
+    Inhale2 = 25915, // Boss->self, no cast, single-target //Indicator
+    IntimidationRaidwide = 25741, // Boss->self, 6.0s cast, range 40 circle //Raidwide
+    PyricBlastStack = 25742, // Boss->players, 4.0s cast, range 6 circle //Stack
+    PyricBreathFront = 25734, // Boss->self, 7.0s cast, range 40 120-degree cone
+    PyricBreathLeft = 25735, // Boss->self, 7.0s cast, range 40 120-degree cone
+    PyricBreathRight = 25736, // Boss->self, 7.0s cast, range 40 120-degree cone
     PyricBreath4 = 25737, // Boss->self, no cast, range 40 ?-degree cone
     PyricBreath5 = 25738, // Boss->self, no cast, range 40 ?-degree cone
-    PyricSphere1 = 25744, // PyricSphere->self, 5.0s cast, single-target
-    PyricSphere2 = 25745, // Helper->self, 10.0s cast, range 50 width 4 cross
-    Scratch = 25743, // Boss->player, 5.0s cast, single-target
+    PyricSphereVisual = 25744, // PyricSphere->self, 5.0s cast, single-target
+    PyricSphereAOE = 25745, // Helper->self, 10.0s cast, range 50 width 4 cross //Cross
+    ScratchTankbuster = 25743, // Boss->player, 5.0s cast, single-target //Tankbuster
     UnknownAbility = 25733, // Boss->location, no cast, single-target
     UnknownSpell = 25740, // Boss->self, no cast, ???
 }
@@ -40,14 +42,31 @@ public enum IconID : uint
     Icon_218 = 218, // player
     Icon_62 = 62, // player
 }
+class PyricSphereAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.PyricSphereAOE), new AOEShapeCross(50, 2));
+
+class PyricBreathFront(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.PyricBreathFront), new AOEShapeCone(40, 60.Degrees()));
+class PyricBreathLeft(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.PyricBreathLeft), new AOEShapeCone(40, 60.Degrees()));
+class PyricBreathRight(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.PyricBreathRight), new AOEShapeCone(40, 60.Degrees()));
+
+
+class PyricBlastStack(BossModule module) : Components.StackWithCastTargets(module, ActionID.MakeSpell(AID.PyricBlastStack), 6, 8);
+class ScratchTankbuster(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.ScratchTankbuster));
+class IntimidationRaidwide(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.IntimidationRaidwide));
 
 class D042LadonStates : StateMachineBuilder
 {
     public D042LadonStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<PyricSphereAOE>()
+            .ActivateOnEnter<PyricBreathFront>()
+            .ActivateOnEnter<PyricBreathLeft>()
+            .ActivateOnEnter<PyricBreathRight>()
+            .ActivateOnEnter<PyricBlastStack>()
+            .ActivateOnEnter<ScratchTankbuster>()
+            .ActivateOnEnter<IntimidationRaidwide>();
     }
 }
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 787, NameID = 10398)] // 
-public class D042Ladon(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(0, 48), 20));
+public class D042Ladon(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsSquare(new(0, 48), 20));
