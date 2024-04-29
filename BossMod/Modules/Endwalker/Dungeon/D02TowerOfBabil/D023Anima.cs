@@ -1,4 +1,6 @@
-﻿namespace BossMod.Endwalker.Dungeon.D02TowerOfBabil.D023Anima;
+﻿using BossMod.Endwalker.Dungeon.D03Vanaspati.D031Snatcher;
+
+namespace BossMod.Endwalker.Dungeon.D02TowerOfBabil.D023Anima;
 
 public enum OID : uint
 {
@@ -15,7 +17,7 @@ public enum OID : uint
 public enum AID : uint
 {
 	AutoAttack = 25341, // Boss->player, no cast, single-target
-	AetherialPull = 25345, // MegaGraviton->player, 8.0s cast, single-target
+	AetherialPull = 25345, // MegaGraviton->player, 8.0s cast, single-target Knockback towardsorigin 30
 	BoundlessPain1 = 25347, // Boss->self, 8.0s cast, single-target
 	BoundlessPain2 = 25348, // Helper->location, no cast, range 6 circle
 	BoundlessPain3 = 25349, // Helper->location, no cast, range 6 circle
@@ -26,17 +28,17 @@ public enum AID : uint
 	MegaGraviton = 25344, // Boss->self, 5.0s cast, range 60 circle
 	ObliviatingClaw1 = 25354, // LowerAnima->self, 3.0s cast, single-target
 	ObliviatingClaw2 = 25355, // LowerAnima->self, 3.0s cast, single-target
-	ObliviatingClaw3 = 25356, // IronNail->self, 6.0s cast, range 3 circle
+	ObliviatingClawSpawnAOE = 25356, // IronNail->self, 6.0s cast, range 3 circle
 	Oblivion1 = 23697, // Helper->location, no cast, range 60 circle
 	Oblivion2 = 23872, // Helper->location, no cast, range 60 circle
 	Oblivion3 = 25359, // LowerAnima->self, 6.0s cast, single-target
-	PaterPatriae1 = 24168, // Helper->self, 3.5s cast, range 60 width 8 rect
+    PaterPatriaeAOE = 24168, // Helper->self, 3.5s cast, range 60 width 8 rect
 	PaterPatriae2 = 25350, // Boss->self, 3.5s cast, single-target
 	PhantomPain1 = 21182, // Boss->self, 7.0s cast, single-target
 	PhantomPain2 = 25343, // Helper->self, 7.0s cast, range 20 width 20 rect
-	Unknown1 = 23929, // Helper->player, no cast, single-target
-	Unknown2 = 26229, // Helper->self, no cast, range 60 circle
-	Unknown3 = 27228, // LowerAnima->self, no cast, single-target
+	Unknown1 = 23929, // Helper->player, no cast, single-target Knockback 60
+	Unknown2 = 26229, // Helper->self, no cast, range 60 circle Knockback towards origin 60
+    Unknown3 = 27228, // LowerAnima->self, no cast, single-target
 }
 
 public enum SID : uint
@@ -57,13 +59,30 @@ public enum TetherID : uint
 	Tether_17 = 17, // MegaGraviton->player
 	Tether_22 = 22, // Helper->Boss
 }
+class CoffinScratch(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.CoffinScratch), 3);
 
+class PhantomPain2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.PhantomPain2), new AOEShapeRect(20, 10));
+class PaterPatriaeAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.PaterPatriaeAOE), new AOEShapeRect(60, 4));
+class CharnelClaw(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.CharnelClaw), new AOEShapeRect(40, 2.5f));
+
+class ObliviatingClawSpawnAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ObliviatingClawSpawnAOE), new AOEShapeCircle(3));
+class AetherialPull(BossModule module) : Components.KnockbackFromCastTarget(module, ActionID.MakeSpell(AID.AetherialPull), 30, kind: Kind.TowardsOrigin);
+
+class MegaGraviton(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.MegaGraviton));
+class Imperatum(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.Imperatum));
 
 class D023AnimaStates : StateMachineBuilder
 {
     public D023AnimaStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            //.ActivateOnEnter<CoffinScratch>() //chasing aoe
+            //.ActivateOnEnter<PhantomPain2>() //bad squares, for some reason offset by 5 so displaying incorrectly
+            //.ActivateOnEnter<AetherialPull>()
+            .ActivateOnEnter<PaterPatriaeAOE>()
+            .ActivateOnEnter<CharnelClaw>()
+            .ActivateOnEnter<ObliviatingClawSpawnAOE>()
+            .ActivateOnEnter<MegaGraviton>();
     }
 }
 

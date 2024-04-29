@@ -10,13 +10,13 @@ public enum OID : uint
 public enum AID : uint
 {
     AutoAttack = 870, // Boss->player, no cast, single-target
-    AetherSiphon1 = 25145, // Boss->self, 3.0s cast, single-target
-    AetherSiphon2 = 25146, // Boss->self, 3.0s cast, single-target
-    AetherSpray1 = 25147, // Boss->location, 7.0s cast, range 30 circle
-    AetherSpray2 = 25148, // Boss->location, 7.0s cast, range 30 circle
+    AetherSiphonFire = 25145, // Boss->self, 3.0s cast, single-target
+    AetherSiphonWater = 25146, // Boss->self, 3.0s cast, single-target
+    AetherSprayFire = 25147, // Boss->location, 7.0s cast, range 30 circle Raidwide
+    AetherSprayWater = 25148, // Boss->location, 7.0s cast, range 30 circle Knockback
     MeaninglessDestruction = 25153, // Boss->self, 5.0s cast, range 100 circle
-    PoisonHeart1 = 25151, // Boss->self, 5.0s cast, single-target
-    PoisonHeart2 = 27851, // Helper->players, 5.0s cast, range 6 circle
+    PoisonHeartVisual = 25151, // Boss->self, 5.0s cast, single-target
+    PoisonHeartStack = 27851, // Helper->players, 5.0s cast, range 6 circle
     TotalWreck = 25154, // Boss->player, 5.0s cast, single-target
     UnholyWater = 27852, // Boss->self, 3.0s cast, single-target
     Withdraw = 27847, // 3731->player, 1.0s cast, single-target
@@ -38,13 +38,22 @@ public enum IconID : uint
     Icon_161 = 161, // player
 }
 
+class MeaninglessDestruction(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.MeaninglessDestruction));
+class PoisonHeartStack(BossModule module) : Components.StackWithCastTargets(module, ActionID.MakeSpell(AID.PoisonHeartStack), 6, 8);
+class TotalWreck(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.TotalWreck));
+class AetherSprayWater(BossModule module) : Components.KnockbackFromCastTarget(module, ActionID.MakeSpell(AID.AetherSprayWater), 13, shape: new AOEShapeCircle(30));
+
 class D032WreckerStates : StateMachineBuilder
 {
     public D032WreckerStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<AetherSprayWater>()
+            .ActivateOnEnter<TotalWreck>()
+            .ActivateOnEnter<PoisonHeartStack>()
+            .ActivateOnEnter<MeaninglessDestruction>();
     }
 }
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 789, NameID = 10718)] // 11052
-public class D032Wrecker(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-287, -354), 20));
+public class D032Wrecker(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-295, -355), 20));

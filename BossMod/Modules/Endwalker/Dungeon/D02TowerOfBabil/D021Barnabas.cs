@@ -1,4 +1,6 @@
-﻿namespace BossMod.Endwalker.Dungeon.D02TowerOfBabil.D021Barnabas;
+﻿using BossMod.Endwalker.Dungeon.D03Vanaspati.D032Wrecker;
+
+namespace BossMod.Endwalker.Dungeon.D02TowerOfBabil.D021Barnabas;
 
 public enum OID : uint
 {
@@ -48,12 +50,33 @@ public enum TetherID : uint
 {
 	Tether_28 = 28, // player->Boss
 }
+class ElectromagneticRelease1(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ElectromagneticRelease1), new AOEShapeRect(40, 3));
+class ElectromagneticRelease2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ElectromagneticRelease2), new AOEShapeCircle(8));
+
+class GroundAndPound1(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.GroundAndPound1), new AOEShapeRect(40, 6));
+class GroundAndPound2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.GroundAndPound2), new AOEShapeRect(40, 6));
+
+class DynamicPound(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.DynamicPound), new AOEShapeRect(40, 6));
+class DynamicScrapline(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.DynamicScrapline), new AOEShapeCircle(8));
+class RollingScrapline(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.RollingScrapline), new AOEShapeCircle(6));
+class Shock(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Shock), new AOEShapeCircle(8));
+class ShockingForce(BossModule module) : Components.StackWithCastTargets(module, ActionID.MakeSpell(AID.ShockingForce), 6, 8);
+
 
 class D021BarnabasStates : StateMachineBuilder
 {
     public D021BarnabasStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<ElectromagneticRelease1>()
+            .ActivateOnEnter<ElectromagneticRelease2>()
+            .ActivateOnEnter<GroundAndPound1>()
+            .ActivateOnEnter<GroundAndPound2>()
+            .ActivateOnEnter<DynamicPound>()
+            .ActivateOnEnter<DynamicScrapline>()
+            .ActivateOnEnter<RollingScrapline>()
+            .ActivateOnEnter<Shock>()
+            .ActivateOnEnter<ShockingForce>();
     }
 }
 

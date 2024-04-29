@@ -1,4 +1,6 @@
-﻿namespace BossMod.Endwalker.Dungeon.D03Vanaspati.D031Snatcher;
+﻿using BossMod.Endwalker.Variant.V01SS.V015ThorneKnight;
+
+namespace BossMod.Endwalker.Dungeon.D03Vanaspati.D031Snatcher;
 
 public enum OID : uint
 {
@@ -30,14 +32,30 @@ public enum IconID : uint
     Icon_304 = 304, // player
 }
 
+class WhatIsLeft(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.WhatIsLeft), new AOEShapeCone(40, 90.Degrees()));
+class WhatIsRight(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.WhatIsRight), new AOEShapeCone(40, 90.Degrees()));
+class LostHope(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.LostHope), new AOEShapeCircle(20));
+class Vitriol(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Vitriol), new AOEShapeCircle(13));
+class NoteOfDespair(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.NoteOfDespair));
+class Wallow(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.Wallow), 6);
+class LastGasp(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.LastGasp));
+
 
 class D031SnatcherStates : StateMachineBuilder
 {
     public D031SnatcherStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<WhatIsLeft>()
+            .ActivateOnEnter<WhatIsRight>()
+            .ActivateOnEnter<LostHope>()
+            .ActivateOnEnter<Vitriol>()
+            .ActivateOnEnter<Explosion>()
+            .ActivateOnEnter<NoteOfDespair>()
+            .ActivateOnEnter<Wallow>()
+            .ActivateOnEnter<LastGasp>();
     }
 }
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 789, NameID = 10717)] // 11049
-public class D031Snatcher(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-375, 80), 20));
+public class D031Snatcher(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-375, 85), 20));

@@ -30,13 +30,24 @@ public enum SID : uint
 	Toad = 2671, // none->player, extra=0x1B1
 }
 
+class ThermalSuppression(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.ThermalSuppression));
+class MagitekMissile(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.MagitekMissile), 6);
+class Explosion(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Explosion), new AOEShapeCross(40, 4));
+class SurfaceMissile(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.SurfaceMissile), 6);
+class MightyBlow(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.MightyBlow), new AOEShapeRect(40, 4));
+
 class D022LugaeStates : StateMachineBuilder
 {
     public D022LugaeStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<ThermalSuppression>()
+            //.ActivateOnEnter<MightyBlow>()
+            .ActivateOnEnter<MagitekMissile>()
+            .ActivateOnEnter<Explosion>()
+            .ActivateOnEnter<SurfaceMissile>();
     }
 }
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 785, NameID = 10281)] // 10282
-public class D022Lugae(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsSquare(new(221, 306), 20));
+public class D022Lugae(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsSquare(new(220, 306), 20));
