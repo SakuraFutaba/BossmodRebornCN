@@ -11,13 +11,13 @@ public enum OID : uint
 public enum AID : uint
 {
     AutoAttack = 25977, // Boss->player, no cast, single-target
-    Decimation = 25936, // Boss->self, 5.0s cast, range 40 circle
+    Decimation = 25936, // Boss->self, 5.0s cast, range 40 circle //Raidwide
     DisengageHatch = 28356, // Boss->self, no cast, single-target
     EclipsingExhaust = 25931, // Boss->self, 5.0s cast, range 40 circle
-    ElectromagneticRepellant = 28360, // Boss->self, 4.0s cast, range 9 circle
-    Elimination = 25935, // Boss->self/player, 5.0s cast, range 46 width 10 rect
-    InfantryDeterrent1 = 28358, // Boss->self, no cast, single-target
-    InfantryDeterrent2 = 28359, // Helper->player, 5.0s cast, range 6 circle
+    ElectromagneticRepellant = 28360, // Boss->self, 4.0s cast, range 9 circle  //Danger AOE in boss hitbox
+    Elimination = 25935, // Boss->self/player, 5.0s cast, range 46 width 10 rect //Tankbuster
+    InfantryDeterrent = 28358, // Boss->self, no cast, single-target
+    InfantryDeterrentAOE = 28359, // Helper->player, 5.0s cast, range 6 circle
     NoFuture1 = 25925, // Boss->self, 4.0s cast, single-target
     NoFuture2 = 25927, // Helper->self, 4.0s cast, range 6 circle
     NoFuture3 = 25928, // Helper->player, 5.0s cast, range 6 circle
@@ -43,12 +43,31 @@ public enum IconID : uint
     Icon_139 = 139, // player
     Icon_230 = 230, // player
 }
+class InfantryDeterrentAOE(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.InfantryDeterrentAOE), 6);
+class NoFuture3(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.NoFuture3), 6);
+
+class NoFuture2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.NoFuture2), new AOEShapeCircle(6));
+class Peacefire2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Peacefire2), new AOEShapeCircle(10));
+
+class SmallBoreLaser(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.SmallBoreLaser), new AOEShapeRect(20, 2));
+
+class Elimination(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.Elimination));
+class Decimation(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.Decimation));
+class EclipsingExhaust(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.EclipsingExhaust));
 
 class D062PeacekeeperStates : StateMachineBuilder
 {
     public D062PeacekeeperStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<InfantryDeterrentAOE>()
+            .ActivateOnEnter<NoFuture3>()
+            .ActivateOnEnter<NoFuture2>()
+            .ActivateOnEnter<Peacefire2>()
+            .ActivateOnEnter<SmallBoreLaser>()
+            .ActivateOnEnter<Elimination>()
+            .ActivateOnEnter<Decimation>()
+            .ActivateOnEnter<EclipsingExhaust>();
     }
 }
 

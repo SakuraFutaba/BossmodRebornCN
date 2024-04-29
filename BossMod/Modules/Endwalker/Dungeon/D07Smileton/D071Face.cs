@@ -10,14 +10,18 @@ public enum OID : uint
 public enum AID : uint
 {
     AutoAttack = 26433, // Boss->player, no cast, single-target
-    FrownyFace = 26422, // RelativelySmallFace->self, 7.0s cast, range 45 width 6 rect
     LinesOfFire = 26421, // Boss->self, 3.0s cast, single-target
-    MixedFeelings = 26424, // Helper->self, 7.0s cast, range 60 width 2 rect
+
     OffMyLawn1 = 26430, // Boss->self, 5.0s cast, single-target
-    OffMyLawn2 = 27742, // Helper->self, 5.0s cast, range 31 width 30 rect
+    OffMyLawnKnockback = 27742, // Helper->self, 5.0s cast, range 31 width 30 rect //Knockback 8
+
+    MixedFeelings = 26424, // Helper->self, 7.0s cast, range 60 width 2 rect
+    FrownyFace = 26422, // RelativelySmallFace->self, 7.0s cast, range 45 width 6 rect
     SmileyFace = 26423, // RelativelySmallFace->self, 7.0s cast, range 45 width 6 rect
-    TempersFlare = 26435, // Boss->self, 5.0s cast, range 60 circle
-    TemperTemper = 26432, // Helper->player, 5.0s cast, range 5 circle
+
+    TempersFlare = 26435, // Boss->self, 5.0s cast, range 60 circle //Raidwide
+    TemperTemperSpread = 26432, // Helper->player, 5.0s cast, range 5 circle //Spread mechanic
+
     UnknownAbility1 = 26426, // RelativelySmallFace->self, no cast, single-target
     UnknownAbility2 = 26427, // RelativelySmallFace->self, no cast, single-target
     UnknownAbility3 = 26428, // RelativelySmallFace->self, no cast, single-target
@@ -45,14 +49,21 @@ public enum TetherID : uint
 {
     Tether_169 = 169, // 34D0->Boss
 }
+class OffMyLawnKnockback(BossModule module) : Components.KnockbackFromCastTarget(module, ActionID.MakeSpell(AID.OffMyLawnKnockback), 8, kind: Kind.DirForward, stopAtWall: true);
+class TemperTemperSpread(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.TemperTemperSpread), 5);
+
+class TempersFlare(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.TempersFlare));
 
 class D071FaceStates : StateMachineBuilder
 {
     public D071FaceStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<OffMyLawnKnockback>()
+            .ActivateOnEnter<TemperTemperSpread>()
+            .ActivateOnEnter<TempersFlare>();
     }
 }
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 794, NameID = 10331)] // 
-public class D071Face(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-45, -0), 20));
+public class D071Face(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsSquare(new(-45, -20), 20));

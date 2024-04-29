@@ -48,7 +48,6 @@ class D031SnatcherStates : StateMachineBuilder
             .ActivateOnEnter<WhatIsRight>()
             .ActivateOnEnter<LostHope>()
             .ActivateOnEnter<Vitriol>()
-            .ActivateOnEnter<Explosion>()
             .ActivateOnEnter<NoteOfDespair>()
             .ActivateOnEnter<Wallow>()
             .ActivateOnEnter<LastGasp>();

@@ -13,11 +13,11 @@ public enum OID : uint
 public enum AID : uint
 {
     AutoAttack = 870, // Boss->player, no cast, single-target
-    CircularSaw = 26437, // Boss->self, 5.0s cast, range 40 circle
+    CircularSaw = 26437, // Boss->self, 5.0s cast, range 40 circle //Raidwide
     LeapForward1 = 26438, // Boss->location, 7.0s cast, range 15 circle
     LeapForward2 = 26439, // PrintedWorker->location, 7.0s cast, range 15 circle
-    OmnidimensionalOnslaught1 = 26440, // Boss->self, 5.0s cast, single-target
-    OmnidimensionalOnslaught2 = 26441, // Helper->self, 5.0s cast, range 40 45-degree cone
+    OmnidimensionalOnslaughtVisual = 26440, // Boss->self, 5.0s cast, single-target
+    OmnidimensionalOnslaughtAOE = 26441, // Helper->self, 5.0s cast, range 40 45-degree cone
     PrintWorkers1 = 26443, // SmileySupporter->self, no cast, single-target
     PrintWorkers2 = 28092, // Boss->self, 3.0s cast, single-target
     UnknownAbility = 26442, // Helper->Boss, no cast, single-target
@@ -33,13 +33,25 @@ public enum TetherID : uint
     Tether_23 = 23, // SmileySupporter->Boss
 }
 
+class OmnidimensionalOnslaughtAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.OmnidimensionalOnslaughtAOE), new AOEShapeCone(40, 22.5f.Degrees()));
+
+class LeapForward1(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.LeapForward1), 15);
+class LeapForward2(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.LeapForward2), 15);
+
+//class SteelBeam(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.SteelBeam));
+class CircularSaw(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.CircularSaw));
+
 class D072FrameworkerStates : StateMachineBuilder
 {
     public D072FrameworkerStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<LeapForward1>()
+            .ActivateOnEnter<LeapForward2>()
+            .ActivateOnEnter<OmnidimensionalOnslaughtAOE>()
+            .ActivateOnEnter<CircularSaw>();
     }
 }
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 794, NameID = 10333)] // 
-public class D072Frameworker(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(65, -110), 20));
+public class D072Frameworker(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(64, -112), 20));

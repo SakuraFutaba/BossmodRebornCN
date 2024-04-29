@@ -53,7 +53,6 @@ class D033SvarbhanuStates : StateMachineBuilder
             .ActivateOnEnter<CosmicKissSpread>()
             .ActivateOnEnter<CosmicKissAOE>()
             .ActivateOnEnter<CosmicKissKnockback>()
-            .ActivateOnEnter<TotalWreck>()
             .ActivateOnEnter<FlamesOfDecay>()
             .ActivateOnEnter<GnashingOfTeeth>();
     }
