@@ -49,7 +49,7 @@ public enum TetherID : uint
 }
 
 class DimensionalRip(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.DimensionalRip), 5);
-class FaithUnmoving(BossModule module) : Components.KnockbackFromCastTarget(module, ActionID.MakeSpell(AID.FaithUnmoving), 20, shape: new AOEShapeCircle(80));
+class FaithUnmoving(BossModule module) : Components.KnockbackFromCastTarget(module, ActionID.MakeSpell(AID.FaithUnmoving), 20, shape: new AOEShapeCircle(80), stopAtWall: true);
 class Rive(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Rive), new AOEShapeRect(30, 1));
 
 class StellarImplosion(BossModule module) : Components.PersistentVoidzoneAtCastTarget(module, 5, ActionID.MakeSpell(AID.StellarImplosion), m => m.Enemies(OID.StellarImplodeArea).Where(v => v.EventState != 7), 0);
