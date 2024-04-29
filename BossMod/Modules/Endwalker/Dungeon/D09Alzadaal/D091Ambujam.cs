@@ -14,25 +14,38 @@ public enum OID : uint
 public enum AID : uint
 {
     AutoAttack = 872, // Boss->player, no cast, single-target
-    BigWave = 28512, // Boss->self, 5.0s cast, range 40 circle
+    BigWave = 28512, // Boss->self, 5.0s cast, range 40 circle //Raidwide
     CorrosiveFountain = 29556, // Helper->self, 7.0s cast, range 8 circle
-    CorrosiveVenom1 = 29157, // CyanTentacle->self, no cast, single-target
-    CorrosiveVenom2 = 29158, // Helper->self, 2.5s cast, range 21 circle
+    CorrosiveVenomVisual = 29157, // CyanTentacle->self, no cast, single-target
+    CorrosiveVenomAOE = 29158, // Helper->self, 2.5s cast, range 21 circle
     TentacleDig1 = 28501, // Boss->self, 3.0s cast, single-target
     TentacleDig2 = 28505, // Boss->self, 3.0s cast, single-target
-    ToxicFountain1 = 29466, // Boss->self, 4.0s cast, single-target
-    ToxicFountain2 = 29467, // Helper->self, 7.0s cast, range 8 circle
-    ToxinShower1 = 28507, // ScarletTentacle->self, no cast, single-target
-    ToxinShower2 = 28508, // Helper->self, 2.5s cast, range 21 circle
+    ToxicFountainVisual = 29466, // Boss->self, 4.0s cast, single-target
+    ToxicFountainAOE = 29467, // Helper->self, 7.0s cast, range 8 circle
+    ToxinShowerVisual = 28507, // ScarletTentacle->self, no cast, single-target
+    ToxinShowerAOE = 28508, // Helper->self, 2.5s cast, range 21 circle
     Unknown1 = 28502, // Boss->self, no cast, single-target
     Unknown2 = 28506, // Boss->self, no cast, single-target
 }
+
+
+class CorrosiveFountain(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.CorrosiveFountain), new AOEShapeCircle(8));
+class CorrosiveVenomAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.CorrosiveVenomAOE), new AOEShapeCircle(21));
+class ToxicFountainAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ToxicFountainAOE), new AOEShapeCircle(8));
+class ToxinShowerAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ToxinShowerAOE), new AOEShapeCircle(21));
+
+class BigWave(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.BigWave));
 
 class D091AmbujamStates : StateMachineBuilder
 {
     public D091AmbujamStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<CorrosiveFountain>()
+            .ActivateOnEnter<CorrosiveVenomAOE>()
+            .ActivateOnEnter<ToxicFountainAOE>()
+            .ActivateOnEnter<ToxinShowerAOE>()
+            .ActivateOnEnter<BigWave>();
     }
 }
 

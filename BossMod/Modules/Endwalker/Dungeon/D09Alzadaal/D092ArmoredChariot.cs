@@ -12,23 +12,31 @@ public enum OID : uint
 public enum AID : uint
 {
     AutoAttack = 29132, // Boss->player, no cast, single-target
-    ArticulatedBits = 28441, // Boss->self, 3.0s cast, range 6 circle
-    Assail1 = 28456, // Boss->self, no cast, single-target
-    Assail2 = 28457, // Boss->self, no cast, single-target
-    AssaultCannon1 = 28442, // ArmoredDrudge->self, 8.0s cast, single-target
-    AssaultCannon2 = 28443, // ArmoredDrudge->self, 8.0s cast, single-target
-    AssaultCannon3 = 28444, // Helper->self, no cast, range 40 width 8 rect
-    AssaultCannon4 = 28445, // Helper->self, no cast, range 28 width 8 rect
-    CannonReflection1 = 28454, // Helper->self, 8.0s cast, single-target
-    CannonReflection2 = 28455, // Helper->self, no cast, range 30 ?-degree cone
-    DiffusionRay = 28446, // Boss->self, 5.0s cast, range 40 circle
-    GravitonCannon = 29555, // Helper->player, 8.5s cast, range 6 circle
+
+    ArticulatedBits = 28441, // Boss->self, 3.0s cast, range 6 circle //Persistent AOE under boss
+
+    AssaultCannonVisual1First = 28442, // ArmoredDrudge->self, 8.0s cast, single-target
+    AssaultCannonVisual2First = 28443, // ArmoredDrudge->self, 8.0s cast, single-target
+
+    AssaultCannonAOE1Rest = 28444, // Helper->self, no cast, range 40 width 8 rect
+    AssaultCannonAOE2Rest = 28445, // Helper->self, no cast, range 28 width 8 rect
+
+    DiffusionRay = 28446, // Boss->self, 5.0s cast, range 40 circle //Raidwide
+
     UnknownAbility1 = 28448, // Boss->self, no cast, single-target
     UnknownAbility2 = 28449, // Boss->self, no cast, single-target
     UnknownAbility3 = 28450, // Boss->self, no cast, single-target
     UnknownAbility4 = 28451, // Boss->self, no cast, single-target
     UnknownAbility5 = 28452, // Boss->self, no cast, single-target
     UnknownAbility6 = 28453, // Boss->self, no cast, single-target
+
+    CannonReflectionVisualFirst = 28454, // Helper->self, 8.0s cast, single-target
+    CannonReflectionAOERest = 28455, // Helper->self, no cast, range 30 ?-degree cone
+    Assail1 = 28456, // Boss->self, no cast, single-target
+    Assail2 = 28457, // Boss->self, no cast, single-target
+
+    GravitonCannon = 29555, // Helper->player, 8.5s cast, range 6 circle //Spread marker
+    //Rail Cannon tankbuster not listed
 }
 
 public enum SID : uint
@@ -43,12 +51,16 @@ public enum IconID : uint
 {
     Icon_329 = 329, // player
 }
+class DiffusionRay(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.DiffusionRay));
+class GravitonCannon(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.GravitonCannon), 6);
 
 class D092ArmoredChariotStates : StateMachineBuilder
 {
     public D092ArmoredChariotStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<DiffusionRay>()
+            .ActivateOnEnter<GravitonCannon>();
     }
 }
 
