@@ -1,6 +1,4 @@
-﻿using BossMod.Endwalker.Dungeon.D04Ktisis.D041Lyssa;
-
-namespace BossMod.Endwalker.Dungeon.D04Ktisis.D042Ladon;
+﻿namespace BossMod.Endwalker.Dungeon.D04Ktisis.D042Ladon;
 
 public enum OID : uint
 {

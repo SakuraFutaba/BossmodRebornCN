@@ -1,6 +1,4 @@
-﻿using BossMod.Endwalker.Dungeon.D02TowerOfBabil.D023Anima;
-
-namespace BossMod.Endwalker.Dungeon.D04Ktisis.D041Lyssa;
+﻿namespace BossMod.Endwalker.Dungeon.D04Ktisis.D041Lyssa;
 
 public enum OID : uint
 {

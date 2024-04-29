@@ -1,6 +1,4 @@
-﻿using BossMod.Endwalker.Variant.V01SS.V015ThorneKnight;
-
-namespace BossMod.Endwalker.Dungeon.D03Vanaspati.D031Snatcher;
+﻿namespace BossMod.Endwalker.Dungeon.D03Vanaspati.D031Snatcher;
 
 public enum OID : uint
 {

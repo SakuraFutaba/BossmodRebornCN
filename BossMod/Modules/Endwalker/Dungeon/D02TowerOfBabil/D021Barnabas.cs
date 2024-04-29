@@ -1,6 +1,4 @@
-﻿using BossMod.Endwalker.Dungeon.D03Vanaspati.D032Wrecker;
-
-namespace BossMod.Endwalker.Dungeon.D02TowerOfBabil.D021Barnabas;
+﻿namespace BossMod.Endwalker.Dungeon.D02TowerOfBabil.D021Barnabas;
 
 public enum OID : uint
 {

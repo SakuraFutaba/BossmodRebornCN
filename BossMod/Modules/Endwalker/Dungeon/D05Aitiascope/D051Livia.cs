@@ -9,17 +9,23 @@ public enum OID : uint
 public enum AID : uint
 {
     AutoAttack = 24771, // Boss->player, no cast, single-target
-    AglaeaBite = 25673, // Boss->self/player, 5.0s cast, range 9 ?-degree cone
+    AglaeaBite = 25673, // Boss->self/player, 5.0s cast, range 9 ?-degree cone //Tankbuster 
+
     AglaeaClimb1 = 25666, // Boss->self, 7.0s cast, single-target
     AglaeaClimb2 = 25667, // Boss->self, 7.0s cast, single-target
-    AglaeaClimb3 = 25668, // Helper->self, 7.0s cast, range 20 90-degree cone
+    AglaeaClimbAOE = 25668, // Helper->self, 7.0s cast, range 20 90-degree cone
+
     AglaeaShot1 = 25669, // Boss->self, 3.0s cast, single-target
-    AglaeaShot2 = 25670, // 346A->location, 3.0s cast, range 20 width 4 rect
-    AglaeaShot3 = 25671, // 346A->location, 1.0s cast, range 40 width 4 rect
+    AglaeaShotAOE1 = 25670, // 346A->location, 3.0s cast, range 20 width 4 rect
+    AglaeaShotAOE2 = 25671, // 346A->location, 1.0s cast, range 40 width 4 rect
+
     Disparagement = 25674, // Boss->self, 5.0s cast, range 40 120-degree cone
-    Frustration = 25672, // Boss->self, 5.0s cast, range 40 circle
+
+    Frustration = 25672, // Boss->self, 5.0s cast, range 40 circle //Raidwide
+
     IgnisAmoris = 25676, // Helper->location, 4.0s cast, range 6 circle
     IgnisOdi = 25677, // Helper->players, 5.0s cast, range 6 circle
+
     OdiEtAmo = 25675, // Boss->self, 3.0s cast, single-target
 }
 
@@ -34,13 +40,32 @@ public enum IconID : uint
     Icon_161 = 161, // player
 }
 
+class AglaeaShotAOE1(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.AglaeaShotAOE1), new AOEShapeRect(20, 3));
+class AglaeaShotAOE2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.AglaeaShotAOE2), new AOEShapeRect(20, 3));
+
+class AglaeaClimbAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.AglaeaClimbAOE), new AOEShapeCone(20, 45.Degrees()));
+class Disparagement(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Disparagement), new AOEShapeCone(40, 60.Degrees()));
+
+class IgnisOdi(BossModule module) : Components.StackWithCastTargets(module, ActionID.MakeSpell(AID.IgnisOdi), 6, 8);
+class IgnisAmoris(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.IgnisAmoris), 6);
+class Frustration(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.Frustration));
+class AglaeaBite(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.AglaeaBite));
+
 class D051LiviaStates : StateMachineBuilder
 {
     public D051LiviaStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<AglaeaShotAOE1>()
+            .ActivateOnEnter<AglaeaShotAOE2>()
+            .ActivateOnEnter<AglaeaClimbAOE>()
+            .ActivateOnEnter<Disparagement>()
+            .ActivateOnEnter<IgnisOdi>()
+            .ActivateOnEnter<IgnisAmoris>()
+            .ActivateOnEnter<Frustration>()
+            .ActivateOnEnter<AglaeaBite>();
     }
 }
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 786, NameID = 10290)] // 
-public class D051Livia(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-6, 470), 20));
+public class D051Livia(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-6, 471), 20));

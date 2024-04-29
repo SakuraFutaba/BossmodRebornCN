@@ -1,6 +1,4 @@
-﻿using BossMod.Endwalker.Dungeon.D03Vanaspati.D032Wrecker;
-
-namespace BossMod.Endwalker.Dungeon.D03Vanaspati.D033Svarbhanu;
+﻿namespace BossMod.Endwalker.Dungeon.D03Vanaspati.D033Svarbhanu;
 
 public enum OID : uint
 {
