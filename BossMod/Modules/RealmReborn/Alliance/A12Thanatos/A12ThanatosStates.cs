@@ -3,6 +3,10 @@ class A12ThanatosStates : StateMachineBuilder
 {
     public A12ThanatosStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<BlackCloud>()
+            .ActivateOnEnter<Cloudscourge>()
+            .ActivateOnEnter<VoidFireII>()
+            .ActivateOnEnter<AstralLight>();
     }
 }

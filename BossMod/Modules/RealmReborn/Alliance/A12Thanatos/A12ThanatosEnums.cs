@@ -6,8 +6,6 @@ public enum OID : uint
     MagicPot = 0x931, // R0.800, x?
     Nemesis = 0x930, // R2.000, x?
     Sandman = 0x983, // R1.800, x?
-    Actor1e8887 = 0x1E8887, // R2.000, x?, EventObj type
-    Actor1e8888 = 0x1E8888, // R0.500, x?, EventObj type
 }
 
 public enum AID : uint

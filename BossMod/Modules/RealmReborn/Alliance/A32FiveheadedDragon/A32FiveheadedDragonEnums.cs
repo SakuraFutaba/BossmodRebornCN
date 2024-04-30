@@ -11,23 +11,6 @@ public enum OID : uint
     PoisonSlime = 0xDFF, // R1.000, x?
     ToxicSlime = 0xE17, // R3.000, x?
     DragonfireFly = 0xDFE, // R0.800, x?
-    Actor1e9705 = 0x1E9705, // R2.000, x?, EventObj type
-    Actor1e9706 = 0x1E9706, // R2.000, x?, EventObj type
-    Actor1e96fa = 0x1E96FA, // R2.000, x?, EventObj type
-    Actor1e9704 = 0x1E9704, // R2.000, x?, EventObj type
-    Actor1e970a = 0x1E970A, // R2.000, x?, EventObj type
-    Actor1e9702 = 0x1E9702, // R2.000, x?, EventObj type
-    Actor1e9707 = 0x1E9707, // R2.000, x?, EventObj type
-    Actor1e970b = 0x1E970B, // R2.000, x?, EventObj type
-    Actor1e9708 = 0x1E9708, // R2.000, x?, EventObj type
-    Actor1e9703 = 0x1E9703, // R2.000, x?, EventObj type
-    Actor1e8f2f = 0x1E8F2F, // R0.500, x?, EventObj type
-    Actor1e981a = 0x1E981A, // R0.500, x?, EventObj type
-    Actor1e972c = 0x1E972C, // R0.500, x?, EventObj type
-    Actor1e9729 = 0x1E9729, // R0.500, x?, EventObj type
-    Actor1e972a = 0x1E972A, // R0.500, x?, EventObj type
-    Actor1e972b = 0x1E972B, // R0.500, x?, EventObj type
-    Actor1e8fb8 = 0x1E8FB8, // R2.000, x?, EventObj type
 }
 
 public enum AID : uint

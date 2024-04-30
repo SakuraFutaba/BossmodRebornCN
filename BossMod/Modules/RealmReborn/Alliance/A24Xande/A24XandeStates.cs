@@ -3,6 +3,13 @@ class A24XandeStates : StateMachineBuilder
 {
     public A24XandeStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<KnucklePress>()
+            .ActivateOnEnter<BurningRave1>()
+            .ActivateOnEnter<BurningRave2>()
+            .ActivateOnEnter<AncientQuake>()
+            .ActivateOnEnter<AncientQuaga>()
+            //.ActivateOnEnter<Stackmarker>()
+            .ActivateOnEnter<AuraCannon>();
     }
 }

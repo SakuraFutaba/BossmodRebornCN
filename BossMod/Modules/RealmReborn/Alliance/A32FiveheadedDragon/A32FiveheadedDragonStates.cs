@@ -3,6 +3,13 @@ class A32FiveheadedDragonStates : StateMachineBuilder
 {
     public A32FiveheadedDragonStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<WhiteBreath>()
+            .ActivateOnEnter<BreathOfFire>()
+            .ActivateOnEnter<BreathOfLight>()
+            .ActivateOnEnter<BreathOfPoison>()
+            .ActivateOnEnter<BreathOfIce>()
+            .ActivateOnEnter<Radiance>()
+            .ActivateOnEnter<HeatWave>();
     }
 }

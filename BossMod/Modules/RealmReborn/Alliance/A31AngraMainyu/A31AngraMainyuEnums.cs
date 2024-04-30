@@ -1,4 +1,5 @@
 ﻿namespace BossMod.RealmReborn.Alliance.A31AngraMainyu;
+
 public enum OID : uint
 {
 
@@ -7,22 +8,6 @@ public enum OID : uint
     FinalHourglass = 0xE02, // R1.500, x?
     GrimReaper = 0xE01, // R2.000, x?
     AngraMainyusDaewa = 0xE4E, // R1.800, x?
-    WormholeGenerator = 0x1E96F3, // R2.000, x?, EventObj type
-    Actor1e9714 = 0x1E9714, // R2.000, x?, EventObj type
-    Actor1e96ff = 0x1E96FF, // R2.000, x?, EventObj type
-    Actor1e9713 = 0x1E9713, // R2.000, x?, EventObj type
-    Actor1e9822 = 0x1E9822, // R2.000, x?, EventObj type
-    Actor1e9712 = 0x1E9712, // R2.000, x?, EventObj type
-    Actor1e9710 = 0x1E9710, // R2.000, x?, EventObj type
-    Actor1e9726 = 0x1E9726, // R2.000, x?, EventObj type
-    Actor1e8fb8 = 0x1E8FB8, // R2.000, x?, EventObj type
-    Actor1e970e = 0x1E970E, // R2.000, x?, EventObj type
-    Actor1e8f2f = 0x1E8F2F, // R0.500, x?, EventObj type
-    Actor1e9727 = 0x1E9727, // R2.000, x?, EventObj type
-    Actor1e970f = 0x1E970F, // R2.000, x?, EventObj type
-    Actor1e970d = 0x1E970D, // R2.000, x?, EventObj type
-    Actor1e9728 = 0x1E9728, // R2.000, x?, EventObj type
-    Actor1e9711 = 0x1E9711, // R2.000, x?, EventObj type
 }
 
 public enum AID : uint
