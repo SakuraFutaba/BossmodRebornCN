@@ -3,6 +3,9 @@ class A13KingBehemothStates : StateMachineBuilder
 {
     public A13KingBehemothStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<EclipticMeteor>()
+            .ActivateOnEnter<SelfDestruct>()
+            .ActivateOnEnter<CharybdisAOE>();
     }
 }

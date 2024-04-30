@@ -1,4 +1,5 @@
 ﻿namespace BossMod.RealmReborn.Alliance.A24Xande;
+
 public enum OID : uint
 {
     Boss = 0xBDB, // R4.000, x?
@@ -6,17 +7,6 @@ public enum OID : uint
     AetherialMine = 0xBDF, // R1.000, x?
     StonefallCircle = 0xBDD, // R1.000, x?
     StarfallCircle = 0xBDC, // R1.000, x?
-    Actor1e9582 = 0x1E9582, // R0.500, x?, EventObj type
-    Actor1e9547 = 0x1E9547, // R2.000, x?, EventObj type
-    Actor1e9548 = 0x1E9548, // R2.000, x?, EventObj type
-    Actor1e9545 = 0x1E9545, // R2.000, x?, EventObj type
-    Actor1e9583 = 0x1E9583, // R0.500, x?, EventObj type
-    Actor1e9514 = 0x1E9514, // R2.000, x?, EventObj type
-    Actor1e8e9b = 0x1E8E9B, // R0.500, x?, EventObj type
-    Actor1e9513 = 0x1E9513, // R2.000, x?, EventObj type
-    Actor1e9544 = 0x1E9544, // R2.000, x?, EventObj type
-    Actor1e8fb8 = 0x1E8FB8, // R2.000, x?, EventObj type
-    Actor1e9546 = 0x1E9546, // R2.000, x?, EventObj type
 }
 
 public enum AID : uint
@@ -40,10 +30,9 @@ public enum SID : uint
     Invincibility = 1570, // none->player, extra=0x0
     Transcendent = 418, // none->player, extra=0x0
     Levitation = 12, // none->player, extra=0x0
-
 }
 
 public enum IconID : uint
 {
-    Icon_317 = 317, // player
+    Stackmarker = 317, // player
 }

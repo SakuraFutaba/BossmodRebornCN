@@ -3,6 +3,8 @@ class A22GlasyaStates : StateMachineBuilder
 {
     public A22GlasyaStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<Aura>()
+            .ActivateOnEnter<VileUtterance>();
     }
 }

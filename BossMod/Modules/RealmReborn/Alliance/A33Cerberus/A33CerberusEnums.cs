@@ -14,14 +14,6 @@ public enum OID : uint
     OpenFetter2 = 0x1E9733, // R0.500, x?, EventObj type
     MagickedFetter1 = 0x1E9736, // R2.000, x?, EventObj type
     MagickedFetter2 = 0x1E9737, // R2.000, x?, EventObj type
-    Actor1e974b = 0x1E974B, // R2.000, x?, EventObj type
-    Actor1e9749 = 0x1E9749, // R2.000, x?, EventObj type
-    Actor1e8e9b = 0x1E8E9B, // R0.500, x?, EventObj type
-    Actor1e9644 = 0x1E9644, // R0.500, x?, EventObj type
-    Actor1e8fb8 = 0x1E8FB8, // R2.000, x?, EventObj type
-    Actor1e9748 = 0x1E9748, // R2.000, x?, EventObj type
-    Actor1e974a = 0x1E974A, // R2.000, x?, EventObj type
-    Actor1e968c = 0x1E968C, // R0.500, x?, EventObj type
 }
 
 public enum AID : uint

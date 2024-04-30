@@ -43,6 +43,8 @@ public enum IconID : uint
     Icon_139 = 139, // player
     Icon_230 = 230, // player
 }
+class ElectromagneticRepellant(BossModule module) : Components.PersistentVoidzoneAtCastTarget(module, 7, ActionID.MakeSpell(AID.ElectromagneticRepellant), m => m.Enemies(OID.Boss).Where(z => z.EventState != 7), 0.8f);
+
 class InfantryDeterrentAOE(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.InfantryDeterrentAOE), 6);
 class NoFuture3(BossModule module) : Components.SpreadFromCastTargets(module, ActionID.MakeSpell(AID.NoFuture3), 6);
 
@@ -60,6 +62,7 @@ class D062PeacekeeperStates : StateMachineBuilder
     public D062PeacekeeperStates(BossModule module) : base(module)
     {
         TrivialPhase()
+            .ActivateOnEnter<ElectromagneticRepellant>()
             .ActivateOnEnter<InfantryDeterrentAOE>()
             .ActivateOnEnter<NoFuture3>()
             .ActivateOnEnter<NoFuture2>()

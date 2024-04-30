@@ -9,24 +9,6 @@ public enum OID : uint
     Gomory = 0xBCD, // R0.900, x?
     Acheron = 0xBCE, // R2.500, x?
     Actor1b2 = 0x1B2, // R0.500, x?, 523 type
-    Actor1e950c = 0x1E950C, // R2.000, x?, EventObj type
-    Actor1e94c7 = 0x1E94C7, // R2.000, x?, EventObj type
-    Actor1e951c = 0x1E951C, // R2.000, x?, EventObj type
-    Actor1e9517 = 0x1E9517, // R2.000, x?, EventObj type
-    Actor1e9518 = 0x1E9518, // R2.000, x?, EventObj type
-    Actor1e951b = 0x1E951B, // R2.000, x?, EventObj type
-    Actor1e9516 = 0x1E9516, // R2.000, x?, EventObj type
-    Actor1e951d = 0x1E951D, // R2.000, x?, EventObj type
-    Actor1e951a = 0x1E951A, // R2.000, x?, EventObj type
-    Actor1e94d3 = 0x1E94D3, // R2.000, x?, EventObj type
-    Actor1e9515 = 0x1E9515, // R2.000, x?, EventObj type
-    Actor1e950d = 0x1E950D, // R0.500, x?, EventObj type
-    Actor1e94cd = 0x1E94CD, // R2.000, x?, EventObj type
-    Actor1e94d0 = 0x1E94D0, // R2.000, x?, EventObj type
-    Actor1e94ca = 0x1E94CA, // R2.000, x?, EventObj type
-    Actor1e8fb8 = 0x1E8FB8, // R2.000, x?, EventObj type
-    Actor1e8e9b = 0x1E8E9B, // R0.500, x?, EventObj type
-
 }
 
 public enum AID : uint
@@ -49,7 +31,6 @@ public enum SID : uint
     Heavy = 14, // none->ShiveringSoul, extra=0x32
     DeepFreeze = 487, // ShiveringSoul->player, extra=0x1
     FireResistanceUp = 520, // none->player, extra=0x0
-
 }
 
 public enum IconID : uint
@@ -61,7 +42,7 @@ public enum IconID : uint
 
 public enum TetherID : uint
 {
-    Tether_6 = 6, // ShudderingSoul->player
-    Tether_8 = 8, // ShiveringSoul->player
-    Tether_5 = 5, // SmolderingSoul->player
+    AetherTether = 6, // ShudderingSoul->player
+    IceTether = 8, // ShiveringSoul->player
+    FireTether = 5, // SmolderingSoul->player
 }
