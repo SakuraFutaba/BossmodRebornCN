@@ -8,36 +8,29 @@ public enum OID : uint
     Sinister = 0x13F5, // R2.400, x?
     Echidna = 0x13F4, // R2.400, x?
     Bloodguard = 0x13F6, // R2.000, x?
-    Actor1e9e1c = 0x1E9E1C, // R2.000, x?, EventObj type
-    Actor1e8f2f = 0x1E8F2F, // R0.500, x?, EventObj type
-    Actor1e9e1a = 0x1E9E1A, // R2.000, x?, EventObj type
-    Actor1e9e1e = 0x1E9E1E, // R2.000, x?, EventObj type
-    Actor1e9dd5 = 0x1E9DD5, // R2.000, x?, EventObj type
-    Actor1e8fb8 = 0x1E8FB8, // R2.000, x?, EventObj type
-    Actor1e9e1b = 0x1E9E1B, // R2.000, x?, EventObj type
-    Actor1e9e19 = 0x1E9E19, // R2.000, x?, EventObj type
 }
 
 public enum AID : uint
 {
     AutoAttack1 = 870, // Boss/Bloodguard->player, no cast, single-target
-    SickleStrike = 5153, // Boss->player, 3.5s cast, single-target
-    NemesisBurst = 5145, // Boss->self, no cast, range 6+R circle
-    AbyssalReaper = 5144, // Boss->self, 4.0s cast, range 14 circle
-    DemonicDescent = 5146, // Boss->self, no cast, range 10 circle
     AutoAttack2 = 1207, // Dexter/Sinister->self, no cast, range 6+R ?-degree cone
     AutoAttack3 = 5148, // Echidna->player, no cast, range 8+R ?-degree cone
-    SerpentineStrike = 5150, // Sinister/Dexter->self, 3.0s cast, range 20 circle
-    Unknown = 5151, // EchidnaHelper->EchidnaHelper, no cast, single-target
+
+    AbyssalReaper = 5144, // Boss->self, 4.0s cast, range 14 circle
+    BloodyHarvest = 5147, // EchidnaHelper->location, 4.0s cast, range 12 circle
+    Deathstrike = 5195, // Bloodguard->self, 3.0s cast, range 60+R width 6 rect
+    DemonicDescent = 5146, // Boss->self, no cast, range 10 circle
+    FlameWreath = 5149, // Echidna->location, 6.0s cast, range 18 circle
     Gehenna = 5152, // Boss->self, no cast, range 100 circle
+    NemesisBurst = 5145, // Boss->self, no cast, range 6+R circle
+    Petrifaction1 = 5154, // Boss->self, 3.0s cast, range 100 circle
+    Petrifaction2 = 5374, // Echidna->self, 3.0s cast, range 60 circle
+    SerpentineStrike = 5150, // Sinister/Dexter->self, 3.0s cast, range 20 circle
     SickleSlash1 = 5142, // Boss->self, 4.0s cast, single-target
     SickleSlash2 = 5143, // EchidnaHelper->self, 4.0s cast, range 18+R width 60 rect
     SickleSlash3 = 5341, // EchidnaHelper->self, 4.0s cast, range 18+R width 60 rect
-    Petrifaction1 = 5154, // Boss->self, 3.0s cast, range 100 circle
-    BloodyHarvest = 5147, // EchidnaHelper->location, 4.0s cast, range 12 circle
-    Petrifaction2 = 5374, // Echidna->self, 3.0s cast, range 60 circle
-    Deathstrike = 5195, // Bloodguard->self, 3.0s cast, range 60+R width 6 rect
-    FlameWreath = 5149, // Echidna->location, 6.0s cast, range 18 circle
+    SickleStrike = 5153, // Boss->player, 3.5s cast, single-target
+    Unknown = 5151, // EchidnaHelper->EchidnaHelper, no cast, single-target
 }
 
 public enum SID : uint
@@ -50,7 +43,6 @@ public enum SID : uint
     VulnerabilityDown = 406, // none->Dexter/Sinister, extra=0x2/0x1/0x5/0x4/0x3
     MagicVulnerabilityUp = 60, // Sinister/Dexter->player, extra=0x0
     Petrification = 610, // Boss/Echidna->player, extra=0x0
-
 }
 
 public enum IconID : uint

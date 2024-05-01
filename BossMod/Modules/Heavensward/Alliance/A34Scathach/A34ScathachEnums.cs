@@ -16,37 +16,48 @@ public enum AID : uint
     AutoAttack = 7760, // Boss->player, no cast, single-target
     AutoAttack2 = 870, // ChimeraPoppet/ShadowcourtHound->player, no cast, single-target
     AutoAttack3 = 871, // Connla2->player, no cast, single-target
+
     BigHug = 7631, // ChimeraPoppet->self, 2.5s cast, range 3+R width 3 rect
     BlindingShadow1 = 7476, // Boss->self, 5.0s cast, range 60 circle
     BlindingShadow2 = 7598, // Connla->self, no cast, range 30 circle
+
     Blizzard = 7777, // ShadowcourtJester->player, 1.0s cast, single-target
     Manos = 7379, // Boss->self, no cast, single-target
     MarrowDrain = 3342, // ShadowcourtHound->self, 3.0s cast, range 6+R 120-degree cone
+
     Nox1 = 7458, // Connla->location, 5.0s cast, range 10 circle
     Nox2 = 7457, // Connla->location, no cast, range 10 circle
+
     ParticleBeam = 7464, // Connla->location, no cast, range 5 circle
     Pitfall = 7377, // Connla->self, 5.0s cast, range 60 circle
-    Shadesmite1 = 7636, // Connla->self, 1.5s cast, range 3 circle
-    Shadesmite2 = 7453, // Connla->self, 1.5s cast, range 15 circle
+
+    Shadesmite1 = 7453, // Connla->self, 1.5s cast, range 15 circle
+    Shadesmite2 = 7636, // Connla->self, 1.5s cast, range 3 circle
     Shadesmite3 = 7637, // Connla->self, 1.5s cast, range 3 circle
+
     Shadespin = 7455, // Boss->self, 4.0s cast, single-target
     Shadespin1 = 7454, // Boss->self, 4.0s cast, single-target
     Shadespin2 = 7456, // Connla->self, 1.2s cast, range 30+R 90-degree cone
+
     Shadethrust = 7459, // Boss->location, 3.0s cast, range 40+R width 5 rect
     ShadowRelease = 7380, // Boss->self, no cast, single-target
     Shred = 7460, // ShadowLimb->player, no cast, single-target
     Snuggle = 7630, // ChimeraPoppet->player, no cast, single-target
     Soar = 7451, // Boss->location, no cast, ???
     TheDragonsVoice = 3344, // ShadowcourtHound->self, 4.5s cast, range 30 circle
+
     ThirtyArrows1 = 7471, // Boss->location, 3.0s cast, range 8 circle
     ThirtyArrows2 = 7472, // Connla->self, 2.5s cast, range 35+R width 8 rect
+
     ThirtyCries = 7475, // Boss->players, no cast, range 12 circle
     ThirtySickles = 7473, // Boss->self, no cast, range 15 circle
     ThirtySouls = 7474, // Boss->self, 4.0s cast, range 60 circle
+
     ThirtyThorns1 = 7467, // Boss->self, no cast, range 7+R width 3 rect
     ThirtyThorns2 = 7468, // Connla->self, no cast, range 12+R width 3 rect
     ThirtyThorns3 = 7469, // Connla->self, no cast, range 12+R width 3 rect
     ThirtyThorns4 = 7470, // Connla->self, 1.5s cast, range 8 circle
+
     Unknown = 7452, // Boss->self, no cast, range 15 circle
     Unknown2 = 7376, // Connla2->self, no cast, single-target
     VoidBlizzard = 7778, // ShadowcourtJester->player, 2.5s cast, single-target

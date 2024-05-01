@@ -11,7 +11,7 @@ public class A11BoneDragon(WorldState ws, Actor primary) : BossModule(ws, primar
 {
     protected override void DrawEnemies(int pcSlot, Actor pc)
     {
-        Arena.Actors(Enemies(OID.Boss), ArenaColor.Enemy);
+        Arena.Actor(PrimaryActor, ArenaColor.Enemy);
         Arena.Actors(Enemies(OID.Platinal), ArenaColor.Enemy);
         Arena.Actors(Enemies(OID.RottingEye), ArenaColor.Enemy);
     }

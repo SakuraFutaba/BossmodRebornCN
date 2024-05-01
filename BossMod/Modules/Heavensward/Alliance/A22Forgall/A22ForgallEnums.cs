@@ -12,40 +12,41 @@ public enum OID : uint
     SummonedDahak = 0x162E, // R5.000, x?
     SummonedSuccubus = 0x162D, // R2.200, x?
     SummonedHaagenti = 0x162F, // R2.800, x?
-    Actor1e84a3 = 0x1E84A3, // R0.500, x?, EventObj type
-    Actor1e8fb8 = 0x1E8FB8, // R2.000, x?, EventObj type
-    Actor1e8f2f = 0x1E8F2F, // R0.500, x?, EventObj type
-    Actor1e84a2 = 0x1E84A2, // R2.000, x?, EventObj type
-    Actor1ea088 = 0x1EA088, // R2.000, x?, EventObj type
-    Actor1ea087 = 0x1EA087, // R2.000, x?, EventObj type
-    Actor1ea086 = 0x1EA086, // R0.500, x?, EventObj type
 }
 
 public enum AID : uint
 {
     AutoAttack = 6101, // Boss->player, no cast, single-target
     AutoAttack2 = 870, // 1628/ShriveledTalon2/ShriveledTalon3/ShriveledTalon1/SummonedDahak/SummonedHaagenti/SummonedSuccubus->player, no cast, single-target
+
     Necropurge = 6103, // ShriveledTalon1/ShriveledTalon3/1628/ShriveledTalon2->location, 2.0s cast, range 10 circle
+
     MegiddoFlame1 = 6080, // Boss->self, 3.0s cast, single-target
     MegiddoFlame2 = 6081, // Forgall->self, 3.0s cast, range 50+R width 8 rect
+
     Necropurge1 = 6078, // Boss->self, 3.0s cast, single-target
     Necropurge2 = 6079, // Forgall->location, 12.5s cast, range 8 circle
-    PunishingRay = 6084, // Forgall->self, no cast, range 60 circle
+
     BrandOfTheFallen = 6092, // Boss->self, 6.0s cast, ???
-    EvilMist = 6085, // Boss->self, 3.0s cast, range 60+R circle
-    Necropurge3 = 6104, // PoisonMist->location, 2.0s cast, range 10 circle
-    Unknown = 6087, // Forgall->self, no cast, ???
-    VoidCall = 6086, // Boss->location, 8.0s cast, range 15 circle
-    RottenBreath = 6096, // SummonedDahak->self, no cast, range 5+R ?-degree cone
-    Voidblood = 6099, // SummonedHaagenti->players, 5.0s cast, range 6 circle
-    Mow = 6098, // SummonedHaagenti->self, 3.0s cast, range 11+R 120-degree cone
-    TailDrive = 6097, // SummonedDahak->self, 2.5s cast, range 25+R 90-degree cone
-    MortalRay = 6100, // SummonedHaagenti->self, 4.0s cast, range 38+R ?-degree cone
-    ManaExplosion = 6088, // Forgall->self, 1.7s cast, range 60 circle
-    MegaDeath = 6090, // Boss->self, 11.0s cast, range 80+R circle
     DarkEruption1 = 6082, // Boss->self, 2.0s cast, single-target
     DarkEruption2 = 6083, // Forgall->location, 2.0s cast, range 6 circle
+    EvilMist = 6085, // Boss->self, 3.0s cast, range 60+R circle
     HellWind = 6091, // Boss->self, 5.0s cast, range 80+R circle
+    ManaExplosion = 6088, // Forgall->self, 1.7s cast, range 60 circle
+    MegaDeath = 6090, // Boss->self, 11.0s cast, range 80+R circle
+
+    MortalRay = 6100, // SummonedHaagenti->self, 4.0s cast, range 38+R ?-degree cone
+    Mow = 6098, // SummonedHaagenti->self, 3.0s cast, range 11+R 120-degree cone
+
+    Necropurge3 = 6104, // PoisonMist->location, 2.0s cast, range 10 circle
+    PunishingRay = 6084, // Forgall->self, no cast, range 60 circle
+    RottenBreath = 6096, // SummonedDahak->self, no cast, range 5+R ?-degree cone
+
+    TailDrive = 6097, // SummonedDahak->self, 2.5s cast, range 25+R 90-degree cone
+
+    Unknown = 6087, // Forgall->self, no cast, ???
+    Voidblood = 6099, // SummonedHaagenti->players, 5.0s cast, range 6 circle
+    VoidCall = 6086, // Boss->location, 8.0s cast, range 15 circle
 }
 
 public enum SID : uint

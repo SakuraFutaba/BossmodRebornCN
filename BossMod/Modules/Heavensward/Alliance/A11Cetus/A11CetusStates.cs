@@ -4,6 +4,13 @@ class A11CetusStates : StateMachineBuilder
 {
     public A11CetusStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<ElectricSwipe>()
+            .ActivateOnEnter<BodySlam>()
+            .ActivateOnEnter<Immersion>()
+            .ActivateOnEnter<ElectricWhorl>()
+            .ActivateOnEnter<ExpulsionAOE>()
+            .ActivateOnEnter<ExpulsionKnockback>()
+            .ActivateOnEnter<BiteAndRun>();
     }
 }

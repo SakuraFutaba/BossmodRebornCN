@@ -5,7 +5,7 @@ class BurningRave1(BossModule module) : Components.LocationTargetedAOEs(module, 
 class BurningRave2(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.BurningRave2), 8);
 class AncientQuake(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.AncientQuake));
 class AncientQuaga(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.AncientQuaga));
-class AuraCannon(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.AuraCannon), new AOEShapeRect(60, 7.5f));
+class AuraCannon(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.AuraCannon), new AOEShapeRect(60, 5));
 //class Stackmarker(BossModule module) : Components.StackWithIcon(module, (uint)IconID.Stackmarker, ActionID.MakeSpell(AID.KnucklePress), 6, 2, 4);
 
 

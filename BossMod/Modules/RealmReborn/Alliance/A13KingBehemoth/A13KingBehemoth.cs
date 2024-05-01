@@ -12,7 +12,7 @@ public class A13KingBehemoth(WorldState ws, Actor primary) : BossModule(ws, prim
 {
     protected override void DrawEnemies(int pcSlot, Actor pc)
     {
-        Arena.Actors(Enemies(OID.Boss), ArenaColor.Enemy);
+        Arena.Actor(PrimaryActor, ArenaColor.Enemy);
         Arena.Actors(Enemies(OID.IronGiant), ArenaColor.Enemy);
         Arena.Actors(Enemies(OID.Puroboros), ArenaColor.Enemy);
     }

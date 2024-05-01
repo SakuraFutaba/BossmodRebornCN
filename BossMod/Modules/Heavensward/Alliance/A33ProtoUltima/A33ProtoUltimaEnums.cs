@@ -16,21 +16,29 @@ public enum AID : uint
 
     AetherBend = 7577, // Boss->self, no cast, range 8+R circle
     AetherialAbsorbption = 7590, // AetherCollector->Boss, no cast, single-target
-    AetherialPool = 7587, // ProtoUltimaHelper->self, 3.5s cast, range 32 circle
+
+    AetherialPool = 7587, // ProtoUltimaHelper->self, 3.5s cast, range 32 circle KB 40 TowardsOrigin
+
     AetherochemicalFlare = 7762, // Boss->self, 5.0s cast, range 40+R circle
     AetherochemicalLaser1 = 7574, // Boss->self, 3.3s cast, range 65+R width 8 rect
     AetherochemicalLaser2 = 7575, // Boss->self, 3.0s cast, range 65+R width 8 rect
     AetherochemicalLaser3 = 7576, // Boss->self, 3.0s cast, range 65+R width 8 rect
+
     CitadelBuster1 = 7579, // Boss->self, no cast, range 65+R width 10 rect
     CitadelBuster2 = 7595, // ProtoUltimaHelper->self, 2.5s cast, range 65+R width 10 rect
+
     DiffractiveLaser = 7594, // Boss->self, no cast, range 12+R ?-degree cone
     Eikonizer = 7597, // ProtoUltimaHelper->self, no cast, range 40 circle
     FlareStar = 7588, // ProtoUltimaHelper->self, 7.0s cast, range 31+R circle
     LightPillar = 7578, // Boss->self, no cast, single-target
+
     Rotoswipe = 4556, // AllaganDreadnaught->self, 3.0s cast, range 8+R 120-degree cone
+
     Supernova1 = 7581, // Boss->self, 6.0s cast, range 40+R circle
     Supernova2 = 7593, // Boss->self, 60.0s cast, range 40+R circle
+
     Touchdown = 7580, // Boss->self, no cast, range 6+R circle
+
     UnknownWeaponskill1 = 7584, // Boss->self, no cast, single-target
     UnknownWeaponskill2 = 7585, // Boss->self, no cast, single-target
     UnknownWeaponskill3 = 7586, // Boss->self, no cast, single-target

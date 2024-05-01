@@ -4,6 +4,11 @@ class A24OzmaStates : StateMachineBuilder
 {
     public A24OzmaStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<MeteorImpact>()
+            .ActivateOnEnter<HolyKB>()
+            .ActivateOnEnter<Holy>()
+            .ActivateOnEnter<ExecrationAOE>()
+            .ActivateOnEnter<AccelerationBomb>();
     }
 }
