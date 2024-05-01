@@ -10,6 +10,5 @@ class A11BoneDragonStates : StateMachineBuilder
             .ActivateOnEnter<Stone>()
             .ActivateOnEnter<Level5Petrify>()
             .Raw.Update = () => Module.PrimaryActor.IsDestroyed;
-
     }
 }

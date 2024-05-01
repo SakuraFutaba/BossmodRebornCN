@@ -4,6 +4,9 @@ class A23HeadstoneStates : StateMachineBuilder
 {
     public A23HeadstoneStates(BossModule module) : base(module)
     {
-        TrivialPhase();
+        TrivialPhase()
+            .ActivateOnEnter<TremblingEpigraph>()
+            .ActivateOnEnter<FlaringEpigraph>()
+            .ActivateOnEnter<BigBurst>();
     }
 }

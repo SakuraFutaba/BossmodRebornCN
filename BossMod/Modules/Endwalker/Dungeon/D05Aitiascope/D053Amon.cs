@@ -5,7 +5,9 @@ public enum OID : uint
     Boss = 0x346E,
     Helper = 0x233C,
     YsaylesSpirit = 0x346F, // R2.000, x1
-    Ice = 0x1EB26D, // R0.500, x0 (spawn during fight), EventObj type
+    Unknown = 0x1EB26D, // R0.500, x0 (spawn during fight), EventObj type
+    Ice = 0x3470, // R6.000, x1
+
 }
 
 public enum AID : uint
@@ -17,7 +19,7 @@ public enum AID : uint
     DarkForte = 25700, // Boss->player, 5.0s cast, single-target //Tankbuster
     Entracte = 25701, // Boss->self, 5.0s cast, range 40 circle //Raidwide
 
-    DreamsOfIce = 27756, // Helper->self, 14.7s cast, range 6 circle
+    DreamsOfIce = 27756, // Helper->self, 14.7s cast, range 6 circle // summons ice to hide behind
     Epode = 25695, // Helper->self, 8.0s cast, range 70 width 12 rect
 
     EruptionForteVisual = 24709, // Boss->self, 3.0s cast, single-target
@@ -40,34 +42,74 @@ public enum IconID : uint
     Icon_218 = 218, // player
 }
 
-class DreamsOfIce(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.DreamsOfIce), new AOEShapeCircle(6));
-class Epode(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Epode), new AOEShapeRect(70, 6));
+//class DreamsOfIce(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.DreamsOfIce), new AOEShapeCircle(6));
+class Epode(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Epode), new AOEShapeRect(70, 6, 70));
 
-class EruptionForteAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.EruptionForteAOE), new AOEShapeCircle(8));
+class EruptionForteAOE(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.EruptionForteAOE), 8);
 
-class LeftFiragaForte(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.LeftFiragaForte), new AOEShapeRect(40, 10));
-class RightFiragaForte(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.RightFiragaForte), new AOEShapeRect(40, 10));
+class LeftFiragaForte(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.LeftFiragaForte), new AOEShapeRect(40, 40, directionOffset: 90.Degrees()));
+class RightFiragaForte(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.RightFiragaForte), new AOEShapeRect(40, 40, directionOffset: -90.Degrees()));
 
 class ThundagaForte1(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.ThundagaForte1), 15);
-class ThundagaForte2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ThundagaForte2), new AOEShapeCone(20, 22.6f.Degrees()));
-class ThundagaForte3(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ThundagaForte3), new AOEShapeCone(20, 22.6f.Degrees()));
 
 class DarkForte(BossModule module) : Components.SingleTargetCast(module, ActionID.MakeSpell(AID.DarkForte));
 class Entracte(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.Entracte));
+
+class DreamsOfIce(BossModule module) : Components.PersistentVoidzoneAtCastTarget(module, 6, ActionID.MakeSpell(AID.DreamsOfIce), m => m.Enemies(OID.Ice).Where(v => v.EventState != 7), 0.1f);
+
+class CurtainCall(BossModule module) : Components.CastLineOfSightAOE(module, ActionID.MakeSpell(AID.CurtainCall), 60, false)
+{
+    public override IEnumerable<Actor> BlockerActors() => Module.Enemies(OID.Ice).Where(a => !a.IsDead);
+}
+
+class ThundagaForte(BossModule module) : Components.GenericAOEs(module, ActionID.MakeSpell(AID.Strophe))
+{
+    private List<Actor> _castersThundagaForte2 = new();
+    private List<Actor> _castersThundagaForte3 = new();
+
+    private static readonly AOEShape _shapeThundagaForte2 = new AOEShapeCone(20, 22.6f.Degrees());
+    private static readonly AOEShape _shapeThundagaForte3 = new AOEShapeCone(20, 22.6f.Degrees());
+
+    public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor)
+    {
+        if (_castersThundagaForte2.Count > 0)
+            return _castersThundagaForte2.Select(c => new AOEInstance(_shapeThundagaForte2, c.Position, c.CastInfo!.Rotation, c.CastInfo!.NPCFinishAt));
+        else
+            return _castersThundagaForte3.Select(c => new AOEInstance(_shapeThundagaForte3, c.Position, c.CastInfo!.Rotation, c.CastInfo!.NPCFinishAt));
+    }
+
+    public override void OnCastStarted(Actor caster, ActorCastInfo spell)
+    {
+        CastersForSpell(spell.Action)?.Add(caster);
+    }
+
+    public override void OnCastFinished(Actor caster, ActorCastInfo spell)
+    {
+        CastersForSpell(spell.Action)?.Remove(caster);
+    }
+
+    private List<Actor>? CastersForSpell(ActionID spell) => (AID)spell.ID switch
+    {
+        AID.ThundagaForte2 => _castersThundagaForte2,
+        AID.ThundagaForte3 => _castersThundagaForte3,
+        _ => null
+    };
+}
 
 class D053AmonStates : StateMachineBuilder
 {
     public D053AmonStates(BossModule module) : base(module)
     {
         TrivialPhase()
-            .ActivateOnEnter<DreamsOfIce>()
+            //.ActivateOnEnter<DreamsOfIce>()
             .ActivateOnEnter<Epode>()
             .ActivateOnEnter<EruptionForteAOE>()
-            //.ActivateOnEnter<LeftFiragaForte>()
-            //.ActivateOnEnter<RightFiragaForte>()
+            .ActivateOnEnter<LeftFiragaForte>()
+            .ActivateOnEnter<RightFiragaForte>()
+            .ActivateOnEnter<CurtainCall>()
             .ActivateOnEnter<ThundagaForte1>()
-            .ActivateOnEnter<ThundagaForte2>()
-            .ActivateOnEnter<ThundagaForte3>()
+            .ActivateOnEnter<ThundagaForte>()
+            //.ActivateOnEnter<ThundagaForte3>()
             .ActivateOnEnter<DarkForte>()
             .ActivateOnEnter<Entracte>();
     }

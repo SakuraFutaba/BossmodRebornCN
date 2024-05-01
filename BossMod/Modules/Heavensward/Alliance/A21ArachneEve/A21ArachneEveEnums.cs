@@ -10,45 +10,39 @@ public enum OID : uint
     DeepEarthAether = 0x167B, // R2.000, x?
     SpittingSpider = 0x1673, // R3.000, x?
     SkitteringSpider = 0x1674, // R3.000, x?
-    Actor1ea083 = 0x1EA083, // R0.500, x?, EventObj type
-    Actor1ea05b = 0x1EA05B, // R2.000, x?, EventObj type
-    Actor1e8f2f = 0x1E8F2F, // R0.500, x?, EventObj type
-    Actor1ea05a = 0x1EA05A, // R2.000, x?, EventObj type
-    Actor1ea045 = 0x1EA045, // R2.000, x?, EventObj type
-    Actor1e8fb8 = 0x1E8FB8, // R2.000, x?, EventObj type
-    Actor1ea057 = 0x1EA057, // R2.000, x?, EventObj type
-    Actor1ea059 = 0x1EA059, // R2.000, x?, EventObj type
-    Actor1ea058 = 0x1EA058, // R2.000, x?, EventObj type
-    Actor1ea03f = 0x1EA03F, // R2.000, x?, EventObj type
-    Actor1ea085 = 0x1EA085, // R0.500, x?, EventObj type
 }
 
 public enum AID : uint
 {
     AutoAttack1 = 872, // Boss/SpittingSpider/SkitteringSpider->player, no cast, single-target
-    DarkSpike = 6179, // Boss->player, 2.5s cast, single-target
-    SilkenSpray = 6180, // Boss->self, 2.5s cast, range 17+R 60-degree cone
+    AutoAttack2 = 870, // Webmaiden->player, no cast, single-target
+
     ArachneWeb = 6238, // Boss->location, no cast, range 6 circle
+    BitterBile = 6214, // SpittingSpider->self, no cast, single-target
+
+    DarkSpike = 6179, // Boss->player, 2.5s cast, single-target
+
+    DigestiveFluid = 6208, // SpittingSpider->player, 1.0s cast, single-target
+    FrondAffeared = 6202, // Boss->self, 3.0s cast, range 60 circle
+    Hatch = 6209, // EarthAether->self, no cast, range 4+R circle
+    Implosion = 6195, // Boss->self, 10.0s cast, range 80 circle
+    Pitfall1 = 6181, // Boss->self, 5.5s cast, range 60 circle
+    Pitfall2 = 6213, // Boss->self, no cast, range 60 circle
+    RealmShaker = 6206, // Webmaiden->self, no cast, range 6+R circle
+
+    ShadowBurst = 6200, // Boss->players, 4.0s cast, range 8 circle
+    SilkenSpray = 6180, // Boss->self, 2.5s cast, range 17+R 60-degree cone
+
+    Silkscreen = 6204, // Webmaiden->self, 2.5s cast, range 15+R width 4 rect
+    SpiderThread = 6201, // SkitteringSpider->player, 5.0s cast, range 6 circle
+    StickyWicket1 = 6215, // Boss->self, no cast, single-target
+    StickyWicket2 = 6207, // ArachneEveHelper->players, no cast, ???
+    TheWidowsEmbrace = 6280, // ArachneEveHelper->self, no cast, range 60 circle
+    TheWidowsKiss = 6210, // ArachneEveHelper->self, no cast, range 60 circle
     Tremblor1 = 6199, // ArachneEveHelper->self, 2.5s cast, range 10+R circle
     Tremblor2 = 6198, // ArachneEveHelper->self, 2.5s cast, range 20+R circle
     Tremblor3 = 6197, // ArachneEveHelper->self, 2.5s cast, range 30+R circle
     Unknown = 6281, // ArachneEveHelper->self, 4.0s cast, range 60+R circle
-    Pitfall1 = 6181, // Boss->self, 5.5s cast, range 60 circle
-    StickyWicket1 = 6215, // Boss->self, no cast, single-target
-    StickyWicket2 = 6207, // ArachneEveHelper->players, no cast, ???
-    Implosion = 6195, // Boss->self, 10.0s cast, range 80 circle
-    Hatch = 6209, // EarthAether->self, no cast, range 4+R circle
-    DigestiveFluid = 6208, // SpittingSpider->player, 1.0s cast, single-target
-    BitterBile = 6214, // SpittingSpider->self, no cast, single-target
-    AutoAttack2 = 870, // Webmaiden->player, no cast, single-target
-    Silkscreen = 6204, // Webmaiden->self, 2.5s cast, range 15+R width 4 rect
-    SpiderThread = 6201, // SkitteringSpider->player, 5.0s cast, range 6 circle
-    ShadowBurst = 6200, // Boss->players, 4.0s cast, range 8 circle
-    FrondAffeared = 6202, // Boss->self, 3.0s cast, range 60 circle
-    TheWidowsKiss = 6210, // ArachneEveHelper->self, no cast, range 60 circle
-    TheWidowsEmbrace = 6280, // ArachneEveHelper->self, no cast, range 60 circle
-    Pitfall2 = 6213, // Boss->self, no cast, range 60 circle
-    RealmShaker = 6206, // Webmaiden->self, no cast, range 6+R circle
 }
 
 public enum SID : uint
