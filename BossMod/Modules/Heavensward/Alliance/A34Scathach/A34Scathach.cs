@@ -13,7 +13,22 @@ class Shadesmite1(BossModule module) : Components.SelfTargetedAOEs(module, Actio
 class Shadesmite2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Shadesmite2), new AOEShapeCircle(3));
 class Shadesmite3(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Shadesmite3), new AOEShapeCircle(3));
 
-class Nox1(BossModule module) : Components.LocationTargetedAOEs(module, ActionID.MakeSpell(AID.Nox1), 10);
+class Pitfall(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.Pitfall));
+class FullSwing(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.FullSwing));
+
+class Nox : Components.StandardChasingAOEs
+{
+    public Nox(BossModule module) : base(module, new AOEShapeCircle(10), ActionID.MakeSpell(AID.NoxAOEFirst), ActionID.MakeSpell(AID.NoxAOERest), 5.5f, 1.6f, 5)
+    {
+        ExcludedTargets = Raid.WithSlot(true).Mask();
+    }
+
+    public override void OnEventIcon(Actor actor, uint iconID)
+    {
+        if (iconID == (uint)IconID.Nox)
+            ExcludedTargets.Clear(Raid.FindSlot(actor.InstanceID));
+    }
+}
 
 class MarrowDrain(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.MarrowDrain), new AOEShapeCone(10, 60.Degrees()));
 class BigHug(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.BigHug), new AOEShapeRect(6, 1.5f));

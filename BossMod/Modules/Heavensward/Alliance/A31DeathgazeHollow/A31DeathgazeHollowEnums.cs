@@ -75,5 +75,5 @@ public enum SID : uint
 
 public enum IconID : uint
 {
-    Icon_70 = 70, // player
+    WindSpread = 70,
 }

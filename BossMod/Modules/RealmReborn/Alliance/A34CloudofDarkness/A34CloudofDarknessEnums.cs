@@ -16,14 +16,18 @@ public enum OID : uint
 public enum AID : uint
 {
     Attack = 3306, // Boss->player, no cast, single-target
+
     FeintParticleBeam1 = 3298, // Boss->location, 3.5s cast, range 8 circle
     FeintParticleBeam2 = 3299, // CloudOfDarknessHelper1->location, no cast, range 3 circle
-    ParticleBeam1 = 3301, // CloudOfDarknessHelper1->location, no cast, range 5 circle
-    Unknown = 2369, // CloudOfDarknessHelper2->self, no cast, ???
+
     FloodOfDarkness = 3305, // Boss->location, no cast, range 60 circle
-    ZeroFormParticleBeam = 3297, // Boss->self, 2.5s cast, range 60+R width 24 rect
+
+    ParticleBeam1 = 3301, // CloudOfDarknessHelper1->location, no cast, range 5 circle
     ParticleBeam2 = 3302, // HyperchargedCloud->self, 20.0s cast, range 60 circle
     ParticleBeam3 = 3300, // CloudOfDarknessHelper1->location, no cast, range 60 circle
+
+    Unknown = 2369, // CloudOfDarknessHelper2->self, no cast, ???
+    ZeroFormParticleBeam = 3297, // Boss->self, 2.5s cast, range 60+R width 24 rect
 }
 
 public enum SID : uint
@@ -39,5 +43,5 @@ public enum SID : uint
 
 public enum IconID : uint
 {
-    Icon_197 = 197, // player
+    FeintParticleBeam = 197, // player chasing AOE icon
 }

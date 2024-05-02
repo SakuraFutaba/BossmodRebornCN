@@ -25,11 +25,13 @@ public enum AID : uint
     Manos = 7379, // Boss->self, no cast, single-target
     MarrowDrain = 3342, // ShadowcourtHound->self, 3.0s cast, range 6+R 120-degree cone
 
-    Nox1 = 7458, // Connla->location, 5.0s cast, range 10 circle
-    Nox2 = 7457, // Connla->location, no cast, range 10 circle
+    NoxAOEFirst = 7458, // Connla->location, 5.0s cast, range 10 circle
+    NoxAOERest = 7457, // Connla->location, no cast, range 10 circle
 
-    ParticleBeam = 7464, // Connla->location, no cast, range 5 circle
+    ParticleBeam1 = 7463, // Connla->location, no cast, range 60 circle
+    ParticleBeam2 = 7464, // Connla->location, no cast, range 5 circle
     Pitfall = 7377, // Connla->self, 5.0s cast, range 60 circle
+    FullSwing = 7378, // Connla2->self, 7.0s cast, range 60 circle
 
     Shadesmite1 = 7453, // Connla->self, 1.5s cast, range 15 circle
     Shadesmite2 = 7636, // Connla->self, 1.5s cast, range 3 circle
@@ -60,6 +62,7 @@ public enum AID : uint
 
     Unknown = 7452, // Boss->self, no cast, range 15 circle
     Unknown2 = 7376, // Connla2->self, no cast, single-target
+
     VoidBlizzard = 7778, // ShadowcourtJester->player, 2.5s cast, single-target
 }
 
@@ -73,12 +76,11 @@ public enum SID : uint
     Riled = 1146, // none->Connla/Connla2/Boss, extra=0x0
     Petrification = 610, // none->ShadowLimb, extra=0x0
     EvasionDown = 32, // none->ShadowLimb, extra=0x0
-
 }
 
 public enum IconID : uint
 {
-    Icon_197 = 197, // player
+    Nox = 197, // player
     Icon_62 = 62, // player
 }
 

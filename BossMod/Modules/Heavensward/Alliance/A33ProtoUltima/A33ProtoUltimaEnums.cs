@@ -39,6 +39,8 @@ public enum AID : uint
 
     Touchdown = 7580, // Boss->self, no cast, range 6+R circle
 
+    WreckingBall = 4557, // AllaganDreadnaught->location, 4.0s cast, range 8 circle
+
     UnknownWeaponskill1 = 7584, // Boss->self, no cast, single-target
     UnknownWeaponskill2 = 7585, // Boss->self, no cast, single-target
     UnknownWeaponskill3 = 7586, // Boss->self, no cast, single-target
@@ -48,5 +50,10 @@ public enum AID : uint
 public enum IconID : uint
 {
     Icon_62 = 62, // ProtoUltimaHelper2
-    Icon_197 = 197, // player
+    Nox = 197, // player chasing aoe icon
+}
+
+public enum TetherID : uint
+{
+    Tether_12 = 12, // AetherCollector->Boss
 }

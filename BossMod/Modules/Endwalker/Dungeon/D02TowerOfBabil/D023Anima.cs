@@ -15,25 +15,35 @@ public enum OID : uint
 public enum AID : uint
 {
 	AutoAttack = 25341, // Boss->player, no cast, single-target
+
 	AetherialPull = 25345, // MegaGraviton->player, 8.0s cast, single-target Knockback towardsorigin 30
-	BoundlessPain1 = 25347, // Boss->self, 8.0s cast, single-target
-	BoundlessPain2 = 25348, // Helper->location, no cast, range 6 circle
+
+	BoundlessPain1 = 25347, // Boss->self, 8.0s cast, single-target //players pulled to the center of the room and hit by a continuous AoE that slowly expands outwards
+    BoundlessPain2 = 25348, // Helper->location, no cast, range 6 circle
 	BoundlessPain3 = 25349, // Helper->location, no cast, range 6 circle
+
 	CharnelClaw = 25357, // IronNail->self, 6.0s cast, range 40 width 5 rect
 	CoffinScratch = 25358, // Helper->location, 3.5s cast, range 3 circle
-	Imperatum = 25353, // Boss->self, 5.0s cast, range 60 circle
-	LunarNail = 25342, // Boss->self, 3.0s cast, single-target
-	MegaGraviton = 25344, // Boss->self, 5.0s cast, range 60 circle
+
+	Imperatum = 25353, // Boss->self, 5.0s cast, range 60 circle //Players are pulled into the floor to face the lower half of Anima
+
+    LunarNail = 25342, // Boss->self, 3.0s cast, single-target
+
 	ObliviatingClaw1 = 25354, // LowerAnima->self, 3.0s cast, single-target
 	ObliviatingClaw2 = 25355, // LowerAnima->self, 3.0s cast, single-target
 	ObliviatingClawSpawnAOE = 25356, // IronNail->self, 6.0s cast, range 3 circle
+
 	Oblivion1 = 23697, // Helper->location, no cast, range 60 circle
 	Oblivion2 = 23872, // Helper->location, no cast, range 60 circle
 	Oblivion3 = 25359, // LowerAnima->self, 6.0s cast, single-target
+
+    MegaGraviton = 25344, // Boss->self, 5.0s cast, range 60 circle // Tether mechanic
     PaterPatriaeAOE = 24168, // Helper->self, 3.5s cast, range 60 width 8 rect
 	PaterPatriae2 = 25350, // Boss->self, 3.5s cast, single-target
+
 	PhantomPain1 = 21182, // Boss->self, 7.0s cast, single-target
 	PhantomPain2 = 25343, // Helper->self, 7.0s cast, range 20 width 20 rect
+
 	Unknown1 = 23929, // Helper->player, no cast, single-target Knockback 60
 	Unknown2 = 26229, // Helper->self, no cast, range 60 circle Knockback towards origin 60
     Unknown3 = 27228, // LowerAnima->self, no cast, single-target
@@ -47,7 +57,7 @@ public enum SID : uint
 
 public enum IconID : uint
 {
-	Icon_197 = 197, // player
+    Nox = 197, // player chasing AOE icon
 }
 
 public enum TetherID : uint

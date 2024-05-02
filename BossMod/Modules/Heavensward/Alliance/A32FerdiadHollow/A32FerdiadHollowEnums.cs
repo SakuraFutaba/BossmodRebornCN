@@ -54,9 +54,9 @@ public enum AID : uint
 
     Sleight = 7321, // Boss->location, no cast, ???
 
-    Unknown1 = 7241, // WailingAtomos/CursingAtomos->self, 6.8s cast, single-target
-    Unknown2 = 7324, // WailingAtomos/CursingAtomos->self, 8.5s cast, single-target
-    Unknown3 = 7325, // WailingAtomos/CursingAtomos->self, 8.5s cast, single-target
+    AtmosAOE1 = 7241, // WailingAtomos/CursingAtomos->self, 6.8s cast, single-target // circle?
+    AtmosAOE2 = 7324, // WailingAtomos/CursingAtomos->self, 8.5s cast, single-target // circle?
+    AtmosDonut = 7325, // WailingAtomos/CursingAtomos->self, 8.5s cast, single-target // donut?
 
     Unknown4 = 7326, // WailingAtomos->location, 3.0s cast, width 6 rect charge
     Unknown5 = 7323, // WailingAtomos->self, 4.8s cast, single-target

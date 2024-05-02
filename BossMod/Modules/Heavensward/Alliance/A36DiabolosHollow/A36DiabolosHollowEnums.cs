@@ -7,6 +7,7 @@ public enum OID : uint
     Deathgate = 0x190A, // R3.200, x0 (spawn during fight)
     DiabolicGate = 0x190B, // R3.200, x0 (spawn during fight)
     Shadowsphere = 0x19AF, // R1.500, x0 (spawn during fight)
+    NightHound = 0x190E, // R5.850, x0 (spawn during fight)
 }
 
 public enum AID : uint
@@ -28,8 +29,8 @@ public enum AID : uint
     HollowOmen2 = 7203, // Helper->self, 20.0s cast, range 30 circle
     Hollowshield = 7198, // Boss->self, no cast, single-target
 
-    Nox1 = 7195, // Helper->location, no cast, range 10 circle
-    Nox2 = 7196, // Helper->location, 5.0s cast, range 10 circle
+    NoxAOEFirst = 7196, // Helper->location, 5.0s cast, range 10 circle
+    NoxAOERest = 7195, // Helper->location, no cast, range 10 circle
 
     ParticleBeam1 = 7204, // Helper->location, no cast, range 60 circle
     ParticleBeam2 = 7205, // Helper->location, no cast, range 5 circle
@@ -41,6 +42,10 @@ public enum AID : uint
     Shadethrust = 7194, // Boss->location, 3.0s cast, range 40+R width 5 rect
     UnknownAbility = 7192, // Boss->location, no cast, ???
     VoidCall = 7188, // Deathgate->self, 9.0s cast, single-target
+
+    Attack = 870, // NightHound->player, no cast, single-target
+    RavenousBite = 7687, // NightHound->player, no cast, single-target
+
 }
 
 public enum SID : uint
@@ -63,7 +68,7 @@ public enum SID : uint
 
 public enum IconID : uint
 {
-    Icon_197 = 197, // player
+    Nox = 197, // player chasing AOE icon
     Icon_91 = 91, // player
     Icon_93 = 93, // player
     Icon_40 = 40, // player
