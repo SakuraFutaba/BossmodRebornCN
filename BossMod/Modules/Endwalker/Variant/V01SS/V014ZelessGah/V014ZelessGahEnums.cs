@@ -9,6 +9,7 @@ public enum OID : uint
     MyrrhIncenseBurner = 0x1EB7CF, // R2.000, x1, EventObj type
     ForebodingDoor = 0x1EB7CE, // R0.500, x1, EventObj type
     BallOfFire = 0x39AF, // R1.000, x0 (spawn during fight)
+    ArcaneFont = 0x39B1, // R0.500-1.000, x0 (spawn during fight)
 }
 
 public enum AID : uint
@@ -26,7 +27,7 @@ public enum AID : uint
     FiresteelFracture = 29868, // Boss->self/player, 5.0s cast, range 40 ?-degree cone
     InfernBrand = 29841, // Boss->self, 4.0s cast, single-target
 
-    BlazingBenifice = 29861, // 39B1->self, 1.5s cast, range 100 width 10 rect
+    BlazingBenifice = 29861, // ArcaneFont->self, 1.5s cast, range 100 width 10 rect
 
     InfernGale1 = 29858, // Boss->self, 4.0s cast, single-target
     InfernGale2 = 29859, // Helper->player, no cast, single-target

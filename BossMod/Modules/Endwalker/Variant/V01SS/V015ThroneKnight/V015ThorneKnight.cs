@@ -14,9 +14,9 @@ class SacredFlay1(BossModule module) : Components.SelfTargetedAOEs(module, Actio
 class SacredFlay2(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.SacredFlay2), new AOEShapeCone(50, 50.Degrees()));
 class SacredFlay3(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.SacredFlay3), new AOEShapeCone(50, 50.Degrees()));
 
-class ForeHonor(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ForeHonor), new AOEShapeCone(50, 180.Degrees()));
+class ForeHonor(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ForeHonor), new AOEShapeCone(50, 90.Degrees()));
 
 class Cogwheel(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.Cogwheel));
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", PrimaryActorOID = (uint)OID.Boss, GroupType = BossModuleInfo.GroupType.CFC, GroupID = 868, NameID = 11419)]
-public class V015ThorneKnight(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsRect(new(289, -230), 20, 20, 45.Degrees()));
+public class V015ThorneKnight(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsRect(new(289, -230), 15, 15, 45.Degrees()));
