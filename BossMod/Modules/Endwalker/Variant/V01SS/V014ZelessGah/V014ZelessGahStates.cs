@@ -6,6 +6,7 @@ class V014ZelessGahStates : StateMachineBuilder
     {
         TrivialPhase()
             .ActivateOnEnter<Burn>()
+            .ActivateOnEnter<BlazingBenifice>()
             .ActivateOnEnter<PureFire2>()
             .ActivateOnEnter<CastShadow>()
             .ActivateOnEnter<FiresteelFracture>()

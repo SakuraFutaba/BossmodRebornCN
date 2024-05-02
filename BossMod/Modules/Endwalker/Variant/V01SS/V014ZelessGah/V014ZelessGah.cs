@@ -17,8 +17,8 @@ class CastShadow(BossModule module) : Components.GenericAOEs(module, ActionID.Ma
     private List<Actor> _castersShadowFirst = new();
     private List<Actor> _castersShadowNext = new();
 
-    private static readonly AOEShape _shapeShadowFirst = new AOEShapeCone(50, 45.Degrees());
-    private static readonly AOEShape _shapeShadowNext = new AOEShapeCone(50, 45.Degrees());
+    private static readonly AOEShape _shapeShadowFirst = new AOEShapeCone(50, 15.Degrees());
+    private static readonly AOEShape _shapeShadowNext = new AOEShapeCone(50, 15.Degrees());
 
     public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor)
     {
@@ -45,6 +45,9 @@ class CastShadow(BossModule module) : Components.GenericAOEs(module, ActionID.Ma
         _ => null
     };
 }
+
+class BlazingBenifice(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.BlazingBenifice), new AOEShapeRect(100, 5, 100));
+
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", PrimaryActorOID = (uint)OID.Boss, GroupType = BossModuleInfo.GroupType.CFC, GroupID = 868, NameID = 11394)]
 public class V014ZelessGah(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsRect(new(289, -105), 15, 20));

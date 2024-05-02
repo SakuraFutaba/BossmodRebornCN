@@ -18,7 +18,7 @@ public enum AID : uint
     BlazingBeacon2 = 28926, // Helper->self, 6.5s cast, range 50 width 16 rect
     BlazingBeacon3 = 28928, // Helper->self, 8.5s cast, range 50 width 16 rect
 
-    BlisteringBlow = 28906, // Boss->player, 5.0s cast, single-target
+    BlisteringBlow = 28906, // Boss->player, 5.0s cast, single-target //tankbuster
     Cogwheel = 28907, // Boss->self, 5.0s cast, range 50 circle
     Explosion = 28925, // BallOfFire->self, 7.0s cast, range 50 width 6 cross
     ForeHonor = 28908, // Boss->self, 6.0s cast, range 50 180-degree cone

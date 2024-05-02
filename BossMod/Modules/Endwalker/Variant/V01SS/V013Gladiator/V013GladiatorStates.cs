@@ -11,11 +11,15 @@ class V013GladiatorStates : StateMachineBuilder
             .ActivateOnEnter<RingOfMight2>()
             .ActivateOnEnter<RingOfMight3>()
             .ActivateOnEnter<RushOfMight>()
-            .ActivateOnEnter<FlashOfSteelMeteor>()
+            .ActivateOnEnter<ShatteringSteelMeteor>()
             .ActivateOnEnter<RackAndRuin>()
             .ActivateOnEnter<FlashOfSteel1>()
             .ActivateOnEnter<FlashOfSteel2>()
             .ActivateOnEnter<SculptorsPassion>()
+            .ActivateOnEnter<GoldenFlame>()
+            .ActivateOnEnter<SilverFlame1>()
+            .ActivateOnEnter<SilverFlame2>()
+            .ActivateOnEnter<Landing>()
             .ActivateOnEnter<MightySmite>();
     }
 }

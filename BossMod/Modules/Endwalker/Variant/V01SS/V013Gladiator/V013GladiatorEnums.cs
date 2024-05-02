@@ -8,6 +8,7 @@ public enum OID : uint
     WhirlwindSafe = 0x39A2, // R2.000, x0 (spawn during fight)
     WhirlwindBad = 0x3AEC, // R1.330, x0 (spawn during fight)
     AntiqueBoulder = 0x39A3, // R1.800, x0 (spawn during fight)
+    HatefulVisage = 0x39A0, // R2.250, x0 (spawn during fight)
 }
 
 public enum AID : uint
@@ -35,9 +36,7 @@ public enum AID : uint
     RingOfMight3In = 30276, // Helper->self, 12.0s cast, range 18-30 donut
 
     FlashOfSteelMeteor = 30287, // Boss->self, 5.0s cast, range 60 circle
-
     Landing = 30288, // AntiqueBoulder->self, 7.0s cast, range 50 circle
-
 
     RushOfMight1 = 30266, // Boss->location, 10.0s cast, range 25 width 3 rect aoe
     RushOfMight2 = 30267, // Boss->location, 10.0s cast, range 25 width 3 rect aoe
@@ -45,11 +44,20 @@ public enum AID : uint
     RushOfMightFront = 30269, // Helper->self, 10.5s cast, range 60 180-degree cone
     RushOfMightBack = 30270, // Helper->self, 12.5s cast, range 60 180-degree cone
 
-    SculptorsPassion = 30282, // Boss->self, 5.0s cast, range 60 width 8 rect shared
+    SculptorsPassion = 30282, // Boss->self, 5.0s cast, range 60 width 8 rect shared ///
     ShatteringSteel = 30283, // Boss->self, 12.0s cast, range 60 circle raidwide
 
     SunderedRemainsVisual = 30280, // Boss->self, 3.0s cast, single-target
     SunderedRemains = 30281, // Helper->self, 9.0s cast, range 10 circle aoe
+
+    //11
+    HatefulVisage = 30289, // Boss->self, 3.0s cast, single-target
+    GoldenFlame = 30290, // HatefulVisage->self, 8.0s cast, range 60 width 10 rect
+
+    //12
+    SilverFlameFirst1 = 30292, // HatefulVisage->self, 8.0s cast, range 60 width 10 rect
+    SilverFlameFirst2 = 30291, // HatefulVisage->self, 8.0s cast, range 60 width 10 rect
+    SilverFlameRest = 30293, // HatefulVisage->self, no cast, range 60 width 10 rect
 }
 
 
