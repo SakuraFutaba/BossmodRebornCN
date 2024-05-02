@@ -11,7 +11,7 @@ class FlailingTentacles2Knockback(BossModule module) : Components.KnockbackFromC
 
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 120, NameID = 4626)]
-public class A13Cuchulainn(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(287.984f, 138.750f), 35))
+public class A13Cuchulainn(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(288, 138.5f), 29.5f))
 {
     protected override void DrawEnemies(int pcSlot, Actor pc)
     {

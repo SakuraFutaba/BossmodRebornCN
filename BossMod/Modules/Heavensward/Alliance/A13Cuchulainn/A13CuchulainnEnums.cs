@@ -21,6 +21,8 @@ public enum AID : uint
     CorrosiveBile1 = 5174, // Boss->self, 2.0s cast, single-target
     CorrosiveBile2 = 5175, // CuchulainnHelper->self, no cast, range 18+R ?-degree cone
     Corruption = 5191, // BlackPhlegm->self, no cast, range 5+R circle
+    Devour = 5185, // Boss->self, no cast, ???
+    Expel = 5186, // Boss->self, no cast, single-target
     FlailingTentacles1 = 5178, // Boss->self, 5.0s cast, single-target
     FlailingTentacles2 = 5179, // CuchulainnHelper->self, 5.0s cast, range 32+R width 7 rect
     GrandCorruption = 5192, // BlackPhlegm->self, no cast, range 80+R circle
