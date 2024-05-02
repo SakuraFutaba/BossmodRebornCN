@@ -14,7 +14,7 @@ class FlameWreath(BossModule module) : Components.LocationTargetedAOEs(module, A
 class SerpentineStrike(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.SerpentineStrike), new AOEShapeCircle(20));
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 120, NameID = 4631)]
-public class A14Echidna(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(285, -130), 35))
+public class A14Echidna(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(288, -126), 29.5f))
 {
     protected override void DrawEnemies(int pcSlot, Actor pc)
     {

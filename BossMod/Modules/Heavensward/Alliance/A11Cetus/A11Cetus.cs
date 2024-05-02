@@ -9,7 +9,7 @@ class ExpulsionKnockback(BossModule module) : Components.KnockbackFromCastTarget
 class BiteAndRun(BossModule module) : Components.ChargeAOEs(module, ActionID.MakeSpell(AID.BiteAndRun), 2.5f);
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 120, NameID = 4613)]
-public class A11Cetus(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-288, -3), 35))
+public class A11Cetus(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(-288, 0), 30))
 {
     protected override void DrawEnemies(int pcSlot, Actor pc)
     {

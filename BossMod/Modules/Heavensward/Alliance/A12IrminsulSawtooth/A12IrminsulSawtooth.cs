@@ -7,15 +7,15 @@ class MucusBomb(BossModule module) : Components.SpreadFromCastTargets(module, Ac
 class MucusSpray(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.MucusSpray2), new AOEShapeDonut(6, 20));
 class Rootstorm(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.Rootstorm));
 class Ambush(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.Ambush), new AOEShapeCircle(9));
-class AmbushKnockback(BossModule module) : Components.KnockbackFromCastTarget(module, ActionID.MakeSpell(AID.Ambush), 30, stopAtWall: true);
+class AmbushKnockback(BossModule module) : Components.KnockbackFromCastTarget(module, ActionID.MakeSpell(AID.Ambush), 30, stopAtWall: true, kind: Kind.TowardsOrigin);
 
-class ShockwaveStomp(BossModule module) : Components.CastLineOfSightAOE(module, ActionID.MakeSpell(AID.ShockwaveStomp), 60, false)
+class ShockwaveStomp(BossModule module) : Components.CastLineOfSightAOE(module, ActionID.MakeSpell(AID.ShockwaveStomp), 70, false)
 {
     public override IEnumerable<Actor> BlockerActors() => Module.Enemies(OID.Irminsul).Where(a => !a.IsDead);
 }
 
 [ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", PrimaryActorOID = (uint)OID.Irminsul, GroupType = BossModuleInfo.GroupType.CFC, GroupID = 120, NameID = 4623)]
-public class A12IrminsulSawtooth(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(0, 130), 35))
+public class A12IrminsulSawtooth(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsDonut(new(0, 130), 8, 35))
 {
     private Actor? _sawtooth;
 
