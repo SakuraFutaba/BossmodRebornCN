@@ -7,8 +7,7 @@ class V014ZelessGahStates : StateMachineBuilder
         TrivialPhase()
             .ActivateOnEnter<Burn>()
             .ActivateOnEnter<PureFire2>()
-            .ActivateOnEnter<CastShadowFirst>()
-            .ActivateOnEnter<CastShadowNext>()
+            .ActivateOnEnter<CastShadow>()
             .ActivateOnEnter<FiresteelFracture>()
             .ActivateOnEnter<InfernGaleKnockback>()
             .ActivateOnEnter<ShowOfStrength>();

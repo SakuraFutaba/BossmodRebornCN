@@ -34,6 +34,8 @@ public enum AID : uint
     RunawayRunoff = 29911, // Helper->self, 9.0s cast, range 60 circle
     Gigantomill = 29898, // Boss->self, 8.0s cast, range 72 width 10 cross
 
+    RollingBoulder = 29914, // Helper->self, no cast, range 10 width 10 rect
+
 }
 
 public enum IconID : uint
