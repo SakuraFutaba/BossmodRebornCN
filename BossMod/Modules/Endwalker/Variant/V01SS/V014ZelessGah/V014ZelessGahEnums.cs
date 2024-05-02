@@ -16,7 +16,7 @@ public enum AID : uint
     AutoAttack = 6499, // Boss->player, no cast, single-target
     Burn = 29839, // BallOfFire->self, 1.5s cast, range 12 circle
 
-    CastShadow1 = 29850, // Boss->self, 4.8s cast, single-target
+    CastShadow = 29850, // Boss->self, 4.8s cast, single-target
     CastShadowFirst = 29851, // Helper->self, 5.5s cast, range 65 ?-degree cone
     CastShadowNext = 29853, // Helper->self, 7.5s cast, range 65 ?-degree cone
 
@@ -25,6 +25,8 @@ public enum AID : uint
 
     FiresteelFracture = 29868, // Boss->self/player, 5.0s cast, range 40 ?-degree cone
     InfernBrand = 29841, // Boss->self, 4.0s cast, single-target
+
+    BlazingBenifice = 29861, // 39B1->self, 1.5s cast, range 100 width 10 rect
 
     InfernGale1 = 29858, // Boss->self, 4.0s cast, single-target
     InfernGale2 = 29859, // Helper->player, no cast, single-target

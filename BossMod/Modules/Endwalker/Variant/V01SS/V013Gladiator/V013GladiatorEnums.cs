@@ -7,6 +7,7 @@ public enum OID : uint
     Regret = 0x39A1, // R1.000, x0 (spawn during fight)
     WhirlwindSafe = 0x39A2, // R2.000, x0 (spawn during fight)
     WhirlwindBad = 0x3AEC, // R1.330, x0 (spawn during fight)
+    AntiqueBoulder = 0x39A3, // R1.800, x0 (spawn during fight)
 }
 
 public enum AID : uint
@@ -32,6 +33,11 @@ public enum AID : uint
     RingOfMight1In = 30274, // Helper->self, 12.0s cast, range 8-30 donut
     RingOfMight2In = 30275, // Helper->self, 12.0s cast, range 13-30 donut
     RingOfMight3In = 30276, // Helper->self, 12.0s cast, range 18-30 donut
+
+    FlashOfSteelMeteor = 30287, // Boss->self, 5.0s cast, range 60 circle
+
+    Landing = 30288, // AntiqueBoulder->self, 7.0s cast, range 50 circle
+
 
     RushOfMight1 = 30266, // Boss->location, 10.0s cast, range 25 width 3 rect aoe
     RushOfMight2 = 30267, // Boss->location, 10.0s cast, range 25 width 3 rect aoe
