@@ -15,8 +15,10 @@ class A34ScathachStates : StateMachineBuilder
             .ActivateOnEnter<Shadesmite1>()
             .ActivateOnEnter<Shadesmite2>()
             .ActivateOnEnter<Shadesmite3>()
-            .ActivateOnEnter<Nox1>()
+            .ActivateOnEnter<Nox>()
             .ActivateOnEnter<MarrowDrain>()
+            .ActivateOnEnter<Pitfall>()
+            .ActivateOnEnter<FullSwing>()
             .ActivateOnEnter<BigHug>();
     }
 }

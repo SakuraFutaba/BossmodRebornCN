@@ -5,7 +5,7 @@ class A33ProtoUltimaStates : StateMachineBuilder
     public A33ProtoUltimaStates(BossModule module) : base(module)
     {
         TrivialPhase()
-            //.ActivateOnEnter<AetherialPool>()
+            .ActivateOnEnter<WreckingBall>()
             .ActivateOnEnter<AetherochemicalFlare>()
             .ActivateOnEnter<AetherochemicalLaser1>()
             .ActivateOnEnter<AetherochemicalLaser2>()
