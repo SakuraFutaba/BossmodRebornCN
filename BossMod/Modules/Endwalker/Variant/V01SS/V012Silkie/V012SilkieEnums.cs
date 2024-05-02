@@ -7,6 +7,7 @@ public enum OID : uint
 	EasternEwer = 0x39F1, // R2.400, x5
 	SilkenPuff = 0x39F0, // R1.000, x15
 	Actor1e9230 = 0x1E9230, // R0.500, x0 (spawn during fight), EventObj type
+    Actor1eb76e = 0x1EB76E, // R0.500, x0 (spawn during fight), EventObj type // possibly route 3 brooms
 }
 
 public enum AID : uint
@@ -37,7 +38,7 @@ public enum AID : uint
 	SlipperySoap = 30522, // Boss->location, 5.0s cast, width 10 rect charge
 
 	SpotRemover1 = 30530, // Boss->self, 3.5s cast, single-target
-	SpotRemover2 = 30531, // Helper->location, 3.5s cast, range 5 circle
+	SpotRemover2 = 30531, // Helper->location, 3.5s cast, range 5 circle// persistenet aoe
 
 	SqueakyCleanE = 30509, // Boss->self, 4.5s cast, single-target
 	SqueakyCleanAOE1E = 30511, // Helper->self, 6.0s cast, range 60 90-degree cone
@@ -51,6 +52,18 @@ public enum AID : uint
 
 	WashOut1 = 30533, // Boss->self, 8.0s cast, single-target
 	WashOutKnockback = 30534, // Helper->self, 8.0s cast, range 60 width 60 rect
+
+	//route 2
+    EasternEwers = 30535, // Boss->self, 4.0s cast, single-target
+    BrimOver = 30536, // EasternEwer->self, 3.0s cast, range 4 circle
+    Rinse = 30537, // Helper->self, no cast, range 4 circle
+
+    //route 4
+    PuffAndTumbleRest = 30538, // SilkenPuff->location, 3.0s cast, single-target
+    PuffAndTumbleVisual = 30539, // SilkenPuff->location, no cast, single-target
+    PuffAndTumble1 = 30540, // Helper->location, 4.6s cast, range 4 circle
+    PuffAndTumble2 = 30656, // Helper->location, 1.6s cast, range 4 circle
+
 }
 
 public enum SID : uint
@@ -60,9 +73,11 @@ public enum SID : uint
 	ChillingSudsBoss = 3298, // Boss->Boss, extra=0x0
 	BracingSudsPuff = 3305, // none->SilkenPuff, extra=0x0
 	ChillingSudsPuff = 3306, // none->SilkenPuff, extra=0x0
+    Route2Ewer = 2397, // none->EasternEwer, extra=0x1EC
+
 }
 
 public enum IconID : uint
 {
-	Icon_218 = 218, // player
+	Tankbuster = 218, // player
 }
