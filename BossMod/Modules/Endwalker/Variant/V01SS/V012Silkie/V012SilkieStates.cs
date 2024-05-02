@@ -21,7 +21,10 @@ class V012SilkieStates : StateMachineBuilder
             .ActivateOnEnter<SqueakyCleanAOE2W>()
             .ActivateOnEnter<SqueakyCleanAOE3W>()
             .ActivateOnEnter<V012PuffTracker>()
+            .ActivateOnEnter<PuffAndTumble1>()
+            .ActivateOnEnter<PuffAndTumble2>()
             .ActivateOnEnter<CarpetBeater>()
+            .ActivateOnEnter<EasternEwers>()
             .ActivateOnEnter<TotalWash>();
     }
 }

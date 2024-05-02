@@ -1,4 +1,6 @@
-﻿namespace BossMod.Endwalker.Variant.V01SS.V011Geryon;
+﻿using BossMod.Endwalker.Alliance.A32Llymlaen;
+
+namespace BossMod.Endwalker.Variant.V01SS.V011Geryon;
 
 public enum OID : uint
 {
@@ -36,6 +38,14 @@ public enum AID : uint
 
     RollingBoulder = 29914, // Helper->self, no cast, range 10 width 10 rect
 
+    //route 3
+    RunawaySludge = 29910, // Helper->self, 5.0s cast, range 9 circle
+    Shockwave = 29902, // Boss->self, 5.0s cast, range 40 width 40 rect
+}
+
+public enum SID : uint
+{
+    Sludge = 2948, // none->player, extra=0x0 route 3
 }
 
 public enum IconID : uint

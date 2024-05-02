@@ -73,7 +73,7 @@ public enum IconID : uint
     Icon_263 = 263, // player
     Icon_168 = 168, // RedGirl2
     Icon_167 = 167, // RedGirl2
-    Icon_218 = 218, // player
+    Tankbuster = 218, // player
 }
 
 public enum TetherID : uint

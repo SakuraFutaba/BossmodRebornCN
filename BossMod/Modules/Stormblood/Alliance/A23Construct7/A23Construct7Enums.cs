@@ -92,5 +92,5 @@ public enum IconID : uint
     Icon_136 = 136, // player
     Icon_137 = 137, // player
     Icon_138 = 138, // player
-    Icon_218 = 218, // player
+    Tankbuster = 218, // player
 }
