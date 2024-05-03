@@ -7,7 +7,7 @@ class A13CuchulainnStates : StateMachineBuilder
         TrivialPhase()
             .ActivateOnEnter<CorrosiveBile1>()
             .ActivateOnEnter<FlailingTentacles2>()
-            .ActivateOnEnter<FlailingTentacles2Knockback>()
+            //.ActivateOnEnter<FlailingTentacles2Knockback>()
             .ActivateOnEnter<Beckon>()
             .ActivateOnEnter<BileBelow>()
             .ActivateOnEnter<Pestilence>()
