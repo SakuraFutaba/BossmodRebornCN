@@ -12,7 +12,7 @@ class A12IrminsulSawtoothStates : StateMachineBuilder
             .ActivateOnEnter<MucusSpray>()
             .ActivateOnEnter<Rootstorm>()
             .ActivateOnEnter<Ambush>()
-            .ActivateOnEnter<AmbushKnockback>()
+            //.ActivateOnEnter<AmbushKnockback>()
             .ActivateOnEnter<ShockwaveStomp>();
     }
 }
