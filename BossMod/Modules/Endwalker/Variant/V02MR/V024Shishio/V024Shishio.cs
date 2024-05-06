@@ -78,5 +78,5 @@ class HauntingThrall(BossModule module) : Components.GenericAOEs(module)
 //Route 11
 class ReishoAOE(BossModule module) : Components.SelfTargetedAOEs(module, ActionID.MakeSpell(AID.ReishoAOE), new AOEShapeCircle(6));
 
-[ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 945, NameID = 12428)]
+[ModuleInfo(BossModuleInfo.Maturity.Contributed, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 945, NameID = 12428)]
 public class V024Shishio(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsSquare(new(-40, -300), 20));
