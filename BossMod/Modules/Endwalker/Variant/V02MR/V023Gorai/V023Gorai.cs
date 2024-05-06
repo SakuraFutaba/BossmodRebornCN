@@ -239,5 +239,5 @@ class FightingSpiritsRaidwide(BossModule module) : Components.RaidwideCast(modul
 class BiwaBreakerFirst(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.BiwaBreakerFirst));
 class BiwaBreakerRest(BossModule module) : Components.RaidwideCast(module, ActionID.MakeSpell(AID.BiwaBreakerRest));
 
-[ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 945, NameID = 12373)]
+[ModuleInfo(BossModuleInfo.Maturity.Contributed, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 945, NameID = 12373)]
 public class V023Gorai(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsSquare(new(741, -190), 20));

@@ -49,5 +49,5 @@ class StringRock(BossModule module) : Components.GenericAOEs(module, ActionID.Ma
     };
 }
 
-[ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 945, NameID = 12428)]
+[ModuleInfo(BossModuleInfo.Maturity.Contributed, Contributors = "CombatReborn Team", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 945, NameID = 12428)]
 public class V025Enenra(WorldState ws, Actor primary) : BossModule(ws, primary, new ArenaBoundsCircle(new(900, -900), 20));
