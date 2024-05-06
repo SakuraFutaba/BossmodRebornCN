@@ -1,6 +1,4 @@
-﻿using BossMod.Endwalker.Alliance.A32Llymlaen;
-
-namespace BossMod.Endwalker.Variant.V01SS.V011Geryon;
+﻿namespace BossMod.Endwalker.Variant.V01SS.V011Geryon;
 
 public enum OID : uint
 {

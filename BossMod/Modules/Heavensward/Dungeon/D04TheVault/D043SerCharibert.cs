@@ -64,33 +64,22 @@ class HeavensflameAOE(BossModule module) : Components.LocationTargetedAOEs(modul
 class HolyChain(BossModule module) : Components.Chains(module, (uint)TetherID.HolyChain, ActionID.MakeSpell(AID.HolyChainPlayerTether));
 
 
-class TurretCharge(BossModule module) : Components.Exaflare(module, 4)
+class DawnKnight(BossModule module) : Components.GenericAOEs(module)
 {
-    public override void OnCastStarted(Actor caster, ActorCastInfo spell)
-    {
-        if ((AID)spell.Action.ID == AID.TurretChargeStart)
-        {
-            Lines.Add(new() { Next = caster.Position, Advance = 8 * spell.Rotation.ToDirection(), NextExplosion = spell.NPCFinishAt, TimeToMove = 0.8f, ExplosionsLeft = 8, MaxShownExplosions = 4 });
-        }
-    }
+    private IReadOnlyList<Actor> _spirits = module.Enemies(OID.DawnKnight);
 
-    public override void OnEventCast(Actor caster, ActorCastEvent spell)
-    {
-        if ((AID)spell.Action.ID is AID.TurretChargeStart or AID.TurretChargeRest)
-        {
-            var pos = (AID)spell.Action.ID == AID.TurretChargeStart ? caster.Position : spell.TargetXZ;
-            int index = Lines.FindIndex(item => item.Next.AlmostEqual(pos, 1));
-            if (index == -1)
-            {
-                ReportError($"Failed to find entry for {caster.InstanceID:X}");
-                return;
-            }
+    private static readonly AOEShapeCircle _shape = new(3);
 
-            AdvanceLine(Lines[index], pos);
-            if (Lines[index].ExplosionsLeft == 0)
-                Lines.RemoveAt(index);
-        }
-    }
+    public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor) => _spirits.Where(actor => !actor.IsDead).Select(b => new AOEInstance(_shape, b.Position));
+}
+
+class DuskKnight(BossModule module) : Components.GenericAOEs(module)
+{
+    private IReadOnlyList<Actor> _spirits = module.Enemies(OID.DuskKnight);
+
+    private static readonly AOEShapeCircle _shape = new(3);
+
+    public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor) => _spirits.Where(actor => !actor.IsDead).Select(b => new AOEInstance(_shape, b.Position));
 }
 
 class D043SerCharibertStates : StateMachineBuilder
@@ -106,7 +95,8 @@ class D043SerCharibertStates : StateMachineBuilder
             .ActivateOnEnter<SacredFlame>()
             .ActivateOnEnter<HeavensflameAOE>()
             .ActivateOnEnter<HolyChain>()
-            .ActivateOnEnter<TurretCharge>();
+            .ActivateOnEnter<DawnKnight>()
+            .ActivateOnEnter<DuskKnight>();
     }
 }
 
