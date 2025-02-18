@@ -118,13 +118,15 @@ sealed class WorldStateGameSync : IDisposable
         _processPacketRSVDataHook.Enable();
         Service.Log($"[WSG] ProcessPacketRSVData address = 0x{_processPacketRSVDataHook.Address:X}");
 
-        // _processSystemLogMessageHook = Service.Hook.HookFromSignature<ProcessSystemLogMessageDelegate>("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 0F B6 43 28", ProcessSystemLogMessageDetour);
-        // _processSystemLogMessageHook.Enable();
+        _processSystemLogMessageHook = Service.Hook.HookFromSignature<ProcessSystemLogMessageDelegate>("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 0F B6 46 28", ProcessSystemLogMessageDetour);
+        _processSystemLogMessageHook.Enable();
         Service.Log($"[WSG] ProcessSystemLogMessage address = 0x{_processSystemLogMessageHook:X}");
 
         _processPacketOpenTreasureHook = Service.Hook.HookFromSignature<ProcessPacketOpenTreasureDelegate>("40 53 48 83 EC 20 48 8B DA 48 8D 0D ?? ?? ?? ?? 8B 52 10 E8 ?? ?? ?? ?? 48 85 C0 74 1B", ProcessPacketOpenTreasureDetour);
         _processPacketOpenTreasureHook.Enable();
         Service.Log($"[WSG] ProcessPacketOpenTreasure address = 0x{_processPacketOpenTreasureHook.Address:X}");
+        
+        
     }
 
     public void Dispose()
