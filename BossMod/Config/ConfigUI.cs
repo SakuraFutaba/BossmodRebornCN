@@ -35,11 +35,13 @@ public sealed class ConfigUI : IDisposable
         _mv = new(rotationDB?.Plans, ws);
         _presets = rotationDB != null ? new(rotationDB.Presets) : null;
 
-        _tabs.Add("Settings", DrawSettings);
-        _tabs.Add("Supported bosses", () => _mv.Draw(_tree, _ws));
-        _tabs.Add("Autorotation presets", () => _presets?.Draw());
+        
+        _tabs.Add("设置", DrawSettings);
+        _tabs.Add("支持的 Bosses", () => _mv.Draw(_tree, _ws));
+        _tabs.Add("自动输出预设", () => _presets?.Draw());
         _tabs.Add("Slash commands", DrawAvailableCommands);
-        _tabs.Add("About", _about.Draw);
+        _tabs.Add("说明", _about.Draw);
+        
 
         Dictionary<Type, UINode> nodes = [];
         var nodes2 = _root.Nodes;
@@ -77,9 +79,9 @@ public sealed class ConfigUI : IDisposable
 
     private static readonly Dictionary<string, string> _availableAICommands = new()
     {
-        { "on", "Enables the AI." },
-        { "off", "Disables the AI." },
-        { "toggle", "Toggles the AI on/off." },
+        { "on", "开启AI" },
+        { "off", "关闭AI " },
+        { "toggle", "切换 the AI on/off." },
         { "targetmaster", "Toggles the focus on target leader." },
         { "follow slotX", "Follows the specified slot, eg. Slot1." },
         { "follow name", "Follows the specified party member by name." },

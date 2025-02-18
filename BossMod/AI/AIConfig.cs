@@ -1,58 +1,63 @@
 ﻿namespace BossMod.AI;
 
-[ConfigDisplay(Name = "AI configuration (AI is very experimental, use at your own risk!)", Order = 7)]
+
+[ConfigDisplay(Name = "AI 配置 (AI 处于非常实验阶段，请自行承担风险！)", Order = 7)]
 sealed class AIConfig : ConfigNode
 {
-    [PropertyDisplay("Show status in DTR bar")]
+    [PropertyDisplay("在 DTR 条中显示状态")]
     public bool ShowDTR = false;
 
-    [PropertyDisplay("Show AI interface")]
-    public bool DrawUI = false;
+    [PropertyDisplay("显示 AI 界面")]
+    public bool DrawUI = true;
+
+    // [PropertyDisplay("将目标设置为焦点")]
+    // public bool FocusTargetLeader = true;
 
     [PropertyDisplay("Focus target master")]
     public bool FocusTargetMaster = false;
 
-    [PropertyDisplay("Broadcast keypresses to other windows")]
+    [PropertyDisplay("将按键广播到其他窗口")]
     public bool BroadcastToSlaves = false;
 
-    [PropertyDisplay("Follow party slot")]
+    [PropertyDisplay("跟随小队位置")]
     public int FollowSlot = 0;
 
-    [PropertyDisplay("Forbid actions")]
+    [PropertyDisplay("禁止动作")]
     public bool ForbidActions = false;
 
     [PropertyDisplay("Manual targeting")]
     public bool ManualTarget = false;
 
-    [PropertyDisplay("Forbid movement")]
+    [PropertyDisplay("禁止移动")]
     public bool ForbidMovement = false;
 
-    [PropertyDisplay("Follow during combat")]
+    [PropertyDisplay("战斗中跟随")]
     public bool FollowDuringCombat = false;
 
-    [PropertyDisplay("Follow during active boss module")]
+    [PropertyDisplay("在主动 Boss 模块期间跟随")]
     public bool FollowDuringActiveBossModule = false;
 
-    [PropertyDisplay("Follow out of combat")]
+    [PropertyDisplay("战斗外跟随")]
     public bool FollowOutOfCombat = false;
 
-    [PropertyDisplay("Follow target")]
+    [PropertyDisplay("跟随目标")]
     public bool FollowTarget = false;
 
-    [PropertyDisplay("Desired positional when following target")]
-    [PropertyCombo(["Any", "Flank", "Rear", "Front"])]
+    [PropertyDisplay("跟随目标时期望位置")]
+    [PropertyCombo(["任何", "侧面", "后方", "前方"])]
     public Positional DesiredPositional = Positional.Any;
 
-    [PropertyDisplay("Max distance to slot")]
+    [PropertyDisplay("到插槽的最大距离")]
     public float MaxDistanceToSlot = 1;
 
-    [PropertyDisplay("Max distance to target")]
+    [PropertyDisplay("到目标的最大距离")]
     public float MaxDistanceToTarget = 2.6f;
 
-    [PropertyDisplay("Enable auto AFK", tooltip: "Enables auto AFK if out of combat. While AFK AI will not use autorotation or target anything")]
+    [PropertyDisplay("启用自动离开(AFK)模式", tooltip: "如果处于非战斗状态，则启用自动离开模式。在离开状态下，AI将不会自动旋转或选择目标")]
     public bool AutoAFK = false;
 
-    [PropertyDisplay("Auto AFK timer", tooltip: "Time in seconds out of combat until AFK mode enables. Any movement will reset timer or disable AFK mode if already active.")]
+
+    [PropertyDisplay("启用非战斗离开(AFK)模式", tooltip: "非战斗状态下等待指定秒数后启用离开模式。任何移动将重置计时器，或在离开模式已激活时禁用该模式")]
     public float AFKModeTimer = 10;
 
     [PropertyDisplay("Disable loading obstacle maps", tooltip: "Might be required to be enabled for some some content such as deep dungeons.")]

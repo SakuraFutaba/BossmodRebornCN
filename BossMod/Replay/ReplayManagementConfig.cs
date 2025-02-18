@@ -2,20 +2,20 @@
 
 public record struct ReplayMemory(string Path, bool IsOpen, DateTime PlaybackPosition);
 
-[ConfigDisplay(Name = "Replays", Order = 0)]
+[ConfigDisplay(Name = "录像设置", Order = 0)]
 public class ReplayManagementConfig : ConfigNode
 {
-    [PropertyDisplay("Show replay management UI")]
+     [PropertyDisplay("显示录像管理界面")]
     public bool ShowUI = false;
 
-    [PropertyDisplay("Auto record replays on duty start/end or outdoor module start/end")]
+    [PropertyDisplay("副本开始自动录像")]
     public bool AutoRecord = false;
 
-    [PropertyDisplay("Max replays to keep before removal")]
+    [PropertyDisplay("最大录像数量")]
     [PropertySlider(0, 1000)]
     public int MaxReplays = 0;
 
-    [PropertyDisplay("Record and store server packets in the replay")]
+    [PropertyDisplay("在录像中记录和存储服务器数据包")]
     public bool RecordServerPackets = false;
 
     [PropertyDisplay("Dump server packets into dalamud.log")]
