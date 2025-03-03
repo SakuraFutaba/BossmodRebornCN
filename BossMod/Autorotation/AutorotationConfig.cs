@@ -1,37 +1,37 @@
 ﻿namespace BossMod.Autorotation;
 
-[ConfigDisplay(Name = "Autorotation", Order = 5)]
+[ConfigDisplay(Name = "自动循环配置", Order = 5)]
 public sealed class AutorotationConfig : ConfigNode
 {
-    [PropertyDisplay("Show in-game UI")]
+    [PropertyDisplay("显示游戏内界面")]
     public bool ShowUI = false;
 
     public enum DtrStatus
     {
-        [PropertyDisplay("Disabled")]
+        [PropertyDisplay("禁用")]
         None,
-        [PropertyDisplay("Text only")]
+        [PropertyDisplay("仅文字")]
         TextOnly,
-        [PropertyDisplay("With icon")]
+        [PropertyDisplay("带图标")]
         Icon
     }
 
-    [PropertyDisplay("Show autorotation preset in the server info bar")]
+    [PropertyDisplay("在服务器信息栏显示当前预设")]
     public DtrStatus ShowDTR = DtrStatus.None;
 
-    [PropertyDisplay("Hide VBM Default preset", tooltip: "If you've created your own presets and no longer need the included default, this option will prevent it from being shown in the Autorotation and Preset Editor windows.")]
+    [PropertyDisplay("隐藏VBM默认预设", tooltip: "创建自定义预设后，启用此选项可隐藏内置的默认预设")]
     public bool HideDefaultPreset = false;
 
-    [PropertyDisplay("Show positional hints in world", tooltip: "Show tips for positional abilities, indicating to move to the flank or rear of your target")]
+    [PropertyDisplay("显示定位指引标记", tooltip: "显示定位技能提示，指示应移动至目标侧面或背面")]
     public bool ShowPositionals = false;
 
-    [PropertyDisplay("Automatically disable autorotation when exiting combat")]
+    [PropertyDisplay("脱战后自动禁用自动循环")]
     public bool ClearPresetOnCombatEnd = false;
 
-    [PropertyDisplay("Automatically reenable force-disabled autorotation when exiting combat")]
+    [PropertyDisplay("脱战后自动重置强制禁用状态")]
     public bool ClearForceDisableOnCombatEnd = true;
 
-    [PropertyDisplay("Early pull threshold", tooltip: "If someone enters combat with a boss when the countdown is longer than this value, it's consider a ninja-pull and autorotation is force disabled")]
+    [PropertyDisplay("提前开怪判定阈值", tooltip: "当队伍成员在倒计时剩余时间超过此值时进入战斗，将被判定为提前开怪并强制禁用自动循环")]
     [PropertySlider(0, 30, Speed = 1)]
     public float EarlyPullThreshold = 1.5f;
 }

@@ -44,25 +44,26 @@ sealed class AIManagementWindow : UIWindow
 
         ImGui.TextUnformatted($"Navi={_manager.Controller.NaviTargetPos}");
 
-        configModified |= ImGui.Checkbox("Forbid actions", ref _config.ForbidActions);
+        configModified |= ImGui.Checkbox("禁用技能", ref _config.ForbidActions);
         ImGui.SameLine();
-        configModified |= ImGui.Checkbox("Forbid movement", ref _config.ForbidMovement);
+        configModified |= ImGui.Checkbox("禁用移动-Forbid movement", ref _config.ForbidMovement);
         ImGui.SameLine();
-        configModified |= ImGui.Checkbox("Idle while mounted", ref _config.ForbidAIMovementMounted);
+        configModified |= ImGui.Checkbox("骑乘时保持静止-Idle while mounted", ref _config.ForbidAIMovementMounted);
         ImGui.SameLine();
-        configModified |= ImGui.Checkbox("Follow during combat", ref _config.FollowDuringCombat);
+        configModified |= ImGui.Checkbox("战斗中跟随", ref _config.FollowDuringCombat);
         ImGui.Spacing();
-        configModified |= ImGui.Checkbox("Follow during active boss module", ref _config.FollowDuringActiveBossModule);
+        configModified |= ImGui.Checkbox("BOSS模块激活时跟随", ref _config.FollowDuringActiveBossModule);
         ImGui.SameLine();
-        configModified |= ImGui.Checkbox("Follow out of combat", ref _config.FollowOutOfCombat);
+        configModified |= ImGui.Checkbox("脱战时跟随", ref _config.FollowOutOfCombat);
         ImGui.SameLine();
-        configModified |= ImGui.Checkbox("Follow target", ref _config.FollowTarget);
+        configModified |= ImGui.Checkbox("跟随目标", ref _config.FollowTarget);
         ImGui.Spacing();
-        configModified |= ImGui.Checkbox("Manual targeting", ref _config.ManualTarget);
+        configModified |= ImGui.Checkbox("手动目标选择", ref _config.ManualTarget);
         ImGui.SameLine();
-        configModified |= ImGui.Checkbox("Disable loading obstacle maps", ref _config.DisableObstacleMaps);
+        configModified |= ImGui.Checkbox("禁用障碍物地图加载", ref _config.DisableObstacleMaps);
 
-        ImGui.Text("Follow party slot");
+        ImGui.Text("跟随队伍成员位置");
+
         ImGui.SameLine();
         ImGui.SetNextItemWidth(250);
         ImGui.SetNextWindowSizeConstraints(new Vector2(0, 0), new Vector2(float.MaxValue, ImGui.GetTextLineHeightWithSpacing() * 50));
@@ -82,7 +83,7 @@ sealed class AIManagementWindow : UIWindow
             ImGui.EndCombo();
         }
         ImGui.Separator();
-        ImGui.Text("Desired positional");
+        ImGui.Text("期望站位-Desired positional");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(100);
         var positionalOptions = Enum.GetNames(typeof(Positional));
@@ -93,7 +94,7 @@ sealed class AIManagementWindow : UIWindow
             configModified = true;
         }
         ImGui.SameLine();
-        ImGui.Text("Max distance - to targets");
+        ImGui.Text("最大距离 - 至目标");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(100);
         var maxDistanceTargetStr = _config.MaxDistanceToTarget.ToString(CultureInfo.InvariantCulture);
@@ -121,7 +122,7 @@ sealed class AIManagementWindow : UIWindow
             }
         }
 
-        ImGui.Text("Movement decision delay");
+        ImGui.Text("移动决策延迟-Movement decision delay");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(100);
         var movementDelayStr = _config.MoveDelay.ToString(CultureInfo.InvariantCulture);

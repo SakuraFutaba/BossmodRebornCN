@@ -13,7 +13,7 @@ sealed class AIConfig : ConfigNode
     // [PropertyDisplay("将目标设置为焦点")]
     // public bool FocusTargetLeader = true;
 
-    [PropertyDisplay("Focus target master")]
+    [PropertyDisplay("目标设置为焦点-Focus target master")]
     public bool FocusTargetMaster = false;
 
     [PropertyDisplay("将按键广播到其他窗口")]
@@ -25,7 +25,7 @@ sealed class AIConfig : ConfigNode
     [PropertyDisplay("禁止动作")]
     public bool ForbidActions = false;
 
-    [PropertyDisplay("Manual targeting")]
+    [PropertyDisplay("手动目标选择-Manual targeting")]
     public bool ManualTarget = false;
 
     [PropertyDisplay("禁止移动")]
@@ -60,13 +60,13 @@ sealed class AIConfig : ConfigNode
     [PropertyDisplay("启用非战斗离开(AFK)模式", tooltip: "非战斗状态下等待指定秒数后启用离开模式。任何移动将重置计时器，或在离开模式已激活时禁用该模式")]
     public float AFKModeTimer = 10;
 
-    [PropertyDisplay("Disable loading obstacle maps", tooltip: "Might be required to be enabled for some some content such as deep dungeons.")]
+    [PropertyDisplay("禁用障碍物地图加载-Disable loading obstacle maps", tooltip: "部分内容（如深层迷宫）可能需要启用此选项。")]
     public bool DisableObstacleMaps = false;
 
-    [PropertyDisplay("Movement decision delay", tooltip: "Only change this at your own risk and keep this value low! Too high and it won't move in time for some mechanics. Make sure to readjust the value for different content.")]
+    [PropertyDisplay("移动决策延迟-Movement decision delay", tooltip: "谨慎修改此值并保持较低数值！过高可能导致无法及时应对某些机制。请注意根据不同内容调整此值。")]
     public double MoveDelay = 0;
 
-    [PropertyDisplay("Idle while mounted")]
+    [PropertyDisplay("骑乘时保持静止-Idle while mounted")]
     public bool ForbidAIMovementMounted = false;
 
     public string? AIAutorotPresetName;
