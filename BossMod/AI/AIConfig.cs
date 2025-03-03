@@ -43,8 +43,9 @@ sealed class AIConfig : ConfigNode
     [PropertyDisplay("跟随目标")]
     public bool FollowTarget = false;
 
-    [PropertyDisplay("跟随目标时期望位置")]
-    [PropertyCombo(["任何", "侧面", "后方", "前方"])]
+    [PropertyDisplay("跟随目标时期望位置(Any任意,Flank侧面,Rear背面,Front正面)")]
+    // [PropertyCombo(["任何", "侧面", "后方", "前方"])]
+    [PropertyCombo(["Any", "Flank", "Rear", "Front"])]
     public Positional DesiredPositional = Positional.Any;
 
     [PropertyDisplay("到插槽的最大距离")]
