@@ -32,6 +32,11 @@ public class BossModuleConfig : ConfigNode
     [PropertyDisplay("雷达竞技场缩放比例", tooltip: "雷达窗口中竞技场的显示比例")]
     [PropertySlider(0.1f, 10, Speed = 0.1f, Logarithmic = true)]
     public float ArenaScale = 1;
+    
+    
+    [PropertyDisplay("雷达元素厚度[thickness]缩放因子", tooltip: "全局缩放雷达元素厚度[thickness]的厚度")]
+    [PropertySlider(0.1f, 10, Speed = 0.1f, Logarithmic = true)]
+    public float ThicknessScale = 1;
 
     [PropertyDisplay("根据镜头方向旋转雷达")]
     public bool RotateArena = true;
