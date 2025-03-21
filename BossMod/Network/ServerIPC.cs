@@ -19,16 +19,23 @@ public enum PacketID
 {
     Ping = 2,
     Init = 3,
-    Logout = 8,
+    RemainingPlayTime = 6,
+    Logout = 7,
+    Logout2 = 8,
     CFCancel = 11,
     CFDutyInfo = 13,
     CFNotify = 14,
-    CFPreferredRole = 18,
+    CFPreferredRole = 17,
+    PFList = 26,
+    PFInfo = 27,
+    PFUpdateRecruitNum = 34,
     CrossWorldLinkshellList = 81,
     FellowshipList = 89,
     Playtime = 111,
     CFRegistered = 112,
+    CFUpdateRecruitNum = 114,
     Chat = 115,
+    Shout = 121,
     RSVData = 127,
     RSFData = 128,
     SocialMessage = 129,
@@ -60,9 +67,14 @@ public enum PacketID
     RetainerSaleHistory = 175,
     RetainerState = 176,
     MarketBoardSearchResult = 177,
+    FreeCompanyActionUpdate = 178,
     FreeCompanyInfo = 179,
     ExamineFreeCompanyInfo = 181,
     FreeCompanyDialog = 182,
+    FreeCompanyTopic = 183,
+    FreeCompanyActivity = 185,
+    FreeCompanyAction = 189,
+    FreeCompanyMember = 190,
     StatusEffectList = 207,
     StatusEffectListEureka = 208,
     StatusEffectListBozja = 209,
@@ -162,12 +174,12 @@ public enum PacketID
     QuestFinish = 361,
     MSQTrackerComplete = 364,
     QuestTracker = 366,
-    Mount = 367,
     DirectorVars = 369,
     ContentDirectorSync = 370,
     ServerRequestCallbackResponse1 = 378,
     ServerRequestCallbackResponse2 = 379,
     ServerRequestCallbackResponse3 = 380,
+    Mount = 397,
     EnvControl = 402,
     SystemLogMessage1 = 408,
     SystemLogMessage2 = 409,
@@ -194,6 +206,7 @@ public enum PacketID
     EquipDisplayFlags = 447,
     NpcYell = 448,
     FateInfo = 453,
+    FateProgress = 455,
     CompletedAchievements = 458,
     LandSetInitialize = 467,
     LandUpdate = 468,
@@ -666,7 +679,7 @@ public enum ActorControlCategory : ushort
     FateAssignID = 2356, // p1 = fate id, assigned to main obj
     FateStart = 2357, // from dissector
     FateEnd = 2358, // from dissector
-    FateProgress = 2366, // from dissector
+    FateProgress = 2364, // from dissector
     SetPvPState = 1504, // from dissector
     EndDuelSession = 1505, // from dissector
     StartDuelCountdown = 1506, // from dissector
@@ -1203,4 +1216,93 @@ public struct ActorGauge
 {
     public Class ClassJobID;
     public ulong Payload;
+}
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct CFPreferredRole
+{
+    public byte Unknown;
+    public CFRole Leveling;
+    public CFRole Highlevel;
+    public CFRole MainScenario;
+    public CFRole Guildhests;
+    public CFRole Expert;
+    public CFRole Trials;
+    public CFRole LevelCapDungeons;
+    public CFRole Mentor;
+    public CFRole AllianceRaids;
+    public CFRole NormalRaids;
+}
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct PFUpdateRecruitNum
+{
+    public ushort All;
+    public ushort All2;
+    public ushort InWorld;
+    public ushort Private;
+    public ushort Other;
+    public ushort DutyRoulette;
+    public ushort Dungeons;
+    public ushort Guildhests;
+    public ushort Trials;
+    public ushort Raids;
+    public ushort HighEndDuty;
+    public ushort PvP;
+    public ushort GoldSaucer;
+    public ushort FATE;
+    public ushort TreasureHunt;
+    public ushort Hunt;
+    public ushort Gathering;
+    public ushort DeepDungeon;
+    public ushort FieldOperations;
+    public ushort VCDungeons;
+    public ushort Unknown21;
+    public ushort Unknown22;
+    public ushort Unknown23;
+    public ushort Unknown24;
+}
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct Mount
+{
+    public ushort MountID;
+    public ushort StainID;
+    public int ModelTop;
+    public int ModelBody;
+    public int ModelLegs;
+}
+
+[StructLayout(LayoutKind.Explicit, Size = 648, Pack = 1)]
+public unsafe struct SpawnNPC
+{
+    [FieldOffset(4)] public byte U4;
+    [FieldOffset(5)] public byte U5;
+    [FieldOffset(6)] public byte U6;
+    [FieldOffset(7)] public byte U7;
+    [FieldOffset(8)] public byte U8;
+    [FieldOffset(9)] public byte U9;
+    [FieldOffset(10)] public byte U10;
+    [FieldOffset(11)] public byte U11;
+    [FieldOffset(16)] public uint gOID16;
+    [FieldOffset(36)] public ushort U36;
+    [FieldOffset(56)] public uint gOID56;
+    [FieldOffset(64)] public uint gOID68;
+    [FieldOffset(84)] public uint gOID84;
+    [FieldOffset(88)] public uint gOID88;
+    [FieldOffset(92)] public uint HP;
+    [FieldOffset(96)] public uint maxHP;
+    [FieldOffset(106)] public ushort MP;
+    [FieldOffset(108)] public ushort maxMP;
+    [FieldOffset(504)] public Vector3 Pos;
+    [FieldOffset(574)] public fixed byte NPCName[74];
+}
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct FirstAttack
+{
+    public uint Type;
+    public uint U1;
+    public uint ID;
+    public uint U2;
 }

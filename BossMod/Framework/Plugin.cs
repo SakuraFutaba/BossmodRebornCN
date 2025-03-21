@@ -1,4 +1,5 @@
 ﻿using BossMod.Autorotation;
+using BossMod.Log;
 using Dalamud.Common;
 using Dalamud.Game;
 using Dalamud.Game.ClientState.Conditions;
@@ -6,6 +7,7 @@ using Dalamud.Game.Command;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game.Event;
+using ECommons;
 using System.IO;
 using System.Reflection;
 
@@ -43,6 +45,7 @@ public sealed class Plugin : IDalamudPlugin
     private readonly ReplayManagementWindow _wndReplay;
     private readonly UIRotationWindow _wndRotation;
     private readonly MainDebugWindow _wndDebug;
+    private readonly LogWindow _wndLog;
 
     public unsafe Plugin(IDalamudPluginInterface dalamud, ICommandManager commandManager, ISigScanner sigScanner, IDataManager dataManager)
     {
@@ -56,6 +59,8 @@ public sealed class Plugin : IDalamudPlugin
         InteropGenerator.Runtime.Resolver.GetInstance.Setup(sigScanner.SearchBase, gameVersion, new(dalamud.ConfigDirectory.FullName + "/cs.json"));
         FFXIVClientStructs.Interop.Generated.Addresses.Register();
         InteropGenerator.Runtime.Resolver.GetInstance.Resolve();
+
+        ECommonsMain.Init(dalamud, this);
 
         dalamud.Create<Service>();
         Service.LogHandlerDebug = (string msg) => Service.Logger.Debug(msg);
@@ -104,6 +109,8 @@ public sealed class Plugin : IDalamudPlugin
         config.Modified.ExecuteAndSubscribe(() => _wndReplay.UpdateLogDirectory());
         _wndRotation = new(_rotation, _amex, () => OpenConfigUI("Autorotation presets"));
         _wndDebug = new(_ws, _rotation, _zonemod, _amex, _movementOverride, _hintsBuilder, dalamud);
+        _wndLog = new();
+        _wndLog.OpenAndBringToFront();
 
         dalamud.UiBuilder.DisableAutomaticUiHide = true;
         dalamud.UiBuilder.Draw += DrawUI;
@@ -113,7 +120,9 @@ public sealed class Plugin : IDalamudPlugin
 
     public void Dispose()
     {
+        ECommonsMain.Dispose();
         Service.Condition.ConditionChange -= OnConditionChanged;
+        _wndLog.Dispose();
         _wndDebug.Dispose();
         _wndRotation.Dispose();
         _wndReplay.Dispose();
@@ -175,6 +184,9 @@ public sealed class Plugin : IDalamudPlugin
                 break;
             case "TOGGLEANTICHEAT":
                 ToggleAnticheat();
+                break;
+            case "L":
+                _wndLog.OpenAndBringToFront();
                 break;
         }
     }
