@@ -26,6 +26,7 @@ class MainDebugWindow(WorldState ws, RotationModuleManager autorot, ZoneModuleMa
     private readonly DebugTeleport _debugTeleport = new();
     private readonly DebugCollision _debugCollision = new();
     private readonly DebugQuests _debugQuests = new();
+    private readonly DebugOpcodes _debugOpcodes = new();
 
     protected override void Dispose(bool disposing)
     {
@@ -42,6 +43,10 @@ class MainDebugWindow(WorldState ws, RotationModuleManager autorot, ZoneModuleMa
         var player = Service.ClientState.LocalPlayer;
         ImGui.TextUnformatted($"Current zone: {ws.CurrentZone}, player=0x{(ulong)Utils.GameObjectInternal(player):X}, playerCID={playerCID:X}, pos = {Utils.Vec3String(player?.Position ?? new Vector3())}");
         ImGui.TextUnformatted($"ID scramble: {Network.IDScramble.Delta} = {*Network.IDScramble.OffsetAdjusted} - {*Network.IDScramble.OffsetBaseFixed} - {*Network.IDScramble.OffsetBaseChanging}");
+        if (ImGui.CollapsingHeader("Opcodes"))
+        {
+            _debugOpcodes.Draw();
+        }
         ImGui.TextUnformatted($"Player mode: {Utils.CharacterInternal(player)->Mode}");
 
         var eventFwk = FFXIVClientStructs.FFXIV.Client.Game.Event.EventFramework.Instance();

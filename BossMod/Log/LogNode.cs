@@ -240,7 +240,7 @@ public class FirstAttackNode(FirstAttack x) : LogNode<FirstAttack>(x)
     private readonly GameObjectInfo _info = new();
     public override void Draw()
     {
-        ImGui.TextColored(LogColor.Property, "typ: ");
+        ImGui.TextColored(LogColor.Property, "type: ");
         ImGui.SameLine(0, 0);
         ImGui.TextColored(LogColor.Enum, Value.Type.ToString());
         switch (Value.Type)

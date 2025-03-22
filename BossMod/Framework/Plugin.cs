@@ -111,6 +111,7 @@ public sealed class Plugin : IDalamudPlugin
         _wndDebug = new(_ws, _rotation, _zonemod, _amex, _movementOverride, _hintsBuilder, dalamud);
         _wndLog = new();
         _wndLog.OpenAndBringToFront();
+        _wndDebug.OpenAndBringToFront();
 
         dalamud.UiBuilder.DisableAutomaticUiHide = true;
         dalamud.UiBuilder.Draw += DrawUI;
