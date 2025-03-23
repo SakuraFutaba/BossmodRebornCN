@@ -18,7 +18,9 @@ public class OpcodeMap
     public readonly nint Func;
     public readonly int MinCase;
     public readonly int JumptableSize;
-    public nint DefaultAddr;
+    public readonly nint DefaultRVA;
+    public readonly nint DefaultAddr;
+    public readonly nint ImagebaseRVA;
     public readonly nint ImagebaseAddr;
     public readonly nint JumptableRVA;
     public readonly nint JumptableAddr;
@@ -47,7 +49,9 @@ public class OpcodeMap
 
         MinCase = -*(sbyte*)(Func + 15);
         JumptableSize = *(int*)(Func + 17) + 1;
+        DefaultRVA = *(int*)(Func + 23);
         DefaultAddr = ReadRVA(Func + 23);
+        ImagebaseRVA = *(int*)(Func + 30);
         ImagebaseAddr = ReadRVA(Func + 30);
         JumptableRVA = *(int*)(Func + 40);
         JumptableAddr = ImagebaseAddr + JumptableRVA;
@@ -59,7 +63,7 @@ public class OpcodeMap
                 continue;
 
             var opcode = minCase + i;
-            var index = ReadIndexForCaseBody(bodyAddr, out var vtoff);
+            var index = ReadIndexForCaseBody(bodyAddr, out _);
             if (index < 0)
                 Service.Log($"[OpcodeMap] Unexpected body for opcode {opcode}");
             else
@@ -68,8 +72,7 @@ public class OpcodeMap
             // OpcodeMapEntry
             OpcodeMapEntry entry = new OpcodeMapEntry();
             entry.Index = i;
-            entry.bodyAddr = ImagebaseAddr + jumptable[i];
-            // entry.bodyAddr = ImagebaseAddr + *((int*)JumptableAddr + 4 * i);
+            entry.bodyAddrOffset = jumptable[i];
             entry.Opcode = MinCase + entry.Index;
             entry.VtableIndex = ReadIndexForCaseBody(bodyAddr, out entry.Vtoff);
             entry.Name = IDToName(entry.VtableIndex);
@@ -77,14 +80,22 @@ public class OpcodeMap
         }
         _opcodeMapTable.Sort((a, b) => a.VtableIndex - b.VtableIndex);
     }
+    public void SortByVtableIndex()
+    {
+        _opcodeMapTable.Sort((a, b) => a.VtableIndex - b.VtableIndex);
+    }
+    public void SortByOpcode()
+    {
+        _opcodeMapTable.Sort((a, b) => a.Opcode - b.Opcode);
+    }
 
     private static unsafe byte* ReadRVA(byte* p) => p + 4 + *(int*)p;
     private static unsafe nint ReadRVA(nint p) => p + 4 + *(int*)p;
 
     // assume each case has the following body:
-    // mov rax, [rcx]
-    // lea r9, [r10+10h]
-    // jmp qword ptr [rax+<vfoff>]
+    // mov rax, [rcx]               48 8B 01
+    // lea r9, [r10+10h]            4D 8D 4A 10
+    // jmp qword ptr [rax+<vfoff>]  48 FF 60/A0 vfoff
     private static readonly byte[] BodyPrefix = [0x48, 0x8B, 0x01, 0x4D, 0x8D, 0x4A, 0x10, 0x48, 0xFF];
 
     private static unsafe bool isNotCaseBody(byte* bodyAddr)
@@ -97,7 +108,7 @@ public class OpcodeMap
         if (isNotCaseBody(bodyAddr))
         {
             vtoff = -2;
-            return -1;
+            return -12;
         }
         vtoff = bodyAddr[BodyPrefix.Length] switch
         {
@@ -113,12 +124,12 @@ public class OpcodeMap
             // 48 FF A0 ?? ?? ?? ?? 跳转到 [RAX+??] 存储的地址   JMP QWORD PTR [RAX+??]
             0x60 => *(bodyAddr + BodyPrefix.Length + 1),
             0xA0 => *(int*)(bodyAddr + BodyPrefix.Length + 1),
-            _ => -1
+            _ => -13
         };
         if (vtoff < 0x10 || (vtoff & 7) != 0)
         {
             Service.Log($"unexpected vtoff : {vtoff:X8}");
-            return -1;
+            return -14;
         }
         // first two vfs are dtor and exec, vtable contains qwords
         // 前两个虚函数为析构函数和执行函数，虚表包含8字节
@@ -142,29 +153,27 @@ public class OpcodeMap
         list[index] = value;
         return true;
     }
-}
 
-public class OpcodeMapHeader
-{
-    public nint Func;
-    public int MinCase;
-    public int JumptableSize;
-    public nint DefaultAddr;
-    public nint Imagebase;
-    public nint Jumptable;
-
-    public OpcodeMapHeader()
+    public unsafe ushort FindOpcodeOfJumpTableValue(int value)
     {
+        for (var i = 0; i < JumptableSize; i++)
+        {
+            if (*(int*)(JumptableAddr + 4 * i) == value)
+            {
+                return (ushort)(i + 101);
+            }
+        }
+        return 0;
     }
 }
 
 public class OpcodeMapEntry
 {
     public int Index;
-    public int VtableIndex = -1;
+    public int VtableIndex = -11;
     public int Opcode = -1;
     public string Name = string.Empty;
     public int Vtoff;
-    public nint bodyAddr;
+    public nint bodyAddrOffset;
     public nint Jumptable;
 }

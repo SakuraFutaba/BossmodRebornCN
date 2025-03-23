@@ -1,4 +1,5 @@
 ﻿using BossMod.Log;
+using BossMod.Network;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Hooking;
 using Dalamud.Memory;
@@ -826,6 +827,7 @@ sealed class WorldStateGameSync : IDisposable
             foreach (var b in payload)
                 sb.Append($"{b:X2}");
             _decoder.LogNode(new(sb.ToString()), "");
+            LogWindow.Log(new PacketDecoder.TextNode(sb.ToString()));
         }
     }
 

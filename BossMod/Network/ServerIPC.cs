@@ -73,6 +73,7 @@ public enum PacketID
     FreeCompanyDialog = 182,
     FreeCompanyTopic = 183,
     FreeCompanyActivity = 185,
+    ClientUpdatePositionHandler = 187,// Client的，不一定对，看下版本是否还是这个
     FreeCompanyAction = 189,
     FreeCompanyMember = 190,
     StatusEffectList = 207,
