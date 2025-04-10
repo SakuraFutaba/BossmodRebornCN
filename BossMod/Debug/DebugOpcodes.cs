@@ -53,7 +53,7 @@ public class DebugOpcodes
         ImGui.TableNextColumn();
         ImGui.TextUnformatted("[Func+23]");
         ImGui.TableNextColumn();
-        ImGui.TextUnformatted($"{opcodeMap.DefaultRVA:X8}");
+        ImGui.TextUnformatted($"0x{opcodeMap.DefaultRVA:X4}");
 
         ImGui.TableNextRow();
         ImGui.TableNextColumn();
@@ -61,7 +61,7 @@ public class DebugOpcodes
         ImGui.TableNextColumn();
         ImGui.TextUnformatted("23 + 4 + [Func+23]");
         ImGui.TableNextColumn();
-        ImGui.TextUnformatted($"{opcodeMap.DefaultAddr - opcodeMap.Func:X8}");
+        ImGui.TextUnformatted($"0x{opcodeMap.DefaultAddr - opcodeMap.Func:X4}");
 
         ImGui.TableNextRow();
         ImGui.TableNextColumn();
@@ -93,20 +93,17 @@ public class DebugOpcodes
         ImGui.TableNextColumn();
         ImGui.TextUnformatted("30 + 4 + [Func+30] + [Func+40]");
         ImGui.TableNextColumn();
-        ImGui.TextUnformatted($"{opcodeMap.JumptableAddr - opcodeMap.Func:X8}");
+        ImGui.TextUnformatted($"0x{opcodeMap.JumptableAddr - opcodeMap.Func:X4}");
 
         ImGui.EndTable();
         #endregion
 
         if (ImGui.Button("Sort By VtableIndex"))
-        {
             opcodeMap.SortByVtableIndex();
-        }
         ImGui.SameLine();
         if (ImGui.Button("Sort By Opcode"))
-        {
             opcodeMap.SortByOpcode();
-        }
+
         // (byte*) imagebase = ReadRVA(Func + 30) = Func + 30 + 4 + [Func+30]
         // (int*) jumptable = imagebase + [Func + 40] = Func + 30 + 4 + [Func+30] + [Func + 40]
         // jumptable[i] = [jumptable + 4 * i] = [Func + 30 + 4 + [Func+30] + [Func + 40] + 4 * i]
@@ -169,7 +166,7 @@ public class DebugOpcodes
             ImGui.TableNextColumn();
             ImGui.TextUnformatted($"{entry.bodyAddrOffset:X8}");
             ImGui.TableNextColumn();
-            ImGui.TextUnformatted($"{opcodeMap.ImagebaseRVA + entry.bodyAddrOffset - 0x10:X8}");
+            ImGui.TextUnformatted($"{opcodeMap.ImagebaseRVA + entry.bodyAddrOffset - 0x10:X4}");
         }
         ImGui.EndTable();
     }

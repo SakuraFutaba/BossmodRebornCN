@@ -11,15 +11,16 @@ namespace BossMod.Log;
 
 public static class LogColor
 {
-    public static Vector4 Number { get; internal set; } = new Vector4(0.929f, 0.580f, 0.753f, 1f);   // ED94C0
-    public static Vector4 Property { get; internal set; } = new Vector4(0.400f, 0.765f, 0.800f, 1f); // 66C3CC
-    public static Vector4 Parameter { get; internal set; } = new Vector4(0.741f, 0.741f, 0.741f, 1f);// BDBDBD
-    public static Vector4 Keywords { get; internal set; } = new Vector4(0.424f, 0.584f, 0.922f, 1f); // 6C95EB
-    public static Vector4 String { get; internal set; } = new Vector4(0.788f, 0.635f, 0.427f, 1f);   // C9A26D
-    public static Vector4 Methods { get; internal set; } = new Vector4(0.224f, 0.800f, 0.608f, 1f);  // 39CC9B
-    public static Vector4 Class { get; internal set; } = new Vector4(0.757f, 0.569f, 1f, 1f);    // C191FF
-    public static Vector4 Enum { get; internal set; } = new Vector4(0.882f, 0.749f, 1f, 1f);     // E1BFFF
-    public static Vector4 Comment { get; internal set; } = new Vector4(0.522f, 0.769f, 0.424f, 1f);     // 85C46C
+    public static Vector4 Number { get; internal set; } = new(0.929f, 0.580f, 0.753f, 1f);   // ED94C0
+    public static Vector4 Property { get; internal set; } = new(0.400f, 0.765f, 0.800f, 1f); // 66C3CC
+    public static Vector4 Parameter { get; internal set; } = new(0.741f, 0.741f, 0.741f, 1f);// BDBDBD
+    public static Vector4 Keywords { get; internal set; } = new(0.424f, 0.584f, 0.922f, 1f); // 6C95EB
+    public static Vector4 String { get; internal set; } = new(0.788f, 0.635f, 0.427f, 1f);   // C9A26D
+    public static Vector4 Methods { get; internal set; } = new(0.224f, 0.800f, 0.608f, 1f);  // 39CC9B
+    public static Vector4 Class { get; internal set; } = new(0.757f, 0.569f, 1f, 1f);    // C191FF
+    public static Vector4 Enum { get; internal set; } = new(0.882f, 0.749f, 1f, 1f);     // E1BFFF
+    public static Vector4 Comment { get; internal set; } = new(0.522f, 0.769f, 0.424f, 1f);     // 85C46C
+    public static Vector4 Inactive { get; internal set; } = new(0.4706f, 0.4706f, 0.4706f, 1f);     // 787878
 }
 public interface ILogNode
 {
@@ -256,5 +257,38 @@ public class FirstAttackNode(FirstAttack x) : LogNode<FirstAttack>(x)
                 ImGui.TextColored(LogColor.Property, $"{Value.ID:X8} {Value.U2:X8}");
                 break;
         }
+    }
+}
+
+public class RemainingPlayTimeNode(RemainingPlayTime x) : LogNode<RemainingPlayTime>(x)
+{
+    public override void Draw()
+    {
+        ImGui.TextColored(LogColor.Inactive, "包月时间：剩余 ");
+        ImGui.SameLine(0, 0);
+        ImGui.TextColored(LogColor.Number, $"{Value.Days / 60:D2}");
+        ImGui.SameLine(0, 0);
+        ImGui.TextColored(LogColor.Inactive, $" 分 ");
+        ImGui.SameLine(0, 0);
+        ImGui.TextColored(LogColor.Number, $"{Value.Days % 60:D2}");
+        ImGui.SameLine(0, 0);
+        ImGui.TextColored(LogColor.Inactive, $" 秒 点卡时间：剩余 ");
+        ImGui.SameLine(0, 0);
+        ImGui.TextColored(LogColor.Number, $"{Value.Minutes / 60:D2}");
+        ImGui.SameLine(0, 0);
+        ImGui.TextColored(LogColor.Inactive, $" 分 ");
+        ImGui.SameLine(0, 0);
+        ImGui.TextColored(LogColor.Number, $"{Value.Minutes % 60:D2}");
+        ImGui.SameLine(0, 0);
+        ImGui.TextColored(LogColor.Inactive, $" 秒");
+    }
+}
+
+public unsafe class ServerNoticeNode(ServerNotice x) : LogNode<ServerNotice>(x)
+{
+    public override void Draw()
+    {
+        var value = Value;
+        ImGui.TextColored(LogColor.Inactive, MemoryHelper.ReadString((IntPtr)value.message, 700));
     }
 }

@@ -132,7 +132,7 @@ public class OpcodeMap
             return -14;
         }
         // first two vfs are dtor and exec, vtable contains qwords
-        // 前两个虚函数为析构函数和执行函数，虚表包含8字节
+        // 前两个虚函数为析构函数和执行函数，虚表包含很多8字节指针
         return (vtoff >> 3) - 2;
     }
 

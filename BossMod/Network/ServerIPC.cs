@@ -1307,3 +1307,17 @@ public struct FirstAttack
     public uint ID;
     public uint U2;
 }
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct RemainingPlayTime
+{
+    public ushort Minutes;
+    public ushort Days;
+}
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public unsafe struct ServerNotice
+{
+    public byte Unk;
+    public fixed byte message[700]; // 776 - 1
+}

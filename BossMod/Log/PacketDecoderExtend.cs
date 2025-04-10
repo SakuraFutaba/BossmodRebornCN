@@ -17,6 +17,8 @@ public abstract unsafe partial class PacketDecoder
             PacketID.Mount when (Mount*)ptr is var p => new MountNode(*p),
             PacketID.SpawnNPC when (SpawnNPC*)ptr is var p => new SpawnNPCNode(*p),
             PacketID.FirstAttack when (FirstAttack*)ptr is var p => new FirstAttackNode(*p),
+            PacketID.RemainingPlayTime when (RemainingPlayTime*)ptr is var p => new RemainingPlayTimeNode(*p),
+            PacketID.ServerNotice when (ServerNotice*)ptr is var p => new ServerNoticeNode(*p),
             _ => DecodePacket(ipc.ID, ptr)?.AsILogNode(),
         };
         if (child != null)
