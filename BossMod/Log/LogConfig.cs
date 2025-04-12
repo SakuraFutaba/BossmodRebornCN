@@ -43,9 +43,5 @@ public class LogConfig : IEzConfig
         PacketID.UpdateInventorySlot
     ];
     public readonly SortedSet<PacketID> DrawWhiteList = [];
-
-    public readonly SortedSet<PacketID> DrawBlackList =
-    [
-
-    ];
+    public readonly SortedSet<PacketID> DrawBlackList = [];
 }

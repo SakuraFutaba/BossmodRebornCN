@@ -45,7 +45,8 @@ public sealed class Plugin : IDalamudPlugin
     private readonly ReplayManagementWindow _wndReplay;
     private readonly UIRotationWindow _wndRotation;
     private readonly MainDebugWindow _wndDebug;
-    private readonly LogWindow _wndLog;
+    public static LogWindow WndLog;
+    private readonly DevBarWindow _wndDevBar;
 
     public unsafe Plugin(IDalamudPluginInterface dalamud, ICommandManager commandManager, ISigScanner sigScanner, IDataManager dataManager)
     {
@@ -109,8 +110,10 @@ public sealed class Plugin : IDalamudPlugin
         config.Modified.ExecuteAndSubscribe(() => _wndReplay.UpdateLogDirectory());
         _wndRotation = new(_rotation, _amex, () => OpenConfigUI("Autorotation presets"));
         _wndDebug = new(_ws, _rotation, _zonemod, _amex, _movementOverride, _hintsBuilder, dalamud);
-        _wndLog = new();
-        _wndLog.OpenAndBringToFront();
+        WndLog = new();
+        WndLog.OpenAndBringToFront();
+        _wndDevBar = new();
+        _wndDevBar.OpenAndBringToFront();
         _wndDebug.OpenAndBringToFront();
 
         dalamud.UiBuilder.DisableAutomaticUiHide = true;
@@ -123,7 +126,7 @@ public sealed class Plugin : IDalamudPlugin
     {
         ECommonsMain.Dispose();
         Service.Condition.ConditionChange -= OnConditionChanged;
-        _wndLog.Dispose();
+        WndLog.Dispose();
         _wndDebug.Dispose();
         _wndRotation.Dispose();
         _wndReplay.Dispose();
@@ -187,7 +190,7 @@ public sealed class Plugin : IDalamudPlugin
                 ToggleAnticheat();
                 break;
             case "L":
-                _wndLog.OpenAndBringToFront();
+                WndLog.OpenAndBringToFront();
                 break;
         }
     }

@@ -7,9 +7,9 @@ using ECommons.Configuration;
 
 namespace BossMod.Log;
 
-public class LogWindow() : UIWindow("Boss mod log UI", false, new(1000, 300))
+public class LogWindow() : UIWindow("Boss mod log UI", false, new(1000, 300), ImGuiWindowFlags.MenuBar)
 {
-    private static readonly CircularBuffer<LogMessage> LogMessageBuffer = new(10000);
+    private static readonly CircularBuffer<LogMessage> LogMessageBuffer = new(16384);
     private const string ConfigPath = "LogConfig.json";
     public static readonly LogConfig C = EzConfig.Init<LogConfig>();
     public static SortedSet<PacketID> LogWhiteList = [.. C.LogWhiteList];
@@ -19,6 +19,30 @@ public class LogWindow() : UIWindow("Boss mod log UI", false, new(1000, 300))
 
     public override void Draw()
     {
+        if (ImGui.BeginMenuBar())
+        {
+            if (ImGui.BeginMenu("Reset"))
+            {
+                if (ImGui.MenuItem("Reset Log White")) ResetLogWhiteList();
+                if (ImGui.MenuItem("Reset Log Black")) ResetLogBlackList();
+                if (ImGui.MenuItem("Reset Draw White")) ResetDrawWhiteList();
+                if (ImGui.MenuItem("Reset Draw Black")) ResetDrawBlackList();
+                ImGui.EndMenu();
+            }
+            if (ImGui.BeginMenu("Clear"))
+            {
+                if (ImGui.MenuItem("Clear Log Black")) ClearLogBlackList();
+                ImGui.EndMenu();
+            }
+            if (ImGui.BeginMenu("xldev"))
+            {
+                Service.CommandManager.ProcessCommand("/xldev");
+                // Svc.PluginInterface.OpenDeveloperMenu();
+                ImGui.EndMenu();
+            }
+            ImGui.EndMenuBar();
+        }
+
         ImGui.Checkbox("##Autoscroll", ref C.Autoscroll);
         ImGuiEx.Tooltip("Autoscroll");
         ImGui.SameLine();
@@ -28,19 +52,13 @@ public class LogWindow() : UIWindow("Boss mod log UI", false, new(1000, 300))
         }
         ImGuiEx.Tooltip("Clear All");
         ImGui.SameLine();
-        if (ImGui.Button("Reset Log White")) ResetLogWhiteList();
+        ImGui.Text("Current LogBlackList");
+        ImGuiEx.Tooltip(string.Join("\n", LogBlackList));
         ImGui.SameLine();
-        if (ImGui.Button("Reset Log Black")) ResetLogBlackList();
-        ImGui.SameLine();
-        if (ImGui.Button("Reset Draw White")) ResetDrawWhiteList();
-        ImGui.SameLine();
-        if (ImGui.Button("Reset Draw Black")) ResetDrawBlackList();
-        ImGui.SameLine();
-        if (ImGui.Button("Clear Log Black")) ClearLogBlackList();
-        ImGui.SameLine();
-        ImGui.Text(string.Join(" ", DrawBlackList));
+        ImGui.Text("Current DrawBlackList");
+        ImGuiEx.Tooltip(string.Join("\n", DrawBlackList));
 
-        ImGui.BeginChild($"Boss mod Log");
+        ImGui.BeginChild("Boss mod Log");
         LogMessageBuffer.ToList().ForEach(LogMessage.DrawLogMessage);
 
         if(C.Autoscroll)
