@@ -16,6 +16,13 @@ public class OpcodeMap
     public String OpcodeToName(int opcode) => Enum.IsDefined(typeof(PacketID), ID(opcode)) ? ID(opcode).ToString() : string.Empty;
     public String IDToName(int id) => Enum.IsDefined(typeof(PacketID), id) ? ((PacketID)id).ToString() : string.Empty;
     public readonly nint Func;
+    public readonly nint VtableAddr;
+    public readonly nint VtableAddr2;
+    public readonly nint VtableAddrDebug;
+    public readonly nint VtableAddrDebug2;
+    public readonly nint VtableAddrDebug3;
+    public readonly nint VtableAddrDebug4;
+    public readonly nint VtableAddrDebug5;
     public readonly int MinCase;
     public readonly int JumptableSize;
     public readonly nint DefaultRVA;
@@ -24,6 +31,8 @@ public class OpcodeMap
     public readonly nint ImagebaseAddr;
     public readonly nint JumptableRVA;
     public readonly nint JumptableAddr;
+
+    public readonly nint VtableAddrOffset;
 
     public unsafe OpcodeMap()
     {
@@ -39,6 +48,15 @@ public class OpcodeMap
         // cdqe                                         48 98
         // mov r9d, ds::<jumptable_rva>[r11+rax*4]      45 8B 8C 83 ?? ?? ?? ??     func + 40
         Func = Service.SigScanner.ScanText("49 8B 40 10  4C 8B 50 38  41 0F B7 42 02  83 C0 ??  3D ?? ?? ?? ??  0F 87 ?? ?? ?? ??  4C 8D 1D ?? ?? ?? ??  48 98  45 8B 8C 83 ?? ?? ?? ??");
+        // VtableAddr = Marshal.ReadIntPtr(Service.SigScanner.GetStaticAddressFromSig("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2"));
+        VtableAddr = Service.SigScanner.GetStaticAddressFromSig("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2");
+        VtableAddrDebug = Service.SigScanner.ScanText("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2 48 89 74 24 30 48 8D 4C 24 30 E8 ?? ?? ?? ??");
+        VtableAddrDebug2 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug + 7, Marshal.ReadInt32(VtableAddrDebug + 3));
+        VtableAddrDebug3 = Marshal.ReadIntPtr(VtableAddrDebug2);
+        VtableAddr2 = Service.SigScanner.GetStaticAddressFromSig("C7 83 10 01 00 00 03 00 00 00 48 8D 4C 24 ?? 48 89 74 24 ?? E8 ?? ?? ?? ??") + 22;
+        VtableAddrDebug4 = VtableAddr2 + 5 + Marshal.ReadIntPtr(VtableAddr2);
+        VtableAddrDebug5 = Marshal.ReadIntPtr(Marshal.ReadIntPtr(VtableAddrDebug4) + 3);
+
 
         var func = (byte*)Func;
         var minCase = -*(sbyte*)(func + 15);
@@ -59,7 +77,7 @@ public class OpcodeMap
         for (var i = 0; i < jumptableSize; ++i)
         {
             var bodyAddr = imagebase + jumptable[i];
-            if (bodyAddr == defaultAddr)
+            if (bodyAddr == defaultAddr) // 纯虚函数占位
                 continue;
 
             var opcode = minCase + i;
@@ -76,6 +94,8 @@ public class OpcodeMap
             entry.Opcode = MinCase + entry.Index;
             entry.VtableIndex = ReadIndexForCaseBody(bodyAddr, out entry.Vtoff);
             entry.Name = IDToName(entry.VtableIndex);
+            entry.VtableFuncAddr = Marshal.ReadIntPtr(VtableAddr, entry.Vtoff);
+            entry.VtableFuncValue = Marshal.ReadIntPtr(entry.VtableFuncAddr);
             _opcodeMapTable.Add(entry);
         }
         _opcodeMapTable.Sort((a, b) => a.VtableIndex - b.VtableIndex);
@@ -132,7 +152,7 @@ public class OpcodeMap
             return -14;
         }
         // first two vfs are dtor and exec, vtable contains qwords
-        // 前两个虚函数为析构函数和执行函数，虚表包含很多8字节指针
+        // 前两个虚函数为析构函数和执行函数，虚表包含很多8字节地址
         return (vtoff >> 3) - 2;
     }
 
@@ -175,5 +195,6 @@ public class OpcodeMapEntry
     public string Name = string.Empty;
     public int Vtoff;
     public nint bodyAddrOffset;
-    public nint Jumptable;
+    public nint VtableFuncAddr = IntPtr.Zero;
+    public nint VtableFuncValue = IntPtr.Zero;
 }

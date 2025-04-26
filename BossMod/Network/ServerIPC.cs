@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using FFXIVClientStructs.FFXIV.Client.System.String;
 
 namespace BossMod.Network.ServerIPC;
 
@@ -17,7 +16,8 @@ namespace BossMod.Network.ServerIPC;
 // actor control examples: normal = toggle weapon, self = cooldown, target = target change
 public enum PacketID
 {
-    Ping = 2,
+    Ping = 0,
+    Pong = 2,
     Init = 3,
     RemainingPlayTime = 6,
     Logout = 7,
@@ -25,17 +25,25 @@ public enum PacketID
     CFCancel = 11,
     CFDutyInfo = 13,
     CFNotify = 14,
-    CFPreferredRole = 17,
+    CFRoleInNeed = 17,
+    PFRecruitStart = 20,
+    PFRecruitCancel = 21,
     PFList = 26,
     PFInfo = 27,
+    ReadyCheck = 33,
     PFUpdateRecruitNum = 34,
+    PFRecruitAllianceStart = 39,
+    PFInfoAlliance = 44,
+    PFRecruitAllianceCancel = 46,
     CrossWorldLinkshellList = 81,
-    FellowshipList = 89,
+    ChatSent = 89,
+    FellowshipList = 99,
+    FellowshipFinder = 104,
     Playtime = 111,
     CFRegistered = 112,
     CFUpdateRecruitNum = 114,
-    Chat = 115,
-    Shout = 121,
+    ChatReceived = 121,
+    WorldsInfo = 125,
     RSVData = 127,
     RSFData = 128,
     SocialMessage = 129,
@@ -73,7 +81,7 @@ public enum PacketID
     FreeCompanyDialog = 182,
     FreeCompanyTopic = 183,
     FreeCompanyActivity = 185,
-    ClientUpdatePositionHandler = 187,// Client的，不一定对，看下版本是否还是这个
+    ClientUpdatePositionHandler = 187,
     FreeCompanyAction = 189,
     FreeCompanyMember = 190,
     StatusEffectList = 207,
@@ -116,6 +124,7 @@ public enum PacketID
     SpawnBoss = 270,
     DespawnCharacter = 271,
     ActorMove = 272,
+    ActorJump = 273,
     Transfer = 274,
     ActorSetPos = 275,
     ActorCast = 277,
@@ -248,6 +257,8 @@ public enum PacketID
     CharaVisualEffect = 586,
     LandSetMap = 587,
     Fall = 588,
+    Performance = 599,
+    Timers = 630,
     PlayMotionSync = 637,
     CEDirector = 646,
     IslandWorkshopDemandResearch = 665,
@@ -1220,7 +1231,7 @@ public struct ActorGauge
 }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct CFPreferredRole
+public struct CFRoleInNeed
 {
     public byte Unknown;
     public CFRole Leveling;
@@ -1311,13 +1322,41 @@ public struct FirstAttack
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct RemainingPlayTime
 {
-    public ushort Minutes;
-    public ushort Days;
+    public uint Minutes;
+    public uint Days;
 }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct ServerNotice
 {
     public byte Unk;
-    public fixed byte message[700]; // 776 - 1
+    public fixed byte Message[700]; // 776 - 1
 }
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public unsafe struct ChatReceived
+{
+    public uint Unk1;
+    public uint Unk2;
+    public uint Unk3;
+    public uint Unk4;
+    public uint EntityId;
+    public ushort WorldId;
+    public ushort MessageType;
+    public fixed byte Name[32]; // 56 - 24 = 32
+    public fixed byte Message[1024]; // 1080 - 56 = 1024
+}
+
+// [StructLayout(LayoutKind.Explicit, Size = 1080, Pack = 1)]
+// public struct Chat2
+// {
+//     [FieldOffset(0)]public uint Unk1;
+//     [FieldOffset(4)]public uint Unk2;
+//     [FieldOffset(8)]public uint Unk3;
+//     [FieldOffset(12)]public uint Unk4;
+//     [FieldOffset(16)]public uint EntityId;
+//     [FieldOffset(20)]public ushort WorldId;
+//     [FieldOffset(22)]public ushort MessageType;
+//     [FieldOffset(24)]public Utf8String Name; // 56 - 24 = 32
+//     [FieldOffset(56)]public Utf8String Message; // 1080 - 56 = 1024
+// }

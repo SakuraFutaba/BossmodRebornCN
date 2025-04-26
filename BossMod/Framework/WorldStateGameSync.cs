@@ -1,5 +1,6 @@
 ﻿using BossMod.Log;
 using BossMod.Network;
+using BossMod.Network.ServerIPC;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Hooking;
 using Dalamud.Memory;
@@ -96,45 +97,45 @@ sealed class WorldStateGameSync : IDisposable
 
         _processPacketActorCastHook = Service.Hook.HookFromSignature<ProcessPacketActorCastDelegate>("40 56 41 56 48 81 EC ?? ?? ?? ?? 48 8B F2", ProcessPacketActorCastDetour);
         _processPacketActorCastHook.Enable();
-        Service.Log($"[WSG] ProcessPacketActorCast address = 0x{_processPacketActorCastHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessPacketActorCast address = 0x{_processPacketActorCastHook.Address:X}");
 
         _processPacketEffectResultHook = Service.Hook.HookFromSignature<ProcessPacketEffectResultDelegate>("48 8B C4 44 88 40 18 89 48 08", ProcessPacketEffectResultDetour);
         _processPacketEffectResultHook.Enable();
-        Service.Log($"[WSG] ProcessPacketEffectResult address = 0x{_processPacketEffectResultHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessPacketEffectResult address = 0x{_processPacketEffectResultHook.Address:X}");
 
         _processPacketEffectResultBasicHook = Service.Hook.HookFromSignature<ProcessPacketEffectResultDelegate>("40 53 41 54 41 55 48 83 EC 40", ProcessPacketEffectResultBasicDetour);
         _processPacketEffectResultBasicHook.Enable();
-        Service.Log($"[WSG] ProcessPacketEffectResultBasic address = 0x{_processPacketEffectResultBasicHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessPacketEffectResultBasic address = 0x{_processPacketEffectResultBasicHook.Address:X}");
 
         _processPacketActorControlHook = Service.Hook.HookFromSignature<ProcessPacketActorControlDelegate>("E8 ?? ?? ?? ?? 0F B7 0B 83 E9 64", ProcessPacketActorControlDetour);
         _processPacketActorControlHook.Enable();
-        Service.Log($"[WSG] ProcessPacketActorControl address = 0x{_processPacketActorControlHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessPacketActorControl address = 0x{_processPacketActorControlHook.Address:X}");
 
         // alt sig - impl: "45 33 D2 48 8D 41 48"
         _processPacketNpcYellHook = Service.Hook.HookFromSignature<ProcessPacketNpcYellDelegate>("48 83 EC 58 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 44 24 ?? 0F 10 41 10", ProcessPacketNpcYellDetour);
         _processPacketNpcYellHook.Enable();
-        Service.Log($"[WSG] ProcessPacketNpcYell address = 0x{_processPacketNpcYellHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessPacketNpcYell address = 0x{_processPacketNpcYellHook.Address:X}");
 
         _processEnvControlHook = Service.Hook.HookFromSignature<ProcessEnvControlDelegate>("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 41 0F B7 E8", ProcessEnvControlDetour);
         _processEnvControlHook.Enable();
-        Service.Log($"[WSG] ProcessEnvControl address = 0x{_processEnvControlHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessEnvControl address = 0x{_processEnvControlHook.Address:X}");
 
         _processPacketRSVDataHook = Service.Hook.HookFromSignature<ProcessPacketRSVDataDelegate>("44 8B 09 4C 8D 41 34", ProcessPacketRSVDataDetour);
         _processPacketRSVDataHook.Enable();
-        Service.Log($"[WSG] ProcessPacketRSVData address = 0x{_processPacketRSVDataHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessPacketRSVData address = 0x{_processPacketRSVDataHook.Address:X}");
 
         _processSystemLogMessageHook = Service.Hook.HookFromSignature<ProcessSystemLogMessageDelegate>("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 0F B6 46 28", ProcessSystemLogMessageDetour);
         _processSystemLogMessageHook.Enable();
-        Service.Log($"[WSG] ProcessSystemLogMessage address = 0x{_processSystemLogMessageHook:X}");
+        LogWindow.Log($"[WSG] ProcessSystemLogMessage address = 0x{_processSystemLogMessageHook.Address:X}");
 
         _processPacketOpenTreasureHook = Service.Hook.HookFromSignature<ProcessPacketOpenTreasureDelegate>("40 53 48 83 EC 20 48 8B DA 48 8D 0D ?? ?? ?? ?? 8B 52 10 E8 ?? ?? ?? ?? 48 85 C0 74 1B", ProcessPacketOpenTreasureDetour);
         _processPacketOpenTreasureHook.Enable();
-        Service.Log($"[WSG] ProcessPacketOpenTreasure address = 0x{_processPacketOpenTreasureHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessPacketOpenTreasure address = 0x{_processPacketOpenTreasureHook.Address:X}");
 
         _processPacketFateInfoHook = Service.Hook.HookFromSignature<ProcessPacketFateInfoDelegate>("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 0F B7 4E 10 48 8D 56 12 41 B8 ?? ?? ?? ??", ProcessPacketFateInfoDetour);
 
         _processPacketFateInfoHook.Enable();
-        Service.Log($"[WSG] ProcessPacketFateInfo address = 0x{_processPacketFateInfoHook.Address:X}");
+        LogWindow.Log($"[WSG] ProcessPacketFateInfo address = 0x{_processPacketFateInfoHook.Address:X}");
     }
 
     public void Dispose()
@@ -827,7 +828,13 @@ sealed class WorldStateGameSync : IDisposable
             foreach (var b in payload)
                 sb.Append($"{b:X2}");
             _decoder.LogNode(new(sb.ToString()), "");
-            LogWindow.Log(new PacketDecoder.TextNode(sb.ToString()));
+        }
+        var id = _opcodeMap.ID((int)opcode);
+        // TODO: ClientIPC 构造函数 id 类型改成 Client
+        var ipc = new NetworkState.ClientIPC(id, opcode, [.. payload]);
+        if (!new[] { PacketID.ClientUpdatePositionHandler, PacketID.Ping }.Contains(id))
+        {
+            LogWindow.Log(_decoder.DecodeClientIPCNode(ipc));
         }
     }
 

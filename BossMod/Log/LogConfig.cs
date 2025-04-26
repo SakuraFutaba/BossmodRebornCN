@@ -9,7 +9,7 @@ public class LogConfig : IEzConfig
     public readonly SortedSet<PacketID> LogWhiteList = [];
     public readonly SortedSet<PacketID> LogBlackList =
     [
-        PacketID.Ping,
+        PacketID.Pong,
         PacketID.ActorControl,
         PacketID.ActorControlSelf,
         PacketID.ActorControlTarget,
@@ -40,7 +40,10 @@ public class LogConfig : IEzConfig
         PacketID.CurrencyCrystalInfo,
         PacketID.RetainerInformation,
         PacketID.InventoryTransaction,
-        PacketID.UpdateInventorySlot
+        PacketID.UpdateInventorySlot,
+
+        PacketID.HousingObjectMove,
+        PacketID.ServerNotice
     ];
     public readonly SortedSet<PacketID> DrawWhiteList = [];
     public readonly SortedSet<PacketID> DrawBlackList = [];

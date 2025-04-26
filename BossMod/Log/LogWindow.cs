@@ -17,6 +17,22 @@ public class LogWindow() : UIWindow("Boss mod log UI", false, new(1000, 300), Im
     public static SortedSet<PacketID> DrawWhiteList = [.. C.DrawWhiteList];
     public static SortedSet<PacketID> DrawBlackList = [.. C.DrawBlackList];
 
+    public override void PreDraw()
+    {
+        // 默认配色黑底白字太瞎眼，抄一下DR的配色
+        ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0xF0 / 255f, 0xF4 / 255f, 0xF7 / 255f, 1f));
+        ImGui.PushStyleColor(ImGuiCol.WindowBg, new Vector4(0x1F / 255f, 0x25 / 255f, 0x33 / 255f, 1f));
+        ImGui.PushStyleColor(ImGuiCol.MenuBarBg, new Vector4(0x1E / 255f, 0x24 / 255f, 0x32 / 255f, 1f));
+        ImGui.PushStyleColor(ImGuiCol.TitleBgActive, new Vector4(0x2A / 255f, 0x32 / 255f, 0x46 / 255f, 1f));
+        ImGui.PushStyleColor(ImGuiCol.TitleBgCollapsed, new Vector4(0x2A / 255f, 0x32 / 255f, 0x46 / 255f, 1f));
+        ImGui.PushStyleColor(ImGuiCol.TitleBg, new Vector4(0x1A / 255f, 0x1E / 255f, 0x2B / 255f, 1f));
+        base.PreDraw();
+    }
+    public override void PostDraw()
+    {
+        ImGui.PopStyleColor(6);
+        base.PostDraw();
+    }
     public override void Draw()
     {
         if (ImGui.BeginMenuBar())
@@ -75,6 +91,10 @@ public class LogWindow() : UIWindow("Boss mod log UI", false, new(1000, 300), Im
     public static void Log(PacketDecoder.TextNode textNode)
     {
         LogMessageBuffer.PushBack(new LogMessage(textNode.AsILogNode()));
+    }
+    public static void Log(string text)
+    {
+        Log(new PacketDecoder.TextNode(text));
     }
 
     public static bool IsInLogBlackList(PacketID id) => LogBlackList.Contains(id);

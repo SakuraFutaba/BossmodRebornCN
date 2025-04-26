@@ -6,6 +6,10 @@ public sealed class NetworkState
     {
         public readonly byte[] Payload = Payload;
     };
+    public readonly record struct ClientIPC(Network.ServerIPC.PacketID ID, uint Opcode, byte[] Payload)
+    {
+        public readonly byte[] Payload = Payload;
+    };
 
     public uint IDScramble;
 
