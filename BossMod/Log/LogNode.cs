@@ -72,6 +72,9 @@ public static class TextNodeExtensions
     }
 }
 
+// DrawPayload 如果子类重写了Draw优先画Draw
+// 解决对齐问题
+// 子类固定的值考虑写到PreDraw里，需要每帧更新的值才写到Draw里
 public class ServerIPCNode(NetworkState.ServerIPC ipc) : LogNode<NetworkState.ServerIPC>(ipc)
 {
     private readonly DateTimeOffset _now = DateTimeOffset.Now;
@@ -171,10 +174,8 @@ public class ClientIPCNode(NetworkState.ClientIPC ipc) : LogNode<NetworkState.Cl
     }
     private void DrawPackedID(PacketID id)
     {
-        var isDefined = Enum.IsDefined(typeof(PacketID), id);
-        var color = isDefined ? ImGuiColors.ParsedGold : ImGuiColors.DalamudRed;
-        ImGuiEx.TextCopy(color, $"{id} ");
-        ImGuiEx.Tooltip(isDefined ? $"id: {(int)id} opcode: {ipc.Opcode}" : $"opcode: {ipc.Opcode}");
+        ImGuiEx.TextCopy(Enum.IsDefined(typeof(PacketID), id) ? ImGuiColors.ParsedGold : ImGuiColors.DalamudRed, $"{id} ");
+        ImGuiEx.Tooltip($"id: {(int)id} opcode: {ipc.Opcode}");
         if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
             ImGui.OpenPopup($"PacketIDMenu##{GetHashCode()}");
         if (ImGui.BeginPopup($"PacketIDMenu##{GetHashCode()}"))
@@ -227,11 +228,11 @@ public unsafe class CountdownNode(Countdown x) : LogNode<Countdown>(x)
     }
 }
 
-public class CFRoleInNeedNode(CFRoleInNeed x) : LogNode<CFRoleInNeed>(x)
+public class CFPreferredRoleNode(CFPreferredRole x) : LogNode<CFPreferredRole>(x)
 {
     public override void Draw()
     {
-        var type = typeof(CFRoleInNeed);
+        var type = typeof(CFPreferredRole);
         var fields = type.GetFields();
         foreach (var field in fields)
         {
@@ -284,6 +285,11 @@ public unsafe class SpawnNPCNode(SpawnNPC x) : LogNode<SpawnNPC>(x)
         var p = (IntPtr)value.NPCName;
         var str = MemoryHelper.ReadString(p, 74);
         ImGui.TextColored(LogColor.String, str);
+        ImGuiEx.TextCopy(LogColor.String, $"BNpcBaseId: {value.BNpcBaseId}");
+        ImGuiEx.TextCopy(LogColor.String, $"BNpcName: {Service.LuminaRow<Lumina.Excel.Sheets.BNpcName>(Value.BNpcNameId)?.Singular}");
+        var modelChara = Service.LuminaRow<Lumina.Excel.Sheets.BNpcBase>(Value.BNpcBaseId)?.ModelChara.Value;
+        ImGuiEx.TextCopy(LogColor.String, $"Model: m{modelChara?.Model:0000}b{modelChara?.Base:0000}v{modelChara?.Variant:0000}");
+
     }
 }
 
@@ -363,7 +369,7 @@ public unsafe class ChatSentNode(ChatSent x) : LogNode<ChatSent>(x)
     }
 }
 
-public unsafe class ChatReceivedNode(ChatReceived x) : LogNode<ChatReceived>(x)
+public unsafe class ChatRecvNode(ChatRecv x) : LogNode<ChatRecv>(x)
 {
     public override void Draw()
     {

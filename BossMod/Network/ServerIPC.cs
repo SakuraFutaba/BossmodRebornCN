@@ -19,30 +19,50 @@ public enum PacketID
     Ping = 0,
     Pong = 2,
     Init = 3,
+    SwitchZone = 5, // trigger when switching zone
     RemainingPlayTime = 6,
     Logout = 7,
     Logout2 = 8,
-    CFCancel = 11,
-    CFDutyInfo = 13,
+    CFCancel = 10,
+    CFRegist = 11,
+    CFQueueInfo = 12,
+    CFReady = 13,
     CFNotify = 14,
-    CFRoleInNeed = 17,
+    UIModule16 = 16,// trigger when being hit and init zone
+    CFPreferredRole = 17,
+    InitZone_19 = 19,
     PFRecruitStart = 20,
     PFRecruitCancel = 21,
     PFList = 26,
     PFInfo = 27,
     ReadyCheck = 33,
     PFUpdateRecruitNum = 34,
+    UIModule37_CharaCard = 37,
     PFRecruitAllianceStart = 39,
+    OnlineStatusFriend = 43,
     PFInfoAlliance = 44,
     PFRecruitAllianceCancel = 46,
+    UIModule50 = 50,
+    UIModule51 = 51,
+    UIModule52 = 52,
+    UIModule68 = 68,
     CrossWorldLinkshellList = 81,
+    OnlineStatusFriendList = 86,
     ChatSent = 89,
+    UIModule93 = 93,
+    UIModule97 = 97,
     FellowshipList = 99,
     FellowshipFinder = 104,
     Playtime = 111,
     CFRegistered = 112,
     CFUpdateRecruitNum = 114,
-    ChatReceived = 121,
+    UIModule115 = 115,
+    UIModule118 = 118,
+    UIModule120 = 120,
+    ChatRecv = 121,
+    UIModule122 = 122,
+    UIModule123 = 123,
+    UIModule124 = 124,
     WorldsInfo = 125,
     RSVData = 127,
     RSFData = 128,
@@ -77,6 +97,7 @@ public enum PacketID
     MarketBoardSearchResult = 177,
     FreeCompanyActionUpdate = 178,
     FreeCompanyInfo = 179,
+    ClientTrigger = 180,
     ExamineFreeCompanyInfo = 181,
     FreeCompanyDialog = 182,
     FreeCompanyTopic = 183,
@@ -118,13 +139,15 @@ public enum PacketID
     UpdatePartyMemberPositions = 245,
     UpdateAllianceNormalMemberPositions = 246,
     UpdateAllianceSmallMemberPositions = 247,
+    AgentBuddy_Finalizer = 249,
     GCAffiliation = 250,
+    ClientUpdatePositionInstance = 265,
     SpawnPlayer = 268,
     SpawnNPC = 269,
     SpawnBoss = 270,
     DespawnCharacter = 271,
     ActorMove = 272,
-    ActorJump = 273,
+    ActorJump = 273, // [CharacterManager + 496] + 88
     Transfer = 274,
     ActorSetPos = 275,
     ActorCast = 277,
@@ -132,8 +155,8 @@ public enum PacketID
     UpdateParty = 279,
     InitZone = 280,
     ApplyIDScramble = 281,
-    UpdateHate = 282,
-    UpdateHater = 283,
+    UpdateHate = 282, // HateRank
+    UpdateHater = 283, // HateList
     SpawnObject = 284,
     DespawnObject = 285,
     UpdateClassInfo = 286,
@@ -149,6 +172,7 @@ public enum PacketID
     ModelEquip = 296,
     Examine = 297,
     CharaNameReq = 300,
+    SetNameForContentId = 301,
     RetainerSummary = 304,
     RetainerInformation = 305,
     ItemMarketBoardSummary = 306,
@@ -175,21 +199,28 @@ public enum PacketID
     EventPlay255 = 336,
     EventStart = 338,
     EventFinish = 339,
+    EventHandler = 343,
     EventContinue = 350,
     ResultDialog = 352,
     DesynthResult = 353,
+    Event_id_354_off_320 = 354,
     QuestActiveList = 358,
     QuestUpdate = 359,
     QuestCompleteList = 360,
     QuestFinish = 361,
+    QuestCompleteList2 = 363,
     MSQTrackerComplete = 364,
     QuestTracker = 366,
     DirectorVars = 369,
     ContentDirectorSync = 370,
+    Event_id_373_off_336 = 373,
     ServerRequestCallbackResponse1 = 378,
     ServerRequestCallbackResponse2 = 379,
     ServerRequestCallbackResponse3 = 380,
+    Event_id_384_off_312 = 384,
     Mount = 397,
+    Event_id_398_off_304 = 398,
+    Event_id_399 = 399,
     EnvControl = 402,
     SystemLogMessage1 = 408,
     SystemLogMessage2 = 409,
@@ -217,7 +248,8 @@ public enum PacketID
     NpcYell = 448,
     FateInfo = 453,
     FateProgress = 455,
-    CompletedAchievements = 458,
+    AchievementList = 458,
+    AchievementNearCompletion = 459,
     LandSetInitialize = 467,
     LandUpdate = 468,
     YardObjectSpawn = 469,
@@ -230,14 +262,20 @@ public enum PacketID
     HousingUpdateLandFlagsSlot = 477,
     HousingLandFlags = 478,
     HousingShowEstateGuestAccess = 479,
+    HousingGuestAccessSetting = 480,
     HousingObjectInitialize = 481,
     HousingInternalObjectSpawn = 482,
     HousingWardInfo = 484,
     HousingObjectMove = 485,
     HousingObjectDye = 486,
     SharedEstateSettingsResponse = 498,
-    DailyQuests = 510,
-    DailyQuestRepeatFlags = 512,
+    Telepo = 505,
+    GcArmyExpeditionMemberUpdate = 506,
+    GcArmyExpeditionInfo = 507,
+    GcArmyExpeditionEnlistment = 508,
+    GcArmyExpeditionInfo2 = 509,
+    GcArmyExpeditionDailyQuestResult = 510,
+    GcArmyExpeditionDailyQuestRepeatFlags = 512,
     LandUpdateHouseName = 514,
     AirshipTimers = 525,
     PlaceMarker = 533,
@@ -257,13 +295,28 @@ public enum PacketID
     CharaVisualEffect = 586,
     LandSetMap = 587,
     Fall = 588,
+    MissionStart = 589,
     Performance = 599,
     Timers = 630,
-    PlayMotionSync = 637,
+    PlayMotionSync = 640,
     CEDirector = 646,
+    QuestEffect_Unk1 = 655,
+    QuestEffect_Unk2 = 656,
+    Island_659 = 659,
     IslandWorkshopDemandResearch = 665,
     IslandWorkshopSupplyDemand = 668,
+    Island_669 = 669,
+    Island_670 = 670,
+    Island_672 = 672,
+    Island_674 = 674,
+    Island_677 = 677,
+    Island_682 = 682,
     IslandWorkshopFavors = 684,
+    CutsceneReplay = 692,
+    FittingShopUpdate = 693,
+    Island_695 = 695,
+    CharaCardBanner = 696,
+    CharaCardData = 697,
 }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -1193,9 +1246,9 @@ public struct EnvControl
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct NpcYell
 {
-    public ulong SourceID;
+    public ulong SourceID; //0x0
     public int u8;
-    public ushort Message;
+    public ushort Message; //0xC
     public ushort uE;
     public ulong u10;
     public ulong u18;
@@ -1231,7 +1284,7 @@ public struct ActorGauge
 }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct CFRoleInNeed
+public struct CFPreferredRole
 {
     public byte Unknown;
     public CFRole Leveling;
@@ -1299,14 +1352,20 @@ public unsafe struct SpawnNPC
     [FieldOffset(16)] public uint gOID16;
     [FieldOffset(36)] public ushort U36;
     [FieldOffset(56)] public uint gOID56;
-    [FieldOffset(64)] public uint gOID68;
-    [FieldOffset(84)] public uint gOID84;
-    [FieldOffset(88)] public uint gOID88;
+    [FieldOffset(64)] public uint BNpcBaseId;
+    [FieldOffset(68)] public uint BNpcNameId;
+    // [FieldOffset(80)] public uint QueueSize;
+    [FieldOffset(84)] public uint EntityIdCheckIsEqualToLocalPlayer;
+    [FieldOffset(88)] public uint EntityUnk88;
     [FieldOffset(92)] public uint HP;
     [FieldOffset(96)] public uint maxHP;
     [FieldOffset(106)] public ushort MP;
     [FieldOffset(108)] public ushort maxMP;
-    [FieldOffset(504)] public Vector3 Pos;
+    [FieldOffset(112)] public ushort ModelCharaId;
+    [FieldOffset(126)] public byte CharacterManagerIndex;
+    [FieldOffset(128)] public uint EntityId;
+    [FieldOffset(130)] public byte ObjectKindCheckIsEqualTo2;
+    [FieldOffset(508)] public Vector3 Pos;
     [FieldOffset(574)] public fixed byte NPCName[74];
 }
 
@@ -1334,7 +1393,7 @@ public unsafe struct ServerNotice
 }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public unsafe struct ChatReceived
+public unsafe struct ChatRecv
 {
     public uint Unk1;
     public uint Unk2;

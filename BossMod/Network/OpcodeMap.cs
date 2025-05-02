@@ -1,4 +1,5 @@
-﻿using BossMod.Network.ServerIPC;
+﻿using BossMod.Log;
+using BossMod.Network.ServerIPC;
 namespace BossMod.Network;
 
 // map betweek network message opcodes (which are randomized every build) to more-or-less stable indices
@@ -23,6 +24,10 @@ public class OpcodeMap
     public readonly nint VtableAddrDebug3;
     public readonly nint VtableAddrDebug4;
     public readonly nint VtableAddrDebug5;
+    public readonly nint VtableAddrDebug6;
+    public readonly nint VtableAddrDebug7;
+    public readonly nint VtableAddrDebug8;
+    public readonly nint VtableAddrDebug9;
     public readonly int MinCase;
     public readonly int JumptableSize;
     public readonly nint DefaultRVA;
@@ -53,9 +58,17 @@ public class OpcodeMap
         VtableAddrDebug = Service.SigScanner.ScanText("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2 48 89 74 24 30 48 8D 4C 24 30 E8 ?? ?? ?? ??");
         VtableAddrDebug2 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug + 7, Marshal.ReadInt32(VtableAddrDebug + 3));
         VtableAddrDebug3 = Marshal.ReadIntPtr(VtableAddrDebug2);
-        VtableAddr2 = Service.SigScanner.GetStaticAddressFromSig("C7 83 10 01 00 00 03 00 00 00 48 8D 4C 24 ?? 48 89 74 24 ?? E8 ?? ?? ?? ??") + 22;
-        VtableAddrDebug4 = VtableAddr2 + 5 + Marshal.ReadIntPtr(VtableAddr2);
-        VtableAddrDebug5 = Marshal.ReadIntPtr(Marshal.ReadIntPtr(VtableAddrDebug4) + 3);
+        VtableAddr2 = Service.SigScanner.GetStaticAddressFromSig("C7 83 10 01 00 00 03 00 00 00 48 8D 4C 24 ?? 48 89 74 24 ?? E8 ?? ?? ?? ??", 21);
+        VtableAddrDebug4 = Service.SigScanner.ScanText("C7 83 10 01 00 00 03 00 00 00 48 8D 4C 24 ?? 48 89 74 24 ?? E8 ?? ?? ?? ??");
+        VtableAddrDebug5 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug4 + 25, Marshal.ReadInt32(VtableAddrDebug4 + 21));
+        VtableAddrDebug6 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug5 + 7, Marshal.ReadInt32(VtableAddrDebug5 + 3));
+        LogWindow.Log($"VtableAddr2: {VtableAddr2:X12}");
+        LogWindow.Log($"debug4: {VtableAddrDebug4:X12}");
+        LogWindow.Log($"debug5: {VtableAddrDebug5:X12}");
+        LogWindow.Log($"debug6: {VtableAddrDebug6:X12}");
+        LogWindow.Log($"debug7: {VtableAddrDebug7:X12}");
+        // VtableAddrDebug4 = VtableAddr2 + 5 + Marshal.ReadIntPtr(VtableAddr2);
+        // VtableAddrDebug5 = Marshal.ReadIntPtr(Marshal.ReadIntPtr(VtableAddrDebug4) + 3);
 
 
         var func = (byte*)Func;

@@ -50,10 +50,14 @@ public class LogWindow() : UIWindow("Boss mod log UI", false, new(1000, 300), Im
                 if (ImGui.MenuItem("Clear Log Black")) ClearLogBlackList();
                 ImGui.EndMenu();
             }
-            if (ImGui.BeginMenu("xldev"))
+            if (ImGui.BeginMenu("Debug"))
             {
-                Service.CommandManager.ProcessCommand("/xldev");
-                // Svc.PluginInterface.OpenDeveloperMenu();
+                if (ImGui.MenuItem("xldev")) Service.CommandManager.ProcessCommand("/xldev");
+                if (ImGui.MenuItem("xldata")) Service.CommandManager.ProcessCommand("/xldata");
+                if (ImGui.MenuItem("xllog")) Service.CommandManager.ProcessCommand("/xllog");
+                if (ImGui.MenuItem("tweaks")) Service.CommandManager.ProcessCommand("/tweaks Debug");
+                if (ImGui.MenuItem("splatoon")) Service.CommandManager.ProcessCommand("/splatoon");
+                if (ImGui.MenuItem("hasel")) Service.CommandManager.ProcessCommand("/haseldebug");
                 ImGui.EndMenu();
             }
             ImGui.EndMenuBar();

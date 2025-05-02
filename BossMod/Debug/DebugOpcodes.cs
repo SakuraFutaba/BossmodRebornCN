@@ -3,6 +3,8 @@ using ECommons.ImGuiMethods;
 using BossMod.Network;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
+using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
+
 namespace BossMod;
 
 public class DebugOpcodes
@@ -28,7 +30,7 @@ public class DebugOpcodes
                 .ToArray()
         ));
         ImGui.Text($"ss : {ss}");
-        ImGui.Text($"ss.ToJson : {ss.ToJson()}");
+        // ImGui.Text($"ss.ToJson : {ss.ToJson()}");
         if (ImGui.Button("Print to Chat Log"))
         {
             Service.ChatGui.Print(ss);
@@ -293,7 +295,7 @@ public class DebugOpcodes
         {
             ImGui.TableNextRow();
             ImGui.TableNextColumn();
-            ImGuiEx.TextCopy($"{entry.VtableIndex}");
+            ImGuiEx.TextCopy($"ProcessPacket_{entry.VtableIndex}");
             ImGui.TableNextColumn();
             ImGuiEx.TextCopy(entry.Name);
             ImGui.TableNextColumn();

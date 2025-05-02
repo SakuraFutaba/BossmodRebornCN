@@ -8,6 +8,7 @@ public enum ClientPacketID
     Init = 1,
     PFRecruitCancel = 19,
     PFRecruitStart = 37,
+    GetOnlineStatusFriend = 69,
     ChatSent = 89,
     MarketBoardRequestItemListingInfo = 122,
     MarketBoardPurchaseHandler = 125,
