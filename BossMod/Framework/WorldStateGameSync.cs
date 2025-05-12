@@ -832,7 +832,7 @@ sealed class WorldStateGameSync : IDisposable
         var id = _opcodeMap.ID((int)opcode);
         // TODO: ClientIPC 构造函数 id 类型改成 Client
         var ipc = new NetworkState.ClientIPC(id, opcode, [.. payload]);
-        if (!new[] { PacketID.ClientUpdatePositionHandler, PacketID.Ping, PacketID.ClientUpdatePositionInstance }.Contains(id))
+        if (!new[] { (PacketID)0, (PacketID)180, (PacketID)187, (PacketID)265 }.Contains(id))
         {
             LogWindow.Log(_decoder.DecodeClientIPCNode(ipc));
         }

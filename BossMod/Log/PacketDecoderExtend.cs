@@ -35,7 +35,7 @@ public abstract unsafe partial class PacketDecoder
         var ptr = (byte*)Unsafe.AsPointer(ref ipc.Payload[0]);
         var child = ipc.ID switch
         {
-            PacketID.ChatSent when (ChatSent*)ptr is var p => new ChatSentNode(*p),
+            // PacketID.ChatSent when (ChatSent*)ptr is var p => new ChatSentNode(*p),
             _ => DecodePacket(ipc.ID, ptr)?.AsILogNode(),
         };
         if (child != null)

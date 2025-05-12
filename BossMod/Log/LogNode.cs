@@ -105,6 +105,16 @@ public class ServerIPCNode(NetworkState.ServerIPC ipc) : LogNode<NetworkState.Se
     private void DrawActorInfo()
     {
         ImGui.TextColored(ImGuiColors.HealerGreen, ObjectString(Value.SourceServerActor));
+        if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
+        {
+            unsafe
+            {
+                var targetSystem = FFXIVClientStructs.FFXIV.Client.Game.Control.TargetSystem.Instance();
+                var gameObjectManager = FFXIVClientStructs.FFXIV.Client.Game.Object.GameObjectManager.Instance();
+                var gameObject = gameObjectManager->Objects.GetObjectByEntityId(ipc.SourceServerActor);
+                targetSystem->SetHardTarget(gameObject);
+            }
+        }
         if (ImGui.IsItemHovered())
         {
             ImGui.SetMouseCursor(ImGuiMouseCursor.Hand);

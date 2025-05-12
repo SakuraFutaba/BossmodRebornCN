@@ -295,7 +295,7 @@ public class DebugOpcodes
         {
             ImGui.TableNextRow();
             ImGui.TableNextColumn();
-            ImGuiEx.TextCopy($"ProcessPacket_{entry.VtableIndex}");
+            ImGuiEx.TextCopy($"{entry.VtableIndex}");
             ImGui.TableNextColumn();
             ImGuiEx.TextCopy(entry.Name);
             ImGui.TableNextColumn();

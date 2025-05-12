@@ -38,7 +38,7 @@ public class LogConfig : IEzConfig
         PacketID.ItemInfo,
         PacketID.ContainerInfo,
         PacketID.CurrencyCrystalInfo,
-        PacketID.RetainerInformation,
+        PacketID.RetainerInfo,
         PacketID.InventoryTransaction,
         PacketID.UpdateInventorySlot,
 
