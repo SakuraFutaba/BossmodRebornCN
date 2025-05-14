@@ -233,6 +233,9 @@ public class DebugOpcodes
         ImGui.SameLine();
         if (ImGui.Button("Sort By Opcode"))
             opcodeMap.SortByOpcode();
+        ImGui.SameLine();
+        if (ImGui.Button("Sort By FuncAddr"))
+            opcodeMap.SortByFuncAddr();
 
         // (byte*) imagebase = ReadRVA(Func + 30) = Func + 30 + 4 + [Func+30]
         // (int*) jumptable = imagebase + [Func + 40] = Func + 30 + 4 + [Func+30] + [Func + 40]
@@ -279,17 +282,15 @@ public class DebugOpcodes
         // vtoff = bodyAddr[9] switch { 0x60 => bodyAddr[10], 0xA0 => (int*)bodyAddr[10] };
         // id = vtoff >> 8 - 2;
 
-        ImGui.BeginTable("Opcode Table", 8, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInner | ImGuiTableFlags.RowBg);
-        ImGui.TableSetupColumn("VtableIndex");
-        ImGui.TableSetupColumn("Name");
-        ImGui.TableSetupColumn("Opcode");
-        ImGui.TableSetupColumn("Index");
-        ImGui.TableSetupColumn("Vtoff");
-        ImGui.TableSetupColumn("bodyAddrOffset(jumptable[i])");
-        // ImGui.TableSetupColumn("bdOff+ImgRVA-0x10");
-        ImGui.TableSetupColumn("VtAddr");
-        ImGui.TableSetupColumn("VtAddrValue");
-        // ImGui.TableSetupColumn("VtAddrIDA");
+        ImGui.BeginTable("Opcode Table", 8, ImGuiTableFlags.BordersInner | ImGuiTableFlags.RowBg);
+        ImGui.TableSetupColumn("VtIndex", ImGuiTableColumnFlags.WidthFixed, ImGui.CalcTextSize("VtIndex").X);
+        ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthFixed, ImGui.CalcTextSize("QuestManagerSetSeenCraftingNotebookDivisionLevel").X);
+        ImGui.TableSetupColumn("Opcode", ImGuiTableColumnFlags.WidthFixed, ImGui.CalcTextSize("Opcode").X);
+        ImGui.TableSetupColumn("Index->Vtoff", ImGuiTableColumnFlags.WidthFixed, ImGui.CalcTextSize("0000-> 0x0000/000000000000").X);
+        ImGui.TableSetupColumn("jumptable[i])", ImGuiTableColumnFlags.WidthFixed, ImGui.CalcTextSize("jumptable[i] ").X);
+        ImGui.TableSetupColumn("ZoneVfAddr", ImGuiTableColumnFlags.WidthFixed, ImGui.CalcTextSize("7FF7BBBBBBBB ").X);
+        ImGui.TableSetupColumn("ZoneFuncAddr", ImGuiTableColumnFlags.WidthFixed, ImGui.CalcTextSize("7FF7BBBBBBBB ").X);
+        ImGui.TableSetupColumn("Zone Function Instructions", ImGuiTableColumnFlags.WidthStretch);
         ImGui.TableHeadersRow();
         foreach (var entry in opcodeMap.OpcodeMapTable)
         {
@@ -300,20 +301,21 @@ public class DebugOpcodes
             ImGuiEx.TextCopy(entry.Name);
             ImGui.TableNextColumn();
             ImGuiEx.TextCopy($"{entry.Opcode}");
+
+            ImGui.PushFont(Dalamud.Interface.UiBuilder.MonoFont);
+
             ImGui.TableNextColumn();
-            ImGui.TextUnformatted($"{entry.Index}");
-            ImGui.TableNextColumn();
-            ImGui.TextUnformatted($"0x{entry.Vtoff:X4} / {entry.Vtoff}");
+            ImGui.TextUnformatted($"{entry.Index,-3} -> 0x{entry.Vtoff:X4} | {entry.Vtoff,4}");
             ImGui.TableNextColumn();
             ImGui.TextUnformatted($"{entry.bodyAddrOffset:X8}");
             ImGui.TableNextColumn();
-            ImGuiEx.TextCopy($"{entry.VtableFuncAddr:X12}");
+            ImGuiEx.TextCopy($"{entry.ZoneVfAddr:X12}");
             ImGui.TableNextColumn();
-            ImGuiEx.TextCopy($"{entry.VtableFuncValue:X16}");
-            // ImGui.TableNextColumn();
-            // ImGuiEx.TextCopy($"{entry.VtableFuncAddr - opcodeMap.ImagebaseAddr + 0x140000000:X8}");
-            // ImGui.TableNextColumn();
-            // ImGui.TextUnformatted($"{opcodeMap.ImagebaseRVA + entry.bodyAddrOffset - 0x10:X4}");
+            ImGuiEx.TextCopy($"{entry.ZoneFuncAddr:X12}");
+            ImGui.TableNextColumn();
+            ImGuiEx.TextCopy($"{entry.ZoneFuncIns.ToHexString()}");
+
+            ImGui.PopFont();
         }
         ImGui.EndTable();
     }

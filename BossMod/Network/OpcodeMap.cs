@@ -18,7 +18,7 @@ public class OpcodeMap
     public String IDToName(int id) => Enum.IsDefined(typeof(PacketID), id) ? ((PacketID)id).ToString() : string.Empty;
     public readonly nint Func;
     public readonly nint VtableAddr;
-    public readonly nint VtableAddr2;
+    public readonly nint ZoneBaseInstance;
     public readonly nint VtableAddrDebug;
     public readonly nint VtableAddrDebug2;
     public readonly nint VtableAddrDebug3;
@@ -36,6 +36,7 @@ public class OpcodeMap
     public readonly nint ImagebaseAddr;
     public readonly nint JumptableRVA;
     public readonly nint JumptableAddr;
+    public readonly nint JumpTableZoneDown;
 
     public readonly nint VtableAddrOffset;
 
@@ -52,25 +53,9 @@ public class OpcodeMap
         // lea r11, <__ImageBase_off>                   4C 8D 1D ?? ?? ?? ??        func + 30
         // cdqe                                         48 98
         // mov r9d, ds::<jumptable_rva>[r11+rax*4]      45 8B 8C 83 ?? ?? ?? ??     func + 40
+
+
         Func = Service.SigScanner.ScanText("49 8B 40 10  4C 8B 50 38  41 0F B7 42 02  83 C0 ??  3D ?? ?? ?? ??  0F 87 ?? ?? ?? ??  4C 8D 1D ?? ?? ?? ??  48 98  45 8B 8C 83 ?? ?? ?? ??");
-        // VtableAddr = Marshal.ReadIntPtr(Service.SigScanner.GetStaticAddressFromSig("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2"));
-        VtableAddr = Service.SigScanner.GetStaticAddressFromSig("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2");
-        VtableAddrDebug = Service.SigScanner.ScanText("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2 48 89 74 24 30 48 8D 4C 24 30 E8 ?? ?? ?? ??");
-        VtableAddrDebug2 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug + 7, Marshal.ReadInt32(VtableAddrDebug + 3));
-        VtableAddrDebug3 = Marshal.ReadIntPtr(VtableAddrDebug2);
-        VtableAddr2 = Service.SigScanner.GetStaticAddressFromSig("C7 83 10 01 00 00 03 00 00 00 48 8D 4C 24 ?? 48 89 74 24 ?? E8 ?? ?? ?? ??", 21);
-        VtableAddrDebug4 = Service.SigScanner.ScanText("C7 83 10 01 00 00 03 00 00 00 48 8D 4C 24 ?? 48 89 74 24 ?? E8 ?? ?? ?? ??");
-        VtableAddrDebug5 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug4 + 25, Marshal.ReadInt32(VtableAddrDebug4 + 21));
-        VtableAddrDebug6 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug5 + 7, Marshal.ReadInt32(VtableAddrDebug5 + 3));
-        LogWindow.Log($"VtableAddr2: {VtableAddr2:X12}");
-        LogWindow.Log($"debug4: {VtableAddrDebug4:X12}");
-        LogWindow.Log($"debug5: {VtableAddrDebug5:X12}");
-        LogWindow.Log($"debug6: {VtableAddrDebug6:X12}");
-        LogWindow.Log($"debug7: {VtableAddrDebug7:X12}");
-        // VtableAddrDebug4 = VtableAddr2 + 5 + Marshal.ReadIntPtr(VtableAddr2);
-        // VtableAddrDebug5 = Marshal.ReadIntPtr(Marshal.ReadIntPtr(VtableAddrDebug4) + 3);
-
-
         var func = (byte*)Func;
         var minCase = -*(sbyte*)(func + 15);
         var jumptableSize = *(int*)(func + 17) + 1;
@@ -79,13 +64,41 @@ public class OpcodeMap
         var jumptable = (int*)(imagebase + *(int*)(func + 40));
 
         MinCase = -*(sbyte*)(Func + 15);
-        JumptableSize = *(int*)(Func + 17) + 1;
-        DefaultRVA = *(int*)(Func + 23);
+        JumptableSize = Marshal.ReadInt32(Func + 17) + 1;
+        DefaultRVA = Marshal.ReadInt32(Func + 23);
         DefaultAddr = ReadRVA(Func + 23);
-        ImagebaseRVA = *(int*)(Func + 30);
+        ImagebaseRVA = Marshal.ReadInt32(Func + 30);
         ImagebaseAddr = ReadRVA(Func + 30);
-        JumptableRVA = *(int*)(Func + 40);
+        JumptableRVA = Marshal.ReadInt32(Func + 40);
         JumptableAddr = ImagebaseAddr + JumptableRVA;
+        // if (Service.SigScanner.TryScanText("4C 89 B4 24 D8 00 00 00 41 8B 8C 80 ?? ?? ?? ??", out var addr) // 7.15
+        //     || Service.SigScanner.TryScanText("48 8D 15 ?? ?? ?? ?? 49 63 C7 8B 8C 82 ?? ?? ?? ??", out addr)) // 7.21
+        // {
+        //     JumpTableZoneDown = ImagebaseAddr + Marshal.ReadInt32(addr + 12); // 7.15
+        //     // JumpTableZoneDown = ImagebaseAddr + Marshal.ReadInt32(addr + 13); // 7.21
+        // }
+        JumpTableZoneDown = ImagebaseAddr + Marshal.ReadInt32(Service.SigScanner.ScanText("4C 89 B4 24 D8 00 00 00 41 8B 8C 80 ?? ?? ?? ??") + 12); // 7.15
+
+
+        // VtableAddr = Marshal.ReadIntPtr(Service.SigScanner.GetStaticAddressFromSig("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2"));
+        VtableAddr = Service.SigScanner.GetStaticAddressFromSig("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2");
+        VtableAddrDebug = Service.SigScanner.ScanText("48 8D 35 ?? ?? ?? ?? 4C 8B C7 33 D2 48 89 74 24 30 48 8D 4C 24 30 E8 ?? ?? ?? ??");
+        VtableAddrDebug2 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug + 7, Marshal.ReadInt32(VtableAddrDebug + 3));
+        VtableAddrDebug3 = Marshal.ReadIntPtr(VtableAddrDebug2);
+        ZoneBaseInstance = Service.SigScanner.GetStaticAddressFromSig("C7 83 10 01 00 00 03 00 00 00 48 8D 4C 24 ?? 48 89 74 24 ?? E8 ?? ?? ?? ??", 21);
+        VtableAddrDebug4 = Service.SigScanner.ScanText("C7 83 10 01 00 00 03 00 00 00 48 8D 4C 24 ?? 48 89 74 24 ?? E8 ?? ?? ?? ??");
+        VtableAddrDebug5 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug4 + 25, Marshal.ReadInt32(VtableAddrDebug4 + 21));
+        VtableAddrDebug6 = Service.SigScanner.ResolveRelativeAddress(VtableAddrDebug5 + 7, Marshal.ReadInt32(VtableAddrDebug5 + 3));
+
+
+        LogWindow.Log($"ZoneBaseInstance: {ZoneBaseInstance:X12}");
+        LogWindow.Log($"debug4: {VtableAddrDebug4:X12}");
+        LogWindow.Log($"debug5: {VtableAddrDebug5:X12}");
+        LogWindow.Log($"debug6: {VtableAddrDebug6:X12}");
+        LogWindow.Log($"debug7: {VtableAddrDebug7:X12}");
+        LogWindow.Log($"JumpTableZoneDown: {JumpTableZoneDown:X12}");
+        LogWindow.Log($"DEBUG: {Service.SigScanner.ScanText("4C 89 B4 24 D8 00 00 00 41 8B 8C 80 ?? ?? ?? ??"):X12}");
+        LogWindow.Log($"DEBUG: {JumpTableZoneDown:X12}");
 
         for (var i = 0; i < jumptableSize; ++i)
         {
@@ -107,11 +120,29 @@ public class OpcodeMap
             entry.Opcode = MinCase + entry.Index;
             entry.VtableIndex = ReadIndexForCaseBody(bodyAddr, out entry.Vtoff);
             entry.Name = IDToName(entry.VtableIndex);
-            entry.VtableFuncAddr = Marshal.ReadIntPtr(VtableAddr, entry.Vtoff);
-            entry.VtableFuncValue = Marshal.ReadIntPtr(entry.VtableFuncAddr);
+            entry.ZoneVfAddr = Marshal.ReadIntPtr(VtableAddr, entry.Vtoff);
+            entry.ZoneFuncAddr = ImagebaseAddr + Marshal.ReadInt32(JumpTableZoneDown, i * 4);
+            // entry.ZoneFuncAddr = JumpTableZoneDown;
             _opcodeMapTable.Add(entry);
         }
-        _opcodeMapTable.Sort((a, b) => a.VtableIndex - b.VtableIndex);
+
+        var addressDict = _opcodeMapTable
+            .Select(e => e.ZoneFuncAddr)
+            .Distinct()
+            .OrderBy(addr => addr)
+            .Pairwise()
+            .ToDictionary(pair => pair.Item1, pair => (int)(pair.Item2 - pair.Item1));
+
+        _opcodeMapTable
+            .OrderBy(entry => entry.VtableIndex)
+            .Where(e => addressDict.ContainsKey(e.ZoneFuncAddr))
+            .ToList()
+            .ForEach(entry =>
+            {
+                entry.ZoneFuncInsLength = addressDict[entry.ZoneFuncAddr];
+                entry.ZoneFuncIns = new byte[entry.ZoneFuncInsLength];
+                Marshal.Copy(entry.ZoneFuncAddr, entry.ZoneFuncIns, 0, entry.ZoneFuncInsLength);
+            });
     }
     public void SortByVtableIndex()
     {
@@ -120,6 +151,10 @@ public class OpcodeMap
     public void SortByOpcode()
     {
         _opcodeMapTable.Sort((a, b) => a.Opcode - b.Opcode);
+    }
+    public void SortByFuncAddr()
+    {
+        _opcodeMapTable.Sort((a, b) => (int)(a.ZoneFuncAddr - b.ZoneFuncAddr));
     }
 
     private static unsafe byte* ReadRVA(byte* p) => p + 4 + *(int*)p;
@@ -208,6 +243,8 @@ public class OpcodeMapEntry
     public string Name = string.Empty;
     public int Vtoff;
     public nint bodyAddrOffset;
-    public nint VtableFuncAddr = IntPtr.Zero;
-    public nint VtableFuncValue = IntPtr.Zero;
+    public nint ZoneVfAddr = IntPtr.Zero;
+    public nint ZoneFuncAddr = IntPtr.Zero;
+    public int ZoneFuncInsLength;
+    public byte[] ZoneFuncIns = [];
 }

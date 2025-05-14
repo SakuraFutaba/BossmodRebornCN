@@ -67,7 +67,7 @@ public static class TextNodeExtensions
         }
         public override void Draw()
         {
-            ImGui.Text(Value);
+            ImGuiEx.TextCopy(Value);
         }
     }
 }
@@ -132,7 +132,9 @@ public class ServerIPCNode(NetworkState.ServerIPC ipc) : LogNode<NetworkState.Se
     }
     private void DrawPayload(byte[] payload)
     {
+        ImGui.PushFont(Dalamud.Interface.UiBuilder.MonoFont);
         ImGuiEx.TextWrappedCopy(ImGuiColors.DalamudGrey, _payloadStr);
+        ImGui.PopFont();
         if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
             ImGui.OpenPopup($"PayloadMenu##{GetHashCode()}");
         if (ImGui.BeginPopup($"PayloadMenu##{GetHashCode()}"))

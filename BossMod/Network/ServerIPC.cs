@@ -314,6 +314,7 @@ public enum PacketID
     Trade = 314,
     InventoryActionAck = 315,
     UpdateInventorySlot = 316,
+    CurrencyUnkInfo = 317, // shares same func with ItemInfo = 309, ContainerInfo = 310, CurrencyCrystalInfo = 313,
     OpenTreasure = 318,
     Loot319 = 319,
     Loot320 = 320,
@@ -419,7 +420,8 @@ public enum PacketID
     CharaCard442 = 442,
     QuestRecomplete443 = 443, // Accepted quest is nothing
     Leve444 = 444, // Accepted leve is nothing
-    PrintStringNameReward = 445,
+    DebugPrintStringNameReward = 445,
+    DebugPrintEntity = 446,
     EquipDisplayFlags = 447,
     NpcYell = 448,
     CharaUnk449 = 449,
@@ -438,6 +440,7 @@ public enum PacketID
     CompanionSetName = 463,
     SetPetCrossHotbarSlot = 464,
     InventoryCharaMake = 465,
+    Fate466 = 466,
     AchievementMergeBitmask = 467, // LandSetInitialize
     LandUpdate = 468,
     YardObjectSpawn = 469,
@@ -475,6 +478,7 @@ public enum PacketID
     Housing501 = 501,
     Housing502 = 502,
     Housing503 = 503,
+    Unk504 = 504,
     Telepo = 505,
     GcArmyExpeditionMemberUpdate = 506,
     GcArmyMember = 507,
@@ -510,6 +514,7 @@ public enum PacketID
     Unk537 = 537, // same instance with 494-497
     UnMount = 538,
     SetDirectorData = 539, // GetDirectorByEventId(0x80040001)
+    LotteryWeekly = 540,
     CeremonySetActorAppearance = 541,
     GoldSaucer544 = 544,
     Housing545 = 545,
@@ -520,6 +525,7 @@ public enum PacketID
     SubmarineStatusList = 550,
     SubmarineProgressionStatus = 551,
     SubmarineExplorationResult = 552,
+    RollDice = 553,
     SubmarineTimers = 554,
     Submarine555 = 555,
     Submarine556 = 556,
@@ -545,6 +551,8 @@ public enum PacketID
     TripleTriad576 = 576,
     TripleTriad577 = 577,
     TripleTriad578 = 578,
+    PvPDuelRequest = 579,
+    WeeklyBingo = 580, // Wondrous Tails
     Housing581 = 581,
     SetInstanceContentUI = 582,
     CharaSetPos = 583,
@@ -624,8 +632,8 @@ public enum PacketID
     QuestEffect657 = 657,
     AgentMap658 = 658,
     MJI659 = 659,
-    MJI660 = 660,
-    MJI661 = 661,
+    MJISchedule = 660,
+    MJICraftUpdateScheduleData = 661,
     MJI662 = 662,
     MJI663 = 663,
     MJILoadDemandResearch664 = 664,
@@ -654,6 +662,7 @@ public enum PacketID
     TripleTriad691 = 691,
     CutsceneReplay = 692,
     FittingShopUpdate = 693,
+    InputTimer = 694, // Client::UI::Misc::InputTimerModule
     MJI695 = 695, // Confirmed in game
     CharaCardBanner = 696,
     CharaCardData = 697,
@@ -666,6 +675,19 @@ public enum PacketID
     Bozja715 = 715,
     MassivePcContentDirector716 = 716, // MassivePcContentDirector
     MassivePcContentDirector717 = 717, // MassivePcContentDirector
+
+    Null707 = 707,
+    Null685 = 685,
+    Null686 = 686,
+    Null687 = 687,
+    Null705 = 705,
+    Null706 = 706,
+    Null709 = 709,
+    Null710 = 710,
+    Null711 = 711,
+    Null712 = 712,
+    Null713 = 713,
+    Null714 = 714,
 }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -1063,8 +1085,6 @@ public enum ActorControlCategory : ushort
     HuntingLogSectionFinish = 543, // from dissector
     HuntingLogRankFinish = 544, // from dissector
     SetMaxGearSets = 560, // from dissector
-    PvPDuelRequest = 579,
-    WeeklyBingo = 580, // Wondrous Tails
     SetCharaGearParamUI = 608, // from dissector
     ToggleWireframeRendering = 609, // from dissector
     ActionRejected = 700, // from XivAlexander (ActorControlSelf)
