@@ -134,7 +134,7 @@ public class OpcodeMap
             .ToDictionary(pair => pair.Item1, pair => (int)(pair.Item2 - pair.Item1));
 
         _opcodeMapTable
-            .OrderBy(entry => entry.VtableIndex)
+            .OrderBy(entry => entry.ZoneFuncAddr)
             .Where(e => addressDict.ContainsKey(e.ZoneFuncAddr))
             .ToList()
             .ForEach(entry =>
@@ -143,6 +143,7 @@ public class OpcodeMap
                 entry.ZoneFuncIns = new byte[entry.ZoneFuncInsLength];
                 Marshal.Copy(entry.ZoneFuncAddr, entry.ZoneFuncIns, 0, entry.ZoneFuncInsLength);
             });
+        SortByFuncAddr();
     }
     public void SortByVtableIndex()
     {

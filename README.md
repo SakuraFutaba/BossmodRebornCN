@@ -1,3 +1,4 @@
-### forked from [44451516-ff14/BossmodRebornCN](https://github.com/44451516-ff14/BossmodRebornCN)
-### 由于已经 fork 过 awgil/ffxiv_bossmod，无法再 fork 44451516-ff14/BossmodRebornCN，因此新建了一个仓库
-### 此仓库只用于个人在国服客户端研究 opcode
+### Forked from [44451516-ff14/BossmodRebornCN](https://github.com/44451516-ff14/BossmodRebornCN)
+### Created a new repository due to the existing fork of [awgil/ffxiv_bossmod](https://github.com/awgil/ffxiv_bossmod)
+### Intended for personal research on opcodes in the CN server
+### [Comparing changes](https://github.com/SakuraFutaba/BossmodRebornCN/compare/461524e...main)

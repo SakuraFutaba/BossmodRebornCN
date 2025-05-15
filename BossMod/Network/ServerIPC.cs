@@ -676,12 +676,12 @@ public enum PacketID
     MassivePcContentDirector716 = 716, // MassivePcContentDirector
     MassivePcContentDirector717 = 717, // MassivePcContentDirector
 
-    Null707 = 707,
     Null685 = 685,
     Null686 = 686,
     Null687 = 687,
     Null705 = 705,
     Null706 = 706,
+    Null707 = 707,
     Null709 = 709,
     Null710 = 710,
     Null711 = 711,
