@@ -1710,34 +1710,84 @@ public struct Mount
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 648, Pack = 1)]
-public unsafe struct SpawnNPC
+public unsafe struct SpawnNPC // Client::Game::Character::CharacterSetupContainer_InitNPCCommon
 {
-    [FieldOffset(4)] public byte U4;
-    [FieldOffset(5)] public byte U5;
-    [FieldOffset(6)] public byte U6;
-    [FieldOffset(7)] public byte U7;
-    [FieldOffset(8)] public byte U8;
-    [FieldOffset(9)] public byte U9;
-    [FieldOffset(10)] public byte U10;
-    [FieldOffset(11)] public byte U11;
-    [FieldOffset(16)] public uint gOID16;
+    [FieldOffset(0)] public uint U0; // Chara+0x7C == Chara.LayoutId + 4
+    [FieldOffset(4)] public uint U4; // Chara+0x1B40
+    [FieldOffset(8)] public byte U8_01_03; // 01 03 Chara+0x1A0 == Chara.ModelScale - 8   if == 4 set flag at Chara+0x34
+    [FieldOffset(9)] public byte U9_00_02; // 00 02 Chara+0x1CC == Chara.Level + 1
+    [FieldOffset(10)] public byte U10; // Chara+0x1E8 = Chara+0x1E8 & 0b11111101 | payload[10] != 0 ? 2 : 0
+    [FieldOffset(11)] public byte U11; // Chara+0x1E1
+    [FieldOffset(12)] public byte U12; // Chara+0x1E2
+    [FieldOffset(13)] public byte U13_Always14; // Chara+0x1E4
+    [FieldOffset(14)] public byte U14; // Chara+0x1E3
+    [FieldOffset(15)] public byte U15; // Chara+0x1E8 = Chara+0x1E8 & 0b11111110 | payload[15] != 0
+    [FieldOffset(16)] public uint EntityId16;
+    [FieldOffset(24)] public ulong FreeCompanyCrestData;
+    [FieldOffset(32)] public ulong WeaponId0;
     [FieldOffset(36)] public ushort U36;
-    [FieldOffset(56)] public uint gOID56;
-    [FieldOffset(64)] public uint BNpcBaseId;
-    [FieldOffset(68)] public uint BNpcNameId;
-    // [FieldOffset(80)] public uint QueueSize;
-    [FieldOffset(84)] public uint EntityIdCheckIsEqualToLocalPlayer;
-    [FieldOffset(88)] public uint EntityUnk88;
+    [FieldOffset(40)] public ulong WeaponId1;
+    [FieldOffset(48)] public ulong WeaponId2;
+    [FieldOffset(56)] public uint CombatTaggerId;
+    [FieldOffset(60)] public uint U60_U63;
+    [FieldOffset(64)] public uint BNpcBaseId; // if BNpcBaseId == 952 && Chara+6F == 2  then 30178 else payload[110]
+    [FieldOffset(68)] public uint BNpcNameId; // if BNpcNameId != 0 FormatName() else payload[NPCName]
+    [FieldOffset(72)] public uint UnkId72;
+    [FieldOffset(76)] public uint CompanionOwnerId; // Chara+0x22C4 == Chara.CompanionOwnerId + 4 == Chara.AccountId - 4
+    [FieldOffset(80)] public ushort EventId; // Chara+0x97) |= 0xC; Chara.EventId = payload[80];
+    [FieldOffset(84)] public uint OwnerId; // payload[128] != 2 | 7.21 no change | EntityIdCheckIsEqualToLocalPlayer
+    [FieldOffset(88)] public uint EntityTeatherTargetMaybe;
     [FieldOffset(92)] public uint HP;
     [FieldOffset(96)] public uint maxHP;
-    [FieldOffset(106)] public ushort MP;
+    [FieldOffset(100)] public uint U100_08020400_08000600; // 08020400 08000600 Chara+0x1F0  if CharaMod != RidingPillion then bool v = payload[100] & 0x8000) != 0
+    [FieldOffset(104)] public ushort FateId; // Chara+0x97) |= 0xC; Chara.FateId = payload[104];
+    [FieldOffset(106)] public ushort MP; // sometimes 2800 sometimes 10000
     [FieldOffset(108)] public ushort maxMP;
+    [FieldOffset(110)] public ushort BehaviorId; // if BNpcBaseId == 952 && Chara+6F == 2  then 30178 else payload[110] GetSheetByIndex(7) Behavior
     [FieldOffset(112)] public ushort ModelCharaId;
-    [FieldOffset(126)] public byte CharacterManagerIndex;
-    [FieldOffset(128)] public uint EntityId;
-    [FieldOffset(130)] public byte ObjectKindCheckIsEqualTo2;
+    [FieldOffset(114)] public short Rotation; // 32767 * 0.0095875263 * 0.0099999998 - 3.1415927 == 0
+    [FieldOffset(116)] public ushort MountId;
+    [FieldOffset(118)] public ushort CompanionData118;
+    [FieldOffset(120)] public ushort CompanionData120;
+    // [FieldOffset(122)] public ushort Ornament; // 7.21 new
+    [FieldOffset(122)] public ushort Tether1;
+    [FieldOffset(124)] public byte CharacterManagerIndex; // 7.21 124->126
+    [FieldOffset(125)] public byte CharacterModes; // 01
+    [FieldOffset(126)] public byte CharacterModesParam;
+    [FieldOffset(127)] public byte ObjectKind; // 02
+    [FieldOffset(128)] public byte SubKind; // payload[128] != 2 | 7.21 128->130 | if != 1 Chara+0x1AE2~0x1AE7 = payload[640~645] else Chara+0x1AE2 = payload[640]
+    [FieldOffset(129)] public byte VfxVoiceId; // 04
+    [FieldOffset(130)] public byte FreeCompanyCrestBitfield; // 04
+    [FieldOffset(131)] public byte Battalion; // 04
+    [FieldOffset(132)] public byte Level;
+    [FieldOffset(133)] public byte ClassJobId;
+    [FieldOffset(134)] public byte EventState; // 7.21 off + 2
+    [FieldOffset(135)] public byte U135; // Chara+0x93 == Chara.YalmDistanceFromPlayerZ + 1
+    [FieldOffset(136)] public byte CombatTagType;
+    [FieldOffset(137)] public byte BuddyModelTop;
+    [FieldOffset(138)] public byte BuddyModelBody;
+    [FieldOffset(139)] public byte BuddyModelLegs;
+    [FieldOffset(140)] public byte BuddyStain;
+    [FieldOffset(141)] public byte U141; // Chara+0x1A0 == Chara.ModelScale - 8
+    [FieldOffset(142)] public byte EurekaRank; // Chara+0x2A0
+    [FieldOffset(143)] public byte EurekaElement; // Chara+0x2A0
+    [FieldOffset(144)] public byte U144; // 0x1AC9 = ModelContainer.UnscaledRadius - 3 = ModelContainer.ModelSkeletonId_2 + 5
+    [FieldOffset(145)] public byte TimelineModelState; // 0xC70 = Chara.TimelineContainer.ModelState
+    [FieldOffset(146)] public byte U146; // 0x1ACA = ModelContainer.UnscaledRadius - 2
+    [FieldOffset(147)] public byte TimelineAnimationState; // 0xC71 0xC72
+    [FieldOffset(148)] public uint StatusId; // 7.21 148->152 150->154 156->160
+    [FieldOffset(150)] public uint ParamOnGainStatus;
+    [FieldOffset(156)] public uint SourceId; // BuddyInstance.BuddyMember.StatusManager.SetStatus(statusIndex, statusId = payload[148], remaining, param = payload[150], sourceId = payload[156], refreshFlags = 1)
     [FieldOffset(508)] public Vector3 Pos;
+    [FieldOffset(520)] public int U520;
+    [FieldOffset(560)] public fixed byte EquipmentId[10];
+    [FieldOffset(570)] public ushort GlassId;
     [FieldOffset(574)] public fixed byte NPCName[74];
+    [FieldOffset(606)] public fixed byte CustomizeData[26]; // Chara.DrawDataContainer.CustomizeData
+    [FieldOffset(607)] public byte Sex;
+    [FieldOffset(632)] public uint U632; // Chara+0x2280 == Chara.CompanionObject + 8 == Chara.TargetId - 8
+    [FieldOffset(636)] public ushort U636; // Chara+0x2284
+    [FieldOffset(638)] public byte U638; // Chara+0x2286
 }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
